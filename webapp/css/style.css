@@ -1,1 +1,9 @@
 /* Enter your custom styles here */
+.permissionGroupLabel {
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+}
+
+.permissionGroup {
+	margin-right: 1rem;
+}

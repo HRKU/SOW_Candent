@@ -1,0 +1,87 @@
+{
+	"roles": [
+		{
+			"id": 1,
+			"name": "Administrator",
+			"description": "Full access to all features and data",
+			"permissions": [
+				"read_all_data",
+				"create_users",
+				"edit_users",
+				"delete_users",
+				"create_roles",
+				"edit_roles",
+				"delete_roles",
+				"manage_permissions"
+			]
+		},
+		{
+			"id": 2,
+			"name": "Editor",
+			"description": "Can create, edit, and delete their own data",
+			"permissions": [
+				"read_own_data",
+				"create_own_data",
+				"edit_own_data",
+				"delete_own_data",
+				"read_all_data"
+			]
+		},
+		{
+			"id": 3,
+			"name": "Viewer",
+			"description": "Can only view data",
+			"permissions": ["read_all_data"]
+		}
+	],
+	"permission": [
+		{
+			"key": "read_all_data",
+			"name": "Read All Data"
+		},
+		{
+			"key": "create_users",
+			"name": "Create Users"
+		},
+		{
+			"key": "edit_users",
+			"name": "Edit Users"
+		},
+		{
+			"key": "delete_users",
+			"name": "Delete Users"
+		},
+		{
+			"key": "create_roles",
+			"name": "Create Roles"
+		},
+		{
+			"key": "edit_roles",
+			"name": "Edit Roles"
+		},
+		{
+			"key": "delete_roles",
+			"name": "Delete Roles"
+		},
+		{
+			"key": "manage_permissions",
+			"name": "Manage Permissions"
+		},
+		{
+			"key": "read_own_data",
+			"name": "Read Own Data"
+		},
+		{
+			"key": "create_own_data",
+			"name": "Create Own Data"
+		},
+		{
+			"key": "edit_own_data",
+			"name": "Edit Own Data"
+		},
+		{
+			"key": "delete_own_data",
+			"name": "Delete Own Data"
+		}
+	]
+}
