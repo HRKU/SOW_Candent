@@ -1,7 +1,9 @@
 <mvc:View controllerName="com.candentech.sowtracker.controller.Admin"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m">
-    <Page id="Page" title="{i18n>title}"> 
-        <content />
+    <Page id="idPage" title="{i18n>title}"> 
+        <content>
+        <mvc:XMLView id="idXMLView" viewName="com.candentech.sowtracker.view.Login" />
+        </content>
     </Page>
 </mvc:View>

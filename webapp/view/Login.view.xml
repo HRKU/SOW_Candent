@@ -1,0 +1,35 @@
+<mvc:View
+    xmlns:form="sap.ui.layout.form"
+	controllerName="com.candentech.sowtracker.controller.Login"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	displayBlock="true"
+	height="100%"
+	busyIndicatorDelay="0">
+    
+    <Page id="idPage" showHeader="false">
+        <content>
+            <FlexBox id="idFlexBox" justifyContent="Center" height="100%" alignItems="Center">
+                <VBox id="idVBox" >
+                    <form:SimpleForm id="idSimpleForm">
+                    <Label id="idLoginFormLabel" text="{i18n>LoginForm}"/>
+                    <HBox id="idHBox" justifyContent="Center" height="60px">
+                        <Image id="idImage" class="imgClass" src="/Assets/images/img.jpg" width="100%" height="100%" />
+                    </HBox>
+					    <Label id="idUserNameLabel" required="true" class="sapThemeFont" text="{i18n>UserName}"/>
+					    <Input type="Email" class="emailClass sapUiResponsiveContentPadding" id="username" placeholder="Enter UserName" width="100%" liveChange="onInputChange" valueState="{= ${email>/valueState} === 'Error' ? 'Error' : 'None'}" valueStateMessage="{= ${email>/valueStateText} || ' '}" />
+					    <Label id="idPasswordLabel" required="true" class="sapThemeFont	" text="{i18n>Password}"/>
+					    <Input class="pwdClass sapUiResponsiveContentPadding" id="password" type="Password" placeholder="Enter Password" showValueHelp="true" valueHelpIconSrc="sap-icon://show" valueHelpRequest=".onShowPasswordSelect" width="100%" liveChange="onInputChange"/>
+                        <HBox justifyContent="End">
+                        <Link id="idForgotPasswordLink" text="{i18n>ForgotPassword}" textAlign="End" class="sapUiTinyMarginTopBottom" />
+                        </HBox>
+                        <HBox justifyContent="Center">
+                        <Button id="idLoginButton" class="sapUiResponsiveContentPadding" text="Login" type="Emphasized" pressed="true" press="onLoginPress" width="100px"/>
+                        </HBox>
+                    </form:SimpleForm> 
+                </VBox>
+            </FlexBox>
+        </content>
+    </Page>
+</mvc:View>

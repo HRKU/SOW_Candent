@@ -3,5 +3,6 @@
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m">
     <App id="app">
+    <!-- <mvc:XMLView id="idXMLView" viewName="com.candentech.sowtracker.view.Login"></mvc:XMLView> -->
     </App>
 </mvc:View>
