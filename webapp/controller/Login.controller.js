@@ -1,9 +1,11 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast"
+    "sap/m/MessageToast",
+    "com/candentech/sowtracker/enums/password"
 ], function (
     Controller,
-    MessageToast
+    MessageToast,
+    ePassword
 ) {
     "use strict";
 
@@ -14,23 +16,22 @@ sap.ui.define([
         },
 
         // Email Validation
-        validateEmail: function (username) {
-            var re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            return re.test(String(username  ).toLowerCase());
-        },
+        // validateEmail: function (username) {
+        //     var re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        //     return re.test(String(username).toLowerCase());
+        // },
 
-        // Show Password Function
+        // Show/Hide Password Function
         onShowPasswordSelect: function () {
             var oPasswordInput = this.byId("password");
-            var sIconSrc = oPasswordInput.getValueHelpIconSrc();
+            var temp = oPasswordInput.getValueHelpIconSrc().split("://")
 
-            if (sIconSrc === "sap-icon://show") {
-                oPasswordInput.setType("Text");
-                oPasswordInput.setValueHelpIconSrc("sap-icon://hide");
-            } else {
-                oPasswordInput.setType("Password");
-                oPasswordInput.setValueHelpIconSrc("sap-icon://show");
-            }
+            var state = temp.pop()
+
+            temp.push(ePassword.opposite_state[state])
+
+            oPasswordInput.setType(ePassword.input_type[state]);
+            oPasswordInput.setValueHelpIconSrc(temp.join("://"));
         },
 
         // OnLogin press Function 
@@ -39,21 +40,21 @@ sap.ui.define([
             var oEmail = oView.byId("username");
             var oPassword = oView.byId("password");
 
-            if (!this.validateEmail(oEmail.getValue())) {
-                oEmail.setValueState("Error");
-                oEmail.setValueStateText("Please enter a valid email address");
-                return;
-            } else {
-                oEmail.setValueState("None");
-            }
+            // if (!this.validateEmail(oEmail.getValue())) {
+            //     oEmail.setValueState("Error");
+            //     oEmail.setValueStateText("Please enter a valid email address");
+            //     return;
+            // } else {
+            //     oEmail.setValueState("None");
+            // }
 
-            if (!oPassword.getValue()) {
-                oPassword.setValueState("Error");
-                oPassword.setValueStateText("Please enter your password");
-                return;
-            } else {
-                oPassword.setValueState("None");
-            }
+            // if (!oPassword.getValue()) {
+            //     oPassword.setValueState("Error");
+            //     oPassword.setValueStateText("Please enter your password");
+            //     return;
+            // } else {
+            //     oPassword.setValueState("None");
+            // }
 
 
             //Fetch Apis 
