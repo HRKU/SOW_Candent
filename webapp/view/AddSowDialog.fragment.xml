@@ -13,8 +13,12 @@
             justifyContent="End"
         >
             <VBox id="idVBoxBtns">
-                <HBox id="_IDGenHBox1" class="sapUiMediumMarginTop">
-                    <VBox id="_IDGenVBox1" class="sapUiMediumMarginEnd sapUiMediumMarginBegin">
+                <HBox
+                    id="_IDGenHBox1"
+                    class="sapUiMediumMargin"
+                    justifyContent="SpaceBetween"
+                >
+                    <VBox id="_IDGenVBox1">
                         <Label
                             id="idLblInpCltName"
                             text="Client Name"
@@ -24,10 +28,10 @@
                         <Input
                             id="idInpCltName"
                             placeholder="Enter Client Name"
-                            width="400px"
+                            width="auto"
                         />
                     </VBox>
-                    <VBox id="_IDGenVBox2" class="sapUiMediumMarginEnd">
+                    <VBox id="_IDGenVBox2">
                         <Label
                             id="idLblInpPrjName"
                             text="Project Name"
@@ -36,12 +40,28 @@
                         <Input
                             id="idInpPrjName"
                             placeholder="Enter Project Name"
-                            width="400px"
+                            width="auto"
+                        />
+                    </VBox>
+                    <VBox id="_IDGenVBox10">
+                        <Label
+                            id="idLblInpAgrrNo"
+                            text="Agreement Number"
+                            design="Bold"
+                        />
+                        <Input
+                            id="idInpAgrrNo"
+                            type="Number"
+                            placeholder="Enter Agreement No"
+                            width="auto"
                         />
                     </VBox>
                 </HBox>
-                <HBox id="_IDGenHBox2" class="sapUiMediumMarginTop">
-                    <VBox id="_IDGenVBox3" class="sapUiMediumMarginEnd sapUiMediumMarginBegin">
+                <HBox id="_IDGenHBox2">
+                    <VBox
+                        id="_IDGenVBox3"
+                        class="sapUiMediumMarginEnd sapUiMediumMarginBegin"
+                    >
                         <Label
                             id="idLblInpSts"
                             text="Project Status"
@@ -50,19 +70,24 @@
                         <ComboBox
                             id="idInpSts"
                             placeholder="Select Status"
-                            width="400px"
+                            width="auto"
                         >
-                            <core:Item id="_IDGenItem1"
+                            <core:Item
+                                id="_IDGenItem1"
                                 key="Active"
                                 text="Active"
                             />
-                            <core:Item id="_IDGenItem2"
+                            <core:Item
+                                id="_IDGenItem2"
                                 key="Inactive"
                                 text="Inactive"
                             />
                         </ComboBox>
                     </VBox>
-                    <VBox id="_IDGenVBox4" class="sapUiMediumMarginEnd">
+                    <VBox
+                        id="_IDGenVBox4"
+                        class="sapUiMediumMarginEnd"
+                    >
                         <Label
                             id="idLblInpPrvType"
                             text="Project Type"
@@ -71,28 +96,29 @@
                         <ComboBox
                             id="idInpPrjType"
                             placeholder="Select Status"
-                            width="400px"
+                            width="auto"
                         >
-                            <core:Item id="_IDGenItem3"
+                            <core:Item
+                                id="_IDGenItem3"
                                 key="Fixed price"
                                 text="Fixed price"
                             />
-                            <core:Item id="_IDGenItem4"
+                            <core:Item
+                                id="_IDGenItem4"
                                 key="Staffing"
                                 text="Staffing"
                             />
-                            <core:Item id="_IDGenItem5"
+                            <core:Item
+                                id="_IDGenItem5"
                                 key="None"
                                 text="None"
                             />
                         </ComboBox>
                     </VBox>
-                </HBox>
-                <HBox id="_IDGenHBox3"
-                    class="sapUiMediumMarginTop"
-                    justifyContent="SpaceBetween"
-                >
-                    <VBox id="_IDGenVBox5" class="sapUiMediumMarginEnd sapUiMediumMarginBegin">
+                    <VBox
+                        id="_IDGenVBox8"
+                        class="sapUiMediumMarginEnd"
+                    >
                         <Label
                             id="idLblInpAssgn"
                             text="Document Type"
@@ -101,25 +127,46 @@
                         <ComboBox
                             id="idInpAssgn"
                             placeholder="Select Document type"
-                            width="250px"
+                            width="auto"
                         >
-                            <core:Item id="_IDGenItem6"
+                            <core:Item
+                                id="_IDGenItem6"
                                 key="MSA"
                                 text="MSA"
                             />
-                            <core:Item id="_IDGenItem7"
+                            <core:Item
+                                id="_IDGenItem7"
                                 key="SOW"
                                 text="SOW"
                             />
-                            <core:Item id="_IDGenItem8"
+                            <core:Item
+                                id="_IDGenItem8"
                                 key="NDA"
                                 text="NDA"
                             />
-                            <core:Item id="_IDGenItem9"
+                            <core:Item
+                                id="_IDGenItem9"
                                 key="CR"
                                 text="CR"
                             />
                         </ComboBox>
+                    </VBox>
+                </HBox>
+                <HBox
+                    id="_IDGenHBox3"
+                    class="sapUiMediumMargin"
+                    justifyContent="SpaceBetween"
+                >
+                    <VBox id="_IDGenVBox9">
+                        <Label
+                            id="idLblStartDate1"
+                            text="Agreement Date"
+                            design="Bold"
+                        />
+                        <DatePicker
+                            id="idStartDatePicker2"
+                            width="auto"
+                        />
                     </VBox>
                     <!-- Start Date -->
                     <VBox id="_IDGenVBox6">
@@ -130,11 +177,11 @@
                         />
                         <DatePicker
                             id="idStartDatePicker"
-                            width="250px"
+                            width="auto"
                         />
                     </VBox>
                     <!-- End Date -->
-                    <VBox id="_IDGenVBox7" class="sapUiMediumMarginEnd sapUiMediumMarginBegin">
+                    <VBox id="_IDGenVBox7">
                         <Label
                             id="idLblEndDate"
                             text="End Date"
@@ -142,7 +189,7 @@
                         />
                         <DatePicker
                             id="idEndDatePicker"
-                            width="250px"
+                            width="auto"
                         />
                     </VBox>
                 </HBox>

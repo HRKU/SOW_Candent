@@ -82,8 +82,13 @@
 			},
 			"routes": [
 				{
-					"name": "RouteDashboard",
+					"name": "RouteLogin",
 					"pattern": ":?query:",
+					"target": ["TargetLogin"]
+				},
+				{
+					"name": "RouteDashboard",
+					"pattern": "dashboard",
 					"target": ["TargetDashboard"]
 				},
 				{
@@ -93,18 +98,25 @@
 				}
 			],
 			"targets": {
+				"TargetLogin": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "Login",
+					"viewName": "Login"
+				},
 				"TargetDashboard": {
 					"viewType": "XML",
 					"transition": "slide",
 					"clearControlAggregation": false,
-					"viewId": "Dashboard",
-					"viewName": "Dashboard"
+					"viewId": "Main",
+					"viewName": "Main"
 				},
 				"TargetTable": {
 					"viewType": "XML",
 					"transition": "slide",
 					"clearControlAggregation": false,
-					"viewId": "table",
+					"viewId": "Table",
 					"viewName": "Table"
 				}
 			}

@@ -1,0 +1,51 @@
+<mvc:View
+    controllerName="com.candentech.sowtracker.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:tnt="sap.tnt"
+>
+    <Page
+        id="mainPage"
+        showHeader="false"
+    >
+        <content>
+            <tnt:ToolHeader
+                id="MainHeader"
+                class="sapUiTinyMargin"
+            >
+                <Title
+                    id="dashboard"
+                    text="Dashboard"
+                />
+                <ToolbarSpacer id="spacer" />
+
+                <Button
+                    type="Neutral"
+                    press=".setVisibleDash"
+                    id="dashbutton"
+                    icon="sap-icon://home"
+                />
+                <Button
+                    type="Neutral"
+                    press=".setVisibleTable"
+                    id="tablebutton"
+                    icon="sap-icon://filter-fields"
+                />
+                <Avatar
+                    id="avatar"
+                    displaySize="XS"
+                />
+            </tnt:ToolHeader>
+            <mvc:XMLView
+                id="dash"
+                viewName="com.candentech.sowtracker.view.Dashboard"
+            />
+            <mvc:XMLView
+                id="table"
+                visible="false"
+                viewName="com.candentech.sowtracker.view.Table"
+            />
+        </content>
+    </Page>
+</mvc:View>

@@ -8,20 +8,7 @@ sap.ui.define(
 			{
 				onInit: function () {
 					var oTitle = this.byId("ProjValue");
-					// fetch(
-					// 	"http://excavator:8000/sow_candent_api/agreementdetails/"
-					// )
-					// 	.then((res) => res.json())
-					// 	.then((data) => {
-					// 		this.getView().setModel(
-					// 			new JSONModel(data),
-					// 			"products"
-					// 		);
-					// 	})
 
-					// 	.catch((error) => {
-					// 		console.error;
-					// 	});
 					// var oModel = this.byId("toolbar");
 					// oModel
 					//     .getAggregation("settingItems")
@@ -32,9 +19,15 @@ sap.ui.define(
 					//     );
 				},
 				navTable() {
-					const oRouter = this.getOwnerComponent().getRouter();
+					// const oRouter = this.getOwnerComponent().getRouter();
+					// oRouter.navTo("RouteTable");
+				},
+				navAvatar() {
+					this.pPopover ??= this.loadFragment({
+						name: "com.candentech.sowtracker.view.AvatarMenu",
+					});
 
-					oRouter.navTo("RouteTable");
+					this.pPopover.then((oPopover) => oPopover.open());
 				},
 
 				formatter: {
@@ -51,8 +44,11 @@ sap.ui.define(
 									(1000 * 60 * 60 * 24)
 							)
 						);
+						if (x < 30) {
+							return x;
+						}
 
-						return x;
+						return;
 					},
 					getShapeColor(doctype) {
 						switch (doctype) {

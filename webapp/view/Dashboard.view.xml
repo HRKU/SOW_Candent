@@ -16,305 +16,294 @@
     xmlns:f="sap.f"
     xmlns:cards="sap.f.cards"
 >
-    <Page
-        id="page"
-        title="{i18n>title}"
-        class="viewMain"
+    <FlexBox
+        id="mainFlex"
+        width="auto"
+        height="100%"
     >
-        <headerContent>
-            <Avatar id="bla" />
-        </headerContent>
-        <content>
-            <FlexBox
-                id="mainFlex"
+        <VBox
+            id="leftSide"
+            width="60%"
+            justifyContent="SpaceBetween"
+            height="100%"
+        >
+            <!-- Column  chart -->
+
+            <viz:VizFrame
+                id="chartContainer"
+                vizType="column"
                 width="auto"
-                height="100%"
+                height="333px"
+                vizProperties="{title:{ text:'SOW and Stuff'},dataLabel:{visible:true,showTotal:true},legend:{visible:true}}"
+                class="sapUiLargeMarginBegin sapUiLargeMarginEnd sapUiSmallMarginTop"
+                uiConfig="{applicationSet:'fiori'}"
             >
-                <VBox
-                    id="leftSide"
-                    width="60%"
-                    justifyContent="SpaceBetween"
-                    height="100%"
+                <viz:dataset>
+                    <viz.data:FlattenedDataset
+                        id="_IDGenFlattenedDataset1"
+                        data="{products>/}"
+                    >
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition
+                                id="_IDGenDimensionDefinition1"
+                                name="Employee Names"
+                                value="{producst>ProjectName}"
+                            />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition
+                                id="_IDGenMeasureDefinition1"
+                                name="data"
+                                value="{path:'products>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                            />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem
+                        id='valueAxisFeed'
+                        uid="valueAxis"
+                        type="Measure"
+                        values="data"
+                    />
+                    <viz.feeds:FeedItem
+                        id='categoryAxisFeed'
+                        uid="categoryAxis"
+                        type="Dimension"
+                        values="Employee Names"
+                    />
+                </viz:feeds>
+                <viz:dependents>
+                    <Popover id="isapop" />
+                </viz:dependents>
+            </viz:VizFrame>
+
+            <!-- gantt chart -->
+
+            <simple:GanttChartContainer
+                id="ganttContainer"
+                class="sapUiResponsiveMargin"
+                width="100%"
+                height="auto"
+            >
+                <simple:toolbar>
+                    <simple:ContainerToolbar id="toolbar" />
+                </simple:toolbar>
+
+                <simple:GanttChartWithTable
+                    id="ganttTableContainer"
+                    shapeSelectionMode="Single"
                 >
-                    <!-- Column  chart -->
-
-                    <viz:VizFrame
-                        id="chartContainer"
-                        vizType="column"
-                        width="auto"
-                        height="333px"
-                        vizProperties="{title:{ text:'SOW and Stuff'},dataLabel:{visible:true,showTotal:true},legend:{visible:true}}"
-                        class="sapUiLargeMarginBegin sapUiLargeMarginEnd sapUiSmallMarginTop"
-                        uiConfig="{applicationSet:'fiori'}"
-                    >
-                        <viz:dataset>
-                            <viz.data:FlattenedDataset
-                                id="_IDGenFlattenedDataset1"
-                                data="{products>/}"
-                            >
-                                <viz.data:dimensions>
-                                    <viz.data:DimensionDefinition
-                                        id="_IDGenDimensionDefinition1"
-                                        name="Employee Names"
-                                        value="{producst>ProjectName}"
-                                    />
-                                </viz.data:dimensions>
-                                <viz.data:measures>
-                                    <viz.data:MeasureDefinition
-                                        id="_IDGenMeasureDefinition1"
-                                        name="data"
-                                        value="{path:'products>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
-                                    />
-                                </viz.data:measures>
-                            </viz.data:FlattenedDataset>
-                        </viz:dataset>
-
-                        <viz:feeds>
-                            <viz.feeds:FeedItem
-                                id='valueAxisFeed'
-                                uid="valueAxis"
-                                type="Measure"
-                                values="data"
-                            />
-                            <viz.feeds:FeedItem
-                                id='categoryAxisFeed'
-                                uid="categoryAxis"
-                                type="Dimension"
-                                values="Employee Names"
-                            />
-                        </viz:feeds>
-                        <viz:dependents>
-                            <Popover id="isapop" />
-                        </viz:dependents>
-                    </viz:VizFrame>
-
-                    <!-- gantt chart -->
-
-                    <simple:GanttChartContainer
-                        id="ganttContainer"
-                        class="sapUiResponsiveMargin"
-                        width="100%"
-                        height="auto"
-                    >
-                        <simple:toolbar>
-                            <simple:ContainerToolbar id="toolbar" />
-                        </simple:toolbar>
-
-                        <simple:GanttChartWithTable
-                            id="ganttTableContainer"
-                            shapeSelectionMode="Single"
+                    <simple:axisTimeStrategy>
+                        <axistime:StepwiseZoomStrategy
+                            id="sss"
+                            zoomLevel="5"
                         >
-                            <simple:axisTimeStrategy>
-                                <axistime:StepwiseZoomStrategy
-                                    id="sss"
-                                    zoomLevel="5"
-                                >
-                                    <axistime:totalHorizon>
-                                        <config:TimeHorizon
-                                            id="th"
-                                            endTime="20301029000000"
-                                            startTime="20221129000000"
+                            <axistime:totalHorizon>
+                                <config:TimeHorizon
+                                    id="th"
+                                    endTime="20301029000000"
+                                    startTime="20221129000000"
+                                />
+                            </axistime:totalHorizon>
+                            <axistime:visibleHorizon>
+                                <config:TimeHorizon
+                                    id="thv"
+                                    startTime="20230101000000"
+                                    endTime="20241029000000"
+                                />
+                            </axistime:visibleHorizon>
+                        </axistime:StepwiseZoomStrategy>
+                    </simple:axisTimeStrategy>
+                    <simple:table>
+                        <table:Table
+                            id="mainTable"
+                            rows="{path: 'products>/'}"
+                            selectionBehavior="RowSelector"
+                            selectionMode="Single"
+                        >
+                            <table:columns>
+                                <table:Column id="col">
+                                    <Text
+                                        id="text"
+                                        text="Clients and Projects"
+                                    />
+                                    <table:template>
+                                        <Label
+                                            id="label"
+                                            text="{products>CompanyName} {products>ProjectName}"
                                         />
-                                    </axistime:totalHorizon>
-                                    <axistime:visibleHorizon>
-                                        <config:TimeHorizon
-                                            id="thv"
-                                            startTime="20230101000000"
-                                            endTime="20241029000000"
-                                        />
-                                    </axistime:visibleHorizon>
-                                </axistime:StepwiseZoomStrategy>
-                            </simple:axisTimeStrategy>
-                            <simple:table>
-                                <table:Table
-                                    id="mainTable"
-                                    rows="{path: 'products>/'}"
-                                    selectionBehavior="RowSelector"
-                                    selectionMode="Single"
-                                >
-                                    <table:columns>
-                                        <table:Column id="col">
-                                            <Text
-                                                id="text"
-                                                text="Clients and Projects"
-                                            />
-                                            <table:template>
-                                                <Label
-                                                    id="label"
-                                                    text="{products>CompanyName} {products>ProjectName}"
-                                                />
-                                            </table:template>
-                                        </table:Column>
-                                    </table:columns>
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
 
-                                    <table:rowSettingsTemplate>
-                                        <simple:GanttRowSettings
-                                            id="grs"
-                                            rowId="{products>SrNo}"
-                                        >
-                                            <simple:shapes1>
-                                                <shapes:Task
-                                                    id="task"
-                                                    time="{path: 'products>AgreementStartDate', formatter: '.formatter.calculateDuration'}"
-                                                    endTime="{path: 'products>AgreementEndDate', formatter: '.formatter.calculateDuration'}"
-                                                    type="Normal"
-                                                    color="{path: 'products>Type', formatter: '.formatter.getShapeColor'}"
-                                                />
-                                            </simple:shapes1>
-                                        </simple:GanttRowSettings>
-                                    </table:rowSettingsTemplate>
-                                </table:Table>
-                            </simple:table>
-                        </simple:GanttChartWithTable>
-                    </simple:GanttChartContainer>
-                </VBox>
-                <VBox
-                    height="100%"
-                    id="abobo"
-                    class="sapUiLargeMarginBegin"
+                            <table:rowSettingsTemplate>
+                                <simple:GanttRowSettings
+                                    id="grs"
+                                    rowId="{products>SrNo}"
+                                >
+                                    <simple:shapes1>
+                                        <shapes:Task
+                                            id="task"
+                                            time="{path: 'products>AgreementStartDate', formatter: '.formatter.calculateDuration'}"
+                                            endTime="{path: 'products>AgreementEndDate', formatter: '.formatter.calculateDuration'}"
+                                            type="Normal"
+                                            color="{path: 'products>Type', formatter: '.formatter.getShapeColor'}"
+                                        />
+                                    </simple:shapes1>
+                                </simple:GanttRowSettings>
+                            </table:rowSettingsTemplate>
+                        </table:Table>
+                    </simple:table>
+                </simple:GanttChartWithTable>
+            </simple:GanttChartContainer>
+        </VBox>
+        <VBox
+            height="100%"
+            id="abobo"
+            class="sapUiLargeMarginBegin"
+        >
+            <Panel
+                id="panel"
+                width="auto"
+                height="333px"
+                class="sapUiResponsiveMargin"
+            >
+                <f:Card id="Experies">
+                    <f:header>
+                        <cards:Header
+                            id="ipi"
+                            title="Urgent Expiries"
+                        />
+                    </f:header>
+                    <f:content>
+                        <List
+                            id="as"
+                            items="{products>/}"
+                        >
+                            <items>
+                                <ObjectListItem
+                                    id="lis"
+                                    title="{products>ProjectName}"
+                                >
+                                    <firstStatus>
+                                        <ObjectStatus
+                                            id="expiresIn"
+                                            text="{path:'products>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                        />
+                                    </firstStatus>
+                                    <ObjectAttribute
+                                        id="expireTag"
+                                        text="expires in "
+                                    />
+                                </ObjectListItem>
+                            </items>
+                        </List>
+                    </f:content>
+                </f:Card>
+            </Panel>
+
+            <HBox id="innerProj">
+                <GenericTile
+                    press=".filterDocs"
+                    id="_IDGenGenericTile1"
+                    class="sapUiSmallMargin sapUiMarginDown"
+                    frameType="OneByHalf"
+                    header="Total Documents"
                 >
-                    <Panel
-                        id="panel"
-                        width="auto"
-                        height="333px"
-                        class="sapUiResponsiveMargin"
-                    >
-                        <f:Card id="Experies">
-                            <f:header>
-                                <cards:Header
-                                    id="ipi"
-                                    title="Urgent Expiries"
-                                />
-                            </f:header>
-                            <f:content>
-                                <List
-                                    id="as"
-                                    items="{products>/}"
-                                >
-                                    <items>
-                                        <ObjectListItem
-                                            id="lis"
-                                            title="{products>ProjectName}"
-                                        >
-                                            <firstStatus>
-                                                <ObjectStatus
-                                                    id="expiresIn"
-                                                    text="{path:'products>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
-                                                />
-                                            </firstStatus>
-                                            <ObjectAttribute
-                                                id="expireTag"
-                                                text="expires in "
-                                            />
-                                        </ObjectListItem>
-                                    </items>
-                                </List>
-                            </f:content>
-                        </f:Card>
-                    </Panel>
-
-                    <HBox id="innerProj">
-                        <GenericTile
-                            press=".filterDocs"
-                            id="_IDGenGenericTile1"
-                            class="sapUiSmallMargin sapUiMarginDown"
-                            frameType="OneByHalf"
-                            header="Total Documents"
-                        >
-                            <customData>
-                                <core:CustomData key="All" />
-                            </customData>
-                            <TileContent id="_IDGenTileContent1">
-                                <Title
-                                    id="_IDGenTitle1"
-                                    titleStyle="H2"
-                                    text="30"
-                                    class="sapUiMarginSmallStart sapThemeHighlight"
-                                />
-                            </TileContent>
-                        </GenericTile>
-                        <GenericTile
-                            press=".filterDocs"
-                            id="_IDGenGenericTile"
-                            class="sapUiSmallMargin sapUiMarginDown"
-                            frameType="OneByHalf"
-                            header="SOW"
-                        >
-                            <customData>
-                                <core:CustomData key="MSA" />
-                            </customData>
-                            <TileContent id="_IDGenTileContent">
-                                <Title
-                                    id="_IDGenTitle"
-                                    titleStyle="H2"
-                                    text="17"
-                                    class="sapUiMarginSmallStart sapThemeHighlight"
-                                />
-                            </TileContent>
-                        </GenericTile>
-                    </HBox>
-                    <HBox id="2nd">
-                        <GenericTile
-                            press=".filterDocs"
-                            id="_IDGenGenericTile2"
-                            class="sapUiSmallMargin sapUiMarginDown"
-                            frameType="OneByHalf"
-                            header="MSA"
-                        >
-                            <TileContent id="_IDGenTileContent2">
-                                <Title
-                                    id="_IDGenTitle2"
-                                    titleStyle="H2"
-                                    text="6"
-                                    class="sapUiMarginSmallStart sapThemeHighlight"
-                                />
-                            </TileContent>
-                        </GenericTile>
-                        <GenericTile
-                            header="NDA"
-                            press=".filterDocs"
-                            id="_IDGenGenericTile4"
-                            class="sapUiSmallMargin sapUiMarginDown"
-                            frameType="OneByHalf"
-                        >
-                            <TileContent id="_IDGenTileContent4">
-                                <Title
-                                    id="_IDGenTitle3"
-                                    titleStyle="H2"
-                                    text="7"
-                                    class="sapUiMarginSmallStart sapThemeHighlight"
-                                />
-                            </TileContent>
-                        </GenericTile>
-                    </HBox>
-                    <GenericTile
-                        id="NavTable"
-                        frameType="TwoByHalf"
-                        class="sapUiResponsiveMargin"
-                        press=".navTable"
-                    >
-                        <TileContent
-                            id="navContent"
-                            state="Loaded"
-                        >
-                            <content>
-                                <Title
-                                    id="sadasd"
-                                    text="GO TO TABLE"
-                                    class="sapUiMarginSmallStart sapThemeHighlight"
-                                />
-                            </content>
-                        </TileContent>
-                        <TileContent id="arrow">
-                            <core:Icon
-                                id="hell"
-                                src="sap-icon://arrow-right"
-                                class="sapUiMarginSmallStart sapThemeHighlight"
-                            />
-                        </TileContent>
-                    </GenericTile>
-                </VBox>
-            </FlexBox>
-        </content>
-    </Page>
+                    <customData>
+                        <core:CustomData key="All" />
+                    </customData>
+                    <TileContent id="_IDGenTileContent1">
+                        <Title
+                            id="_IDGenTitle1"
+                            titleStyle="H2"
+                            text="30"
+                            class="sapUiMarginSmallStart sapThemeHighlight"
+                        />
+                    </TileContent>
+                </GenericTile>
+                <GenericTile
+                    press=".filterDocs"
+                    id="_IDGenGenericTile"
+                    class="sapUiSmallMargin sapUiMarginDown"
+                    frameType="OneByHalf"
+                    header="SOW"
+                >
+                    <customData>
+                        <core:CustomData key="MSA" />
+                    </customData>
+                    <TileContent id="_IDGenTileContent">
+                        <Title
+                            id="_IDGenTitle"
+                            titleStyle="H2"
+                            text="17"
+                            class="sapUiMarginSmallStart sapThemeHighlight"
+                        />
+                    </TileContent>
+                </GenericTile>
+            </HBox>
+            <HBox id="2nd">
+                <GenericTile
+                    press=".filterDocs"
+                    id="_IDGenGenericTile2"
+                    class="sapUiSmallMargin sapUiMarginDown"
+                    frameType="OneByHalf"
+                    header="MSA"
+                >
+                    <TileContent id="_IDGenTileContent2">
+                        <Title
+                            id="_IDGenTitle2"
+                            titleStyle="H2"
+                            text="6"
+                            class="sapUiMarginSmallStart sapThemeHighlight"
+                        />
+                    </TileContent>
+                </GenericTile>
+                <GenericTile
+                    header="NDA"
+                    press=".filterDocs"
+                    id="_IDGenGenericTile4"
+                    class="sapUiSmallMargin sapUiMarginDown"
+                    frameType="OneByHalf"
+                >
+                    <TileContent id="_IDGenTileContent4">
+                        <Title
+                            id="_IDGenTitle3"
+                            titleStyle="H2"
+                            text="7"
+                            class="sapUiMarginSmallStart sapThemeHighlight"
+                        />
+                    </TileContent>
+                </GenericTile>
+            </HBox>
+            <!-- <GenericTile
+                id="NavTable"
+                frameType="TwoByHalf"
+                class="sapUiResponsiveMargin"
+                press=".navTable"
+            >
+                <TileContent
+                    id="navContent"
+                    state="Loaded"
+                >
+                    <content>
+                        <Title
+                            id="sadasd"
+                            text="GO TO TABLE"
+                            class="sapUiMarginSmallStart sapThemeHighlight"
+                        />
+                    </content>
+                </TileContent>
+                <TileContent id="arrow">
+                    <core:Icon
+                        id="hell"
+                        src="sap-icon://arrow-right"
+                        class="sapUiMarginSmallStart sapThemeHighlight"
+                    />
+                </TileContent>
+            </GenericTile> -->
+        </VBox>
+    </FlexBox>
 </mvc:View>
