@@ -1,0 +1,26 @@
+<mvc:View
+    xmlns:smarttable="sap.ui.comp.smarttable"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    controllerName="com.candentech.sowtracker.controller.Table"
+>
+    <!-- <Table
+            id="projectTable"
+            class="sapUiResponsiveMargin"
+            width="auto"
+            items="{products>/}"
+            multiSelectMode="Default"
+        >
+            <headerToolbar>
+                <OverflowToolbar id="toolbar">
+                    <ToolbarSpacer id="seprate" />
+                    <Button
+                        id="Create"
+                        text="Create"
+                        type="Emphasized"
+                        press=".onOpenDialog"
+                    />
+                </OverflowToolbar>
+            </headerToolbar>
+        </Table> -->
+</mvc:View>

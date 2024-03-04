@@ -1,1 +1,14 @@
-/* Enter your custom styles here */
+/* .sapMGT {
+	border: none;
+	border-radius: 0;
+	border-color: transparent;
+}
+.sapMGT:active {
+	border: none;
+	border-radius: 0;
+	border-color: transparent;
+} */
+
+.TwoByHalf .sapMGTHdrContent {
+	height: 1rem;
+}
