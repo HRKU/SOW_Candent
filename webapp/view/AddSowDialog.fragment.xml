@@ -21,13 +21,13 @@
                     <VBox id="_IDGenVBox1">
                         <Label
                             id="idLblInpCltName"
-                            text="Client Name"
+                            text="Company Name"
                             design="Bold"
                             class=""
                         />
                         <Input
-                            id="idInpCltName"
-                            placeholder="Enter Client Name"
+                            id="CompanyName"
+                            placeholder="Enter Company Name"
                             width="auto"
                         />
                     </VBox>
@@ -38,7 +38,7 @@
                             design="Bold"
                         />
                         <Input
-                            id="idInpPrjName"
+                            id="ProjectName"
                             placeholder="Enter Project Name"
                             width="auto"
                         />
@@ -50,7 +50,7 @@
                             design="Bold"
                         />
                         <Input
-                            id="idInpAgrrNo"
+                            id="AgreementNo"
                             type="Number"
                             placeholder="Enter Agreement No"
                             width="auto"
@@ -63,12 +63,12 @@
                         class="sapUiMediumMarginEnd sapUiMediumMarginBegin"
                     >
                         <Label
-                            id="idLblInpSts"
+                            id="projectStatus"
                             text="Project Status"
                             design="Bold"
                         />
                         <ComboBox
-                            id="idInpSts"
+                            id="Status"
                             placeholder="Select Status"
                             width="auto"
                         >
@@ -89,12 +89,12 @@
                         class="sapUiMediumMarginEnd"
                     >
                         <Label
-                            id="idLblInpPrvType"
+                            id="projectType1"
                             text="Project Type"
                             design="Bold"
                         />
                         <ComboBox
-                            id="idInpPrjType"
+                            id="ProjectType"
                             placeholder="Select Status"
                             width="auto"
                         >
@@ -125,7 +125,7 @@
                             design="Bold"
                         />
                         <ComboBox
-                            id="idInpAssgn"
+                            id="Type"
                             placeholder="Select Document type"
                             width="auto"
                         >
@@ -164,7 +164,8 @@
                             design="Bold"
                         />
                         <DatePicker
-                            id="idStartDatePicker2"
+                            valueFormat="MM-dd-yyyy"
+                            id="AgreementDate"
                             width="auto"
                         />
                     </VBox>
@@ -176,7 +177,8 @@
                             design="Bold"
                         />
                         <DatePicker
-                            id="idStartDatePicker"
+                            valueFormat="MM-dd-yyyy"
+                            id="AgreementStartDate"
                             width="auto"
                         />
                     </VBox>
@@ -188,7 +190,8 @@
                             design="Bold"
                         />
                         <DatePicker
-                            id="idEndDatePicker"
+                            valueFormat="MM-dd-yyyy"
+                            id="AgreementEndDate"
                             width="auto"
                         />
                     </VBox>
@@ -201,7 +204,7 @@
                     <Button
                         id="idSbtBtn"
                         text="Submit"
-                        press=".onsubmit"
+                        press=".onSubmit"
                         type="Emphasized"
                         class="sapUiSmallMargin"
                     />

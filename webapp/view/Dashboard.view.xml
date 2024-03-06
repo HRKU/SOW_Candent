@@ -41,7 +41,7 @@
                 <viz:dataset>
                     <viz.data:FlattenedDataset
                         id="_IDGenFlattenedDataset1"
-                        data="{products>/}"
+                        data="{docs>/filtered/EXP}"
                     >
                         <viz.data:dimensions>
                             <viz.data:DimensionDefinition
@@ -54,7 +54,7 @@
                             <viz.data:MeasureDefinition
                                 id="_IDGenMeasureDefinition1"
                                 name="data"
-                                value="{path:'products>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
                             />
                         </viz.data:measures>
                     </viz.data:FlattenedDataset>
@@ -85,7 +85,7 @@
                 id="ganttContainer"
                 class="sapUiResponsiveMargin"
                 width="100%"
-                height="auto"
+                height="300px"
             >
                 <simple:toolbar>
                     <simple:ContainerToolbar id="toolbar" />
@@ -98,7 +98,7 @@
                     <simple:axisTimeStrategy>
                         <axistime:StepwiseZoomStrategy
                             id="sss"
-                            zoomLevel="5"
+                            zoomLevel="1"
                         >
                             <axistime:totalHorizon>
                                 <config:TimeHorizon
@@ -119,7 +119,7 @@
                     <simple:table>
                         <table:Table
                             id="mainTable"
-                            rows="{path: 'products>/'}"
+                            rows="{path: 'docs>/'}"
                             selectionBehavior="RowSelector"
                             selectionMode="Single"
                         >
@@ -132,7 +132,7 @@
                                     <table:template>
                                         <Label
                                             id="label"
-                                            text="{products>CompanyName} {products>ProjectName}"
+                                            text="{docs>CompanyName} {docs>ProjectName}"
                                         />
                                     </table:template>
                                 </table:Column>
@@ -141,15 +141,15 @@
                             <table:rowSettingsTemplate>
                                 <simple:GanttRowSettings
                                     id="grs"
-                                    rowId="{products>SrNo}"
+                                    rowId="{docs>SrNo}"
                                 >
                                     <simple:shapes1>
                                         <shapes:Task
                                             id="task"
-                                            time="{path: 'products>AgreementStartDate', formatter: '.formatter.calculateDuration'}"
-                                            endTime="{path: 'products>AgreementEndDate', formatter: '.formatter.calculateDuration'}"
+                                            time="{path: 'docs>AgreementStartDate', formatter: '.formatter.calculateDuration'}"
+                                            endTime="{path: 'docs>AgreementEndDate', formatter: '.formatter.calculateDuration'}"
                                             type="Normal"
-                                            color="{path: 'products>Type', formatter: '.formatter.getShapeColor'}"
+                                            color="{path: 'docs>Type', formatter: '.formatter.getShapeColor'}"
                                         />
                                     </simple:shapes1>
                                 </simple:GanttRowSettings>
@@ -180,17 +180,17 @@
                     <f:content>
                         <List
                             id="as"
-                            items="{products>/}"
+                            items="{docs>/filtered/EXP}"
                         >
                             <items>
                                 <ObjectListItem
                                     id="lis"
-                                    title="{products>ProjectName}"
+                                    title="{docs>ProjectName}"
                                 >
                                     <firstStatus>
                                         <ObjectStatus
                                             id="expiresIn"
-                                            text="{path:'products>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                            text="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
                                         />
                                     </firstStatus>
                                     <ObjectAttribute
@@ -232,7 +232,7 @@
                     header="SOW"
                 >
                     <customData>
-                        <core:CustomData key="MSA" />
+                        <core:CustomData key="SOW" />
                     </customData>
                     <TileContent id="_IDGenTileContent">
                         <Title
@@ -252,6 +252,9 @@
                     frameType="OneByHalf"
                     header="MSA"
                 >
+                    <customData>
+                        <core:CustomData key="MSA" />
+                    </customData>
                     <TileContent id="_IDGenTileContent2">
                         <Title
                             id="_IDGenTitle2"
@@ -268,6 +271,9 @@
                     class="sapUiSmallMargin sapUiMarginDown"
                     frameType="OneByHalf"
                 >
+                    <customData>
+                        <core:CustomData key="NDA" />
+                    </customData>
                     <TileContent id="_IDGenTileContent4">
                         <Title
                             id="_IDGenTitle3"

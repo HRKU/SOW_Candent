@@ -65,7 +65,7 @@ sap.ui.define(
 				oModel.setProperty("/username", oEmail.getValue());
 				oModel.setProperty("/password", oPassword.getValue());
 
-				fetch(services.login, {
+				fetch("http://excavator:8000/sow_candent_api/login/", {
 					method: "POST",
 					body: JSON.stringify(oModel.getData()),
 				})
@@ -73,6 +73,8 @@ sap.ui.define(
 						// console.log(response.json());
 						if (response.status == 200) {
 							MessageToast.show("Login successful");
+							const oRouter = this.getOwnerComponent().getRouter();
+							oRouter.navTo("RouteDashboard");
 						} else {
 							MessageToast.show(
 								"Login failed. Please check your email and password."
