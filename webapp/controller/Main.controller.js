@@ -9,11 +9,19 @@ sap.ui.define(
 				this.byId("dash").setVisible(true);
 				this.byId("table").setVisible(false);
 				this.byId("dashboard").setText("Dashboard");
+				this.byId("backButton").setVisible(false);
 			},
 			setVisibleTable() {
 				this.byId("dash").setVisible(false);
 				this.byId("table").setVisible(true);
 				this.byId("dashboard").setText("Table Data");
+				this.byId("backButton").setVisible(true);
+			},
+			onNavBack() {
+				this.byId("dash").setVisible(true);
+				this.byId("table").setVisible(false);
+				this.byId("dashboard").setText("Dashboard");
+				this.byId("backButton").setVisible(false);
 			},
 		});
 	}

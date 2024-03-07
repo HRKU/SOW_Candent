@@ -35,8 +35,29 @@ sap.ui.define(
 				fetch("http://yw:8000/sow_candent_app/agree/")
 					.then((res) => res.json())
 					.then((data) => {
-						console.log(data);
-						this.setModel(new JSONModel(data), "products");
+						this.setModel(new JSONModel(data), "docs");
+
+						var oModel = this.getModel("docs").getData();
+						oModel.filtered = {};
+						oModel.filtered.All = oModel;
+						oModel.filtered.MSA = oModel.filter((i) => i.Type == "MSA");
+						oModel.filtered.SOW = oModel.filter((i) => i.Type == "SOW");
+						oModel.filtered.NDA = oModel.filter((i) => i.Type == "NDA");
+						oModel.filtered.EXP = oModel
+							.filter((i) => i.Status === "Active")
+							.filter((i) => {
+								const diff = new Date(i.AgreementEndDate) - new Date();
+								const remaining_days = Math.round(diff / (1000 * 60 * 60 * 24));
+								return remaining_days < 30;
+							});
+						oModel.length = {};
+
+						console.log(oModel);
+						this.setModel(new JSONModel(data), "docsDupat");
+						console.log(
+							"the fetch is working just fine and here is the data from api, ",
+							data
+						);
 					})
 					.catch(console.error);
 			},

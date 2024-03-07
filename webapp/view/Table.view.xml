@@ -4,23 +4,34 @@
     xmlns:mvc="sap.ui.core.mvc"
     controllerName="com.candentech.sowtracker.controller.Table"
 >
-    <!-- <Table
-            id="projectTable"
-            class="sapUiResponsiveMargin"
-            width="auto"
-            items="{products>/}"
-            multiSelectMode="Default"
-        >
-            <headerToolbar>
-                <OverflowToolbar id="toolbar">
-                    <ToolbarSpacer id="seprate" />
-                    <Button
-                        id="Create"
-                        text="Create"
-                        type="Emphasized"
-                        press=".onOpenDialog"
-                    />
-                </OverflowToolbar>
-            </headerToolbar>
-        </Table> -->
+    <Table
+        id="projectTable"
+        class="sapUiResponsiveMargin"
+        width="auto"
+        mode="SingleSelectMaster"
+    >
+        <headerToolbar>
+            <OverflowToolbar id="toolbar">
+                <ToolbarSpacer id="seprate" />
+                <Button
+                    id="Delete"
+                    icon="sap-icon://delete"
+                    type="Emphasized"
+                    press=".onDelete"
+                />
+                <Button
+                    id="Edit"
+                    text="Edit"
+                    type="Emphasized"
+                    press=".onEdit"
+                />
+                <Button
+                    id="Create"
+                    text="Create"
+                    type="Emphasized"
+                    press=".onOpenDialog"
+                />
+            </OverflowToolbar>
+        </headerToolbar>
+    </Table>
 </mvc:View>
