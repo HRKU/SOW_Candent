@@ -164,7 +164,7 @@
                             design="Bold"
                         />
                         <DatePicker
-                            valueFormat="MM-dd-yyyy"
+                            valueFormat="yyyy-MM-dd"
                             id="AgreementDate"
                             width="auto"
                         />
@@ -177,7 +177,7 @@
                             design="Bold"
                         />
                         <DatePicker
-                            valueFormat="MM-dd-yyyy"
+                            valueFormat="yyyy-MM-dd"
                             id="AgreementStartDate"
                             width="auto"
                         />
@@ -190,7 +190,7 @@
                             design="Bold"
                         />
                         <DatePicker
-                            valueFormat="MM-dd-yyyy"
+                            valueFormat="yyyy-MM-dd"
                             id="AgreementEndDate"
                             width="auto"
                         />
