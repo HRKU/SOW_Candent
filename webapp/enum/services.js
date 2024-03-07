@@ -1,6 +1,6 @@
 sap.ui.define(
 	{
-		login: "/sow_candent_api/login",
+		login: "http://yw:8000/sow_candent_app/login/",
 	},
 	true
 );
