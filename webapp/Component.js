@@ -32,7 +32,7 @@ sap.ui.define(
 				// set the device model
 				this.setModel(models.createDeviceModel(), "device");
 
-				fetch("/sow_candent_api/agreementdetails")
+				fetch("http://yw:8000/sow_candent_app/agree/")
 					.then((res) => res.json())
 					.then((data) => {
 						console.log(data);
