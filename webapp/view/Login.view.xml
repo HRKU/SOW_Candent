@@ -21,10 +21,6 @@
             >
                 <VBox id="idVBox">
                     <form:SimpleForm id="idSimpleForm">
-                        <Label
-                            id="idLoginFormLabel"
-                            text="{i18n>LoginForm}"
-                        />
                         <HBox
                             id="idHBox"
                             justifyContent="Center"

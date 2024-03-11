@@ -1,4 +1,5 @@
 <mvc:View
+    xmlns:unified="sap.ui.unified"
     xmlns:smarttable="sap.ui.comp.smarttable"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
@@ -13,6 +14,16 @@
         <headerToolbar>
             <OverflowToolbar id="toolbar">
                 <ToolbarSpacer id="seprate" />
+                <unified:FileUploader
+                    id="fileUpload"
+                    fileType="xlsx,csv,xls"
+                    style="Emphasized"
+                    placeholder="Upload"
+                    buttonOnly="true"
+                    buttonText="Upload File"
+                    multiple="false"
+                    change=".onFileUpload"
+                />
                 <Button
                     id="Delete"
                     icon="sap-icon://delete"
@@ -23,7 +34,7 @@
                     id="Edit"
                     text="Edit"
                     type="Emphasized"
-                    press=".onEdit"
+                    press=".onOpenEdit"
                 />
                 <Button
                     id="Create"

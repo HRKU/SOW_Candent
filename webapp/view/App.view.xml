@@ -5,7 +5,5 @@
     displayBlock="true"
     xmlns="sap.m"
 >
-    <Shell id="Main">
-        <App id="app" />
-    </Shell>
+    <App id="app" />
 </mvc:View>

@@ -18,7 +18,8 @@
 >
     <FlexBox
         id="mainFlex"
-        width="auto"
+        width="100%"
+        justifyContent="Center"
         height="100%"
     >
         <VBox
@@ -28,64 +29,63 @@
             height="100%"
         >
             <!-- Column  chart -->
+            <HBox id="charts">
+                <viz:VizFrame
+                    id="chartContainer"
+                    vizType="column"
+                    width="auto"
+                    height="300px"
+                    vizProperties="{title:{ text:'Close to Expiry'},dataLabel:{visible:true,showTotal:true},legend:{visible:true}}"
+                    class="sapUiLargeMarginBegin sapUiLargeMarginEnd sapUiSmallMarginTop"
+                    uiConfig="{applicationSet:'fiori'}"
+                >
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset
+                            id="_IDGenFlattenedDataset1"
+                            data="{docs>/filtered/EXP}"
+                        >
+                            <viz.data:dimensions>
+                                <viz.data:DimensionDefinition
+                                    id="_IDGenDimensionDefinition1"
+                                    name="Employee Names"
+                                    value="{docs>ProjectName}"
+                                />
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition
+                                    id="_IDGenMeasureDefinition1"
+                                    name="data"
+                                    value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                />
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
 
-            <viz:VizFrame
-                id="chartContainer"
-                vizType="column"
-                width="auto"
-                height="333px"
-                vizProperties="{title:{ text:'SOW and Stuff'},dataLabel:{visible:true,showTotal:true},legend:{visible:true}}"
-                class="sapUiLargeMarginBegin sapUiLargeMarginEnd sapUiSmallMarginTop"
-                uiConfig="{applicationSet:'fiori'}"
-            >
-                <viz:dataset>
-                    <viz.data:FlattenedDataset
-                        id="_IDGenFlattenedDataset1"
-                        data="{docs>/filtered/EXP}"
-                    >
-                        <viz.data:dimensions>
-                            <viz.data:DimensionDefinition
-                                id="_IDGenDimensionDefinition1"
-                                name="Employee Names"
-                                value="{producst>ProjectName}"
-                            />
-                        </viz.data:dimensions>
-                        <viz.data:measures>
-                            <viz.data:MeasureDefinition
-                                id="_IDGenMeasureDefinition1"
-                                name="data"
-                                value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
-                            />
-                        </viz.data:measures>
-                    </viz.data:FlattenedDataset>
-                </viz:dataset>
-
-                <viz:feeds>
-                    <viz.feeds:FeedItem
-                        id='valueAxisFeed'
-                        uid="valueAxis"
-                        type="Measure"
-                        values="data"
-                    />
-                    <viz.feeds:FeedItem
-                        id='categoryAxisFeed'
-                        uid="categoryAxis"
-                        type="Dimension"
-                        values="Employee Names"
-                    />
-                </viz:feeds>
-                <viz:dependents>
-                    <Popover id="isapop" />
-                </viz:dependents>
-            </viz:VizFrame>
+                    <viz:feeds>
+                        <viz.feeds:FeedItem
+                            id='valueAxisFeed'
+                            uid="valueAxis"
+                            type="Measure"
+                            values="data"
+                        />
+                        <viz.feeds:FeedItem
+                            id='categoryAxisFeed'
+                            uid="categoryAxis"
+                            type="Dimension"
+                            values="Employee Names"
+                        />
+                    </viz:feeds>
+                    <viz:dependents>
+                        <Popover id="isapop" />
+                    </viz:dependents>
+                </viz:VizFrame>
+            </HBox>
 
             <!-- gantt chart -->
 
             <simple:GanttChartContainer
                 id="ganttContainer"
                 class="sapUiResponsiveMargin"
-                width="100%"
-                height="300px"
             >
                 <simple:toolbar>
                     <simple:ContainerToolbar id="toolbar" />
@@ -119,7 +119,7 @@
                     <simple:table>
                         <table:Table
                             id="mainTable"
-                            rows="{path: 'docs>/'}"
+                            rows="{path: 'docs>/agreements'}"
                             selectionBehavior="RowSelector"
                             selectionMode="Single"
                         >
@@ -137,6 +137,12 @@
                                     </table:template>
                                 </table:Column>
                             </table:columns>
+                            <table:rowMode>
+                                <rowmodes:Fixed
+                                    id="RowControl"
+                                    rowCount="7"
+                                />
+                            </table:rowMode>
 
                             <table:rowSettingsTemplate>
                                 <simple:GanttRowSettings
@@ -219,7 +225,7 @@
                         <Title
                             id="_IDGenTitle1"
                             titleStyle="H2"
-                            text="30"
+                            text="{docs>/length/All}"
                             class="sapUiMarginSmallStart sapThemeHighlight"
                         />
                     </TileContent>
@@ -238,7 +244,7 @@
                         <Title
                             id="_IDGenTitle"
                             titleStyle="H2"
-                            text="17"
+                            text="{docs>/length/SOW}"
                             class="sapUiMarginSmallStart sapThemeHighlight"
                         />
                     </TileContent>
@@ -259,7 +265,7 @@
                         <Title
                             id="_IDGenTitle2"
                             titleStyle="H2"
-                            text="6"
+                            text="{docs>/length/MSA}"
                             class="sapUiMarginSmallStart sapThemeHighlight"
                         />
                     </TileContent>
@@ -278,7 +284,7 @@
                         <Title
                             id="_IDGenTitle3"
                             titleStyle="H2"
-                            text="7"
+                            text="{docs>/length/NDA}"
                             class="sapUiMarginSmallStart sapThemeHighlight"
                         />
                     </TileContent>

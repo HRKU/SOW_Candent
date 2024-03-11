@@ -4,21 +4,7 @@ sap.ui.define(
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Dashboard", {
-			onInit: function () {
-				var oTitle = this.byId("ProjValue");
-				// var oModel = this.byId("toolbar");
-				// oModel
-				//     .getAggregation("settingItems")
-				//     .map((i) =>
-				//         i.getProperty("displayText") === "Indicate Current Time"
-				//             ? i.setChecked(true)
-				//             : i.setChecked(false)
-				//     );
-			},
-			navTable() {
-				// const oRouter = this.getOwnerComponent().getRouter();
-				// oRouter.navTo("RouteTable");
-			},
+			onInit: function () {},
 			navAvatar() {
 				this.pPopover ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.AvatarMenu",
@@ -52,7 +38,6 @@ sap.ui.define(
 							return "sapUiAccent2";
 						case "SLA":
 							return "sapUiAccent5";
-
 						default:
 							return "sapUiAccent4";
 					}
@@ -66,12 +51,8 @@ sap.ui.define(
 					.getCustomData()
 					.map((i) => i.getKey())
 					.pop();
-
-				// Clear existing filters
 				oBinding.filter([]);
-
 				if (sSelectedKey === "All") {
-					// No filter needed, all data will be shown
 				} else if (sSelectedKey) {
 					var newFilter = new sap.ui.model.Filter(
 						"Type",

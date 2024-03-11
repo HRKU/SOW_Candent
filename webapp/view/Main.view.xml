@@ -41,6 +41,7 @@
                 <Avatar
                     id="avatar"
                     displaySize="XS"
+                    press=".onOpenPopover"
                 />
             </tnt:ToolHeader>
             <mvc:XMLView
