@@ -33,6 +33,7 @@ sap.ui.define(
 				this.byId("dashboard").setText("Dashboard");
 				this.byId("backButton").setVisible(false);
 			},
+			onOpenPopover() {},
 		});
 	}
 );

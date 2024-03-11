@@ -3,8 +3,7 @@
     xmlns:core="sap.ui.core"
 >
     <Dialog
-        id="idAddSowDialog"
-        title="Add New SOW"
+        id="idAddAndEditSowDialog"
         contentWidth="auto"
         contentHeight="auto"
     >
@@ -54,6 +53,7 @@
                             type="Number"
                             placeholder="Enter Agreement No"
                             width="auto"
+                            value=""
                         />
                     </VBox>
                 </HBox>
@@ -207,6 +207,15 @@
                         press=".onSubmit"
                         type="Emphasized"
                         class="sapUiSmallMargin"
+                        visible="true"
+                    />
+                    <Button
+                        id="idEdtBtn"
+                        text="Save"
+                        press=".onSubmitEdit"
+                        type="Emphasized"
+                        class="sapUiSmallMargin"
+                        visible="false"
                     />
                     <Button
                         id="idclsBtn"

@@ -12,3 +12,6 @@
 .TwoByHalf .sapMGTHdrContent {
 	height: 1rem;
 }
+html.sap-desktop:not(.sapUiNativeScrollbars) {
+	scrollbar-color: initial;
+}

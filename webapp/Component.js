@@ -35,24 +35,35 @@ sap.ui.define(
 				fetch("http://excavator:8000/sow_candent_api/agreements/list/")
 					.then((res) => res.json())
 					.then((data) => {
-						this.setModel(new JSONModel(data), "docs");
-
-						var oModel = this.getModel("docs").getData();
+						console.log(data);
+						var oModel = {};
+						oModel.agreements = {};
+						oModel.agreements = data;
 						oModel.filtered = {};
-						oModel.filtered.All = oModel;
-						oModel.filtered.MSA = oModel.filter((i) => i.Type == "MSA");
-						oModel.filtered.SOW = oModel.filter((i) => i.Type == "SOW");
-						oModel.filtered.NDA = oModel.filter((i) => i.Type == "NDA");
-						oModel.filtered.EXP = oModel
+						oModel.filtered.All = oModel.agreements;
+						oModel.filtered.MSA = oModel.agreements.filter(
+							(i) => i.Type == "MSA"
+						);
+						oModel.filtered.SOW = oModel.agreements.filter(
+							(i) => i.Type == "SOW"
+						);
+						oModel.filtered.NDA = oModel.agreements.filter(
+							(i) => i.Type == "NDA"
+						);
+						oModel.filtered.EXP = oModel.agreements
 							.filter((i) => i.Status === "Active")
 							.filter((i) => {
 								const diff = new Date(i.AgreementEndDate) - new Date();
 								const remaining_days = Math.round(diff / (1000 * 60 * 60 * 24));
 								return remaining_days < 30;
 							});
-						// oModel.length = {};
+						oModel.length = {};
+						Object.keys(oModel.filtered).map(
+							(i) => (oModel.length[i] = oModel.filtered[i].length)
+						);
+						this.setModel(new JSONModel(oModel), "docs");
 
-						console.log(oModel);
+						console.log(this.getModel("docs"));
 						this.setModel(new JSONModel(data), "docsDupat");
 						console.log(
 							"the fetch is working just fine and here is the data from api, ",
