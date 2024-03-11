@@ -65,6 +65,27 @@ sap.ui.define(
 				}, 10);
 			},
 			onCloseDialog() {
+				var oIds = [
+					"CompanyName",
+					"ProjectName",
+					"AgreementNo",
+					"Status",
+					"ProjectType",
+					"Type",
+					"AgreementDate",
+					"AgreementStartDate",
+					"AgreementEndDate",
+				];
+				var oControls = {};
+
+				oIds.map((id) => {
+					oControls[id] = this.byId(id);
+				});
+				for (var key in oControls) {
+					if (oControls[key].getValue()) {
+						oControls[key].setValue();
+					}
+				}
 				this.pDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.AddSowDialog",
 				});
@@ -141,6 +162,11 @@ sap.ui.define(
 				this.pDialog ??= this.loadFragment({
 					name: "com.candenxtech.sowtracker.view.AddSowDialog",
 				});
+				for (var key in oControls) {
+					if (oControls[key].getValue()) {
+						oControls[key].setValue();
+					}
+				}
 
 				this.pDialog.then((oDialog) => oDialog.close());
 			},
@@ -210,6 +236,13 @@ sap.ui.define(
 					.catch((error) => {
 						MessageToast.show("Something Went Wrong " + error);
 					});
+
+				for (var key in oControls) {
+					if (oControls[key].getValue()) {
+						oControls[key].setValue();
+					}
+				}
+
 				this.pDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.AddSowDialog",
 				});
@@ -221,6 +254,13 @@ sap.ui.define(
 				this.pDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.AddSowDialog",
 				});
+
+				var oSelectedRow = this.byId("projectTable").getSelectedItem();
+				if (!oSelectedRow) {
+					MessageToast.show("Please select row to edit");
+					return;
+				}
+
 				this.pDialog.then((oDialog) => oDialog.open());
 
 				var oIds = [
@@ -237,7 +277,7 @@ sap.ui.define(
 
 				setTimeout(() => {
 					var oDialog = this.byId("idAddAndEditSowDialog");
-					var oSelectedRow = this.byId("projectTable").getSelectedItem();
+
 					if (oSelectedRow) {
 						// Check if a row is selected
 						var items = oSelectedRow.getCells().map((i) => i.getText());
@@ -265,12 +305,14 @@ sap.ui.define(
 					})
 						.then((response) => {
 							if (!response.ok) {
+								MessageToast.show("File Failed to upload");
 								throw new Error("Error uploading file");
 							}
 							return response.json(); // Assuming the server returns JSON response
 						})
 						.then((data) => {
 							// Handle successful upload
+							MessageToast.show("File Uploaded Successfully");
 							console.log("File uploaded successfully:", data);
 						})
 						.catch((error) => {
