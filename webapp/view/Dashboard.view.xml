@@ -47,8 +47,10 @@
                             <viz.data:DimensionDefinition
                                 id="_IDGenDimensionDefinition1"
                                 name="Employee Names"
-                                value="{producst>ProjectName}"
+                                value="{docs>ProjectName}"
                             />
+                            <!-- i just want to figur out how it work -->
+                            <!-- value="{producst>ProjectName}" -->
                         </viz.data:dimensions>
                         <viz.data:measures>
                             <viz.data:MeasureDefinition
