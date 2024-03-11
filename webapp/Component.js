@@ -32,7 +32,7 @@ sap.ui.define(
 				// set the device model
 				this.setModel(models.createDeviceModel(), "device");
 
-				fetch("http://yw:8000/sow_candent_app/agree/")
+				fetch("http://excavator:8000/sow_candent_api/agreements/list/")
 					.then((res) => res.json())
 					.then((data) => {
 						this.setModel(new JSONModel(data), "docs");
@@ -50,7 +50,7 @@ sap.ui.define(
 								const remaining_days = Math.round(diff / (1000 * 60 * 60 * 24));
 								return remaining_days < 30;
 							});
-						oModel.length = {};
+						// oModel.length = {};
 
 						console.log(oModel);
 						this.setModel(new JSONModel(data), "docsDupat");

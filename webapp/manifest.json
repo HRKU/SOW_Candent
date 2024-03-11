@@ -95,6 +95,11 @@
 					"name": "RouteTable",
 					"pattern": "table",
 					"target": ["TargetTable"]
+				},
+				{
+					"name": "RouteAdmin",
+					"pattern": "admin",
+					"target": ["TargetAdmin"]
 				}
 			],
 			"targets": {
@@ -118,6 +123,13 @@
 					"clearControlAggregation": false,
 					"viewId": "Table",
 					"viewName": "Table"
+				},
+				"TargetAdmin": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "Admin",
+					"viewName": "Admin"
 				}
 			}
 		},

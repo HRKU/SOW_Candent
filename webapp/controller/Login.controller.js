@@ -1,7 +1,7 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/m/MessageToast",
-	"com/candentech/sowtracker/enums/password",
+	"com/candentech/sowtracker/enum/password",
 	"com/candentech/sowtracker/enum/services"
 ], function (
 	Controller,

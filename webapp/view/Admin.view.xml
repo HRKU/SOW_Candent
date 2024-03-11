@@ -1,0 +1,102 @@
+<mvc:View
+	controllerName="com.candentech.sowtracker.controller.Admin"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	displayBlock="true"
+	height="100%"
+	busyIndicatorDelay="0"
+>
+<Panel height="100%" width="100%">
+	
+    <Page id="idPanel">
+		<Dialog id="idDialog" resizable="true" draggable="true" title="Add new Roles">
+            <VBox class="sapUiSmallMargin">
+				<VBox>
+                	<Label for="username" showColon="true" text="Username" />
+					<Input id="username" placeholder="Enter username" />
+                	</VBox>
+					<Label for="password" showColon="true" text="Password" />
+					<Input id="password" type="Password" placeholder="Enter password"/>
+					<VBox>
+                	</VBox>
+					<VBox>
+					<ComboBox>
+						<core:Item key="{ProductId}" text="{Name}" />
+					</ComboBox>
+                </VBox>
+                    
+            </VBox>
+            <HBox class="sapUiSmallMargin">
+            	<Button press=".handleClose" text="Register" class="sapUiTinyMarginTop sapUiTinyMarginBottom" />
+            </HBox>
+            
+        </Dialog>
+
+        <Table id="myTable">
+        <headerToolbar>
+            <OverflowToolbar>
+                <content>
+                    <Title text="Roles and Permission" />
+                    <ToolbarSpacer/>
+                    <Button
+                    text="Add Role" 
+                    press=".handleOpen"
+                    />
+                </content>
+            </OverflowToolbar>
+        </headerToolbar>
+			<columns>
+				<Column name="name">
+					<header>
+						<Label text="Name" />
+					</header>
+				</Column>
+				<Column name="description">
+					<header>
+						<Label text="Description" />
+					</header>
+				</Column>
+				<Column name="permission">
+					<header>
+						<Label text="Permission" />
+					</header>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<ObjectIdentifier title="Administrator" />
+						<ObjectIdentifier title="Full Access to all feature and data" />
+						<ObjectIdentifier title="read own data, create user, edit user, delete user, create roles, edit roles delete roles, manage permission" />
+					</cells>
+				</ColumnListItem>
+            </items>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<ObjectIdentifier title="Editor" />
+						<ObjectIdentifier title="Can create,edit, and delete their own data" />
+						<ObjectIdentifier title="read own data, creatte own dat, edit own data, delete own data, read all data" />
+					</cells>
+				</ColumnListItem>
+            </items>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<ObjectIdentifier title="viewer" />
+						<ObjectIdentifier title="can only view data" />
+						<ObjectIdentifier title="read all data" />
+					</cells>
+				</ColumnListItem>
+            </items>
+		</Table>
+
+		<Panel>
+			<content>
+				
+			</content>
+		</Panel>
+    </Page>
+</Panel>
+</mvc:View>

@@ -5,7 +5,7 @@ sap.ui.define(
 
 		return Controller.extend("com.candentech.sowtracker.controller.Dashboard", {
 			onInit: function () {
-				var oTitle = this.byId("ProjValue");
+				// var oTitle = this.byId("ProjValue");
 				// var oModel = this.byId("toolbar");
 				// oModel
 				//     .getAggregation("settingItems")
