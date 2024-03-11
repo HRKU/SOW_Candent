@@ -28,58 +28,55 @@
             justifyContent="SpaceBetween"
             height="100%"
         >
-            <!-- Column  chart -->
-            <HBox id="charts">
-                <viz:VizFrame
-                    id="chartContainer"
-                    vizType="column"
-                    width="auto"
-                    height="300px"
-                    vizProperties="{title:{ text:'Close to Expiry'},dataLabel:{visible:true,showTotal:true},legend:{visible:true}}"
-                    class="sapUiLargeMarginBegin sapUiLargeMarginEnd sapUiSmallMarginTop"
-                    uiConfig="{applicationSet:'fiori'}"
-                >
-                    <viz:dataset>
-                        <viz.data:FlattenedDataset
-                            id="_IDGenFlattenedDataset1"
-                            data="{docs>/filtered/EXP}"
-                        >
-                            <viz.data:dimensions>
-                                <viz.data:DimensionDefinition
-                                    id="_IDGenDimensionDefinition1"
-                                    name="Employee Names"
-                                    value="{docs>ProjectName}"
-                                />
-                            </viz.data:dimensions>
-                            <viz.data:measures>
-                                <viz.data:MeasureDefinition
-                                    id="_IDGenMeasureDefinition1"
-                                    name="data"
-                                    value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
-                                />
-                            </viz.data:measures>
-                        </viz.data:FlattenedDataset>
-                    </viz:dataset>
+            <viz:VizFrame
+                id="chartContainer"
+                vizType="column"
+                width="auto"
+                height="300px"
+                vizProperties="{title:{ text:'Close to Expiry'},dataLabel:{visible:true,showTotal:true},legend:{visible:true}}"
+                class="sapUiLargeMarginBegin sapUiLargeMarginEnd sapUiSmallMarginTop"
+                uiConfig="{applicationSet:'fiori'}"
+            >
+                <viz:dataset>
+                    <viz.data:FlattenedDataset
+                        id="_IDGenFlattenedDataset1"
+                        data="{docs>/filtered/EXP}"
+                    >
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition
+                                id="_IDGenDimensionDefinition1"
+                                name="Employee Names"
+                                value="{docs>ProjectName}"
+                            />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition
+                                id="_IDGenMeasureDefinition1"
+                                name="data"
+                                value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                            />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
 
-                    <viz:feeds>
-                        <viz.feeds:FeedItem
-                            id='valueAxisFeed'
-                            uid="valueAxis"
-                            type="Measure"
-                            values="data"
-                        />
-                        <viz.feeds:FeedItem
-                            id='categoryAxisFeed'
-                            uid="categoryAxis"
-                            type="Dimension"
-                            values="Employee Names"
-                        />
-                    </viz:feeds>
-                    <viz:dependents>
-                        <Popover id="isapop" />
-                    </viz:dependents>
-                </viz:VizFrame>
-            </HBox>
+                <viz:feeds>
+                    <viz.feeds:FeedItem
+                        id='valueAxisFeed'
+                        uid="valueAxis"
+                        type="Measure"
+                        values="data"
+                    />
+                    <viz.feeds:FeedItem
+                        id='categoryAxisFeed'
+                        uid="categoryAxis"
+                        type="Dimension"
+                        values="Employee Names"
+                    />
+                </viz:feeds>
+                <viz:dependents>
+                    <Popover id="isapop" />
+                </viz:dependents>
+            </viz:VizFrame>
 
             <!-- gantt chart -->
 

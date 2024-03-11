@@ -41,7 +41,7 @@
                 <Avatar
                     id="avatar"
                     displaySize="XS"
-                    press=".onOpenPopover"
+                    press=".onAvatarPress"
                 />
             </tnt:ToolHeader>
             <mvc:XMLView
@@ -52,6 +52,11 @@
                 id="table"
                 visible="false"
                 viewName="com.candentech.sowtracker.view.Table"
+            />
+            <mvc:XMLView
+                id="admin"
+                visible="false"
+                viewName="com.candentech.sowtracker.view.Admin"
             />
         </content>
     </Page>

@@ -3,12 +3,15 @@ sap.ui.define(
 		"sap/ui/core/mvc/Controller",
 		"sap/ui/model/json/JSONModel",
 		"sap/m/MessageToast",
+		"sap/m/MessageBox",
+		"com/candentech/sowtracker/enum/services",
 	],
-	(Controller, JSONModel, MessageToast) => {
+	(Controller, JSONModel, MessageToast, MessageBox, services) => {
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Table", {
 			onInit: function () {
+				// const oModel = JSONModel("project.json");
 				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
 					"SrNo",
@@ -136,7 +139,7 @@ sap.ui.define(
 						MessageToast.show("Something Went Wrong " + error);
 					});
 				this.pDialog ??= this.loadFragment({
-					name: "com.candentech.sowtracker.view.AddSowDialog",
+					name: "com.candenxtech.sowtracker.view.AddSowDialog",
 				});
 
 				this.pDialog.then((oDialog) => oDialog.close());
@@ -247,7 +250,7 @@ sap.ui.define(
 					this.byId("idEdtBtn").setVisible(true);
 				}, 50);
 			},
-			onDelete() {},
+
 			onFileUpload(oEvent) {
 				var oFile = oEvent.getParameter("files")[0]; // Get the first file if multiple is false
 
@@ -277,6 +280,50 @@ sap.ui.define(
 				} else {
 					sap.m.MessageToast.show("No file selected");
 				}
+			},
+
+			onDelete() {
+				debugger;
+				const oTable = this.byId("projectTable");
+				const oSelectedItem = oTable.getSelectedItem();
+				const sPath = oSelectedItem.getBindingContext("docs").getPath();
+				const { SrNo: iSrNo } = oSelectedItem
+					.getModel("docs")
+					.getProperty(sPath);
+				window.oTable = oTable;
+				// debugger;
+				// Check whether the data are selected or not
+				if (!oSelectedItem) {
+					MessageToast.show("Please select the at least one Record!");
+					return;
+				}
+
+				MessageBox.confirm("Are you sure to delete the record?", {
+					title: "Confirm",
+					onClose: function (sAction) {
+						if (sAction === "OK" && iSrNo) {
+							fetch(services.delete, {
+								method: "DELETE",
+								body: JSON.stringify({
+									SrNo: iSrNo,
+								}),
+							})
+								.then((res) => {
+									if (res.ok) {
+										sap.m.MessageToast.show("Record deleted successfully.");
+										oTable.removeItem(oSelectedItem);
+									} else {
+										sap.m.MessageToast.show("Failed to delete the record.");
+									}
+								})
+								.catch((error) => {
+									sap.m.MessageToast.show(
+										"An error occurred: " + error.message
+									);
+								});
+						}
+					},
+				});
 			},
 		});
 	}
