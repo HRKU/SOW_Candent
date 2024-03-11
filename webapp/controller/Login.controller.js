@@ -2,9 +2,10 @@ sap.ui.define(
 	[
 		"sap/ui/core/mvc/Controller",
 		"sap/m/MessageToast",
+		"com/candentech/sowtracker/enums/password",
 		"com/candentech/sowtracker/enum/services",
 	],
-	function (Controller, MessageToast, services) {
+	function (Controller, MessageToast, ePassword, services) {
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Login", {
@@ -14,23 +15,22 @@ sap.ui.define(
 			},
 
 			// Email Validation
-			validateEmail: function (username) {
-				var re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-				return re.test(String(username).toLowerCase());
-			},
+			// validateEmail: function (username) {
+			//     var re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+			//     return re.test(String(username).toLowerCase());
+			// },
 
-			// Show Password Function
+			// Show/Hide Password Function
 			onShowPasswordSelect: function () {
 				var oPasswordInput = this.byId("password");
-				var sIconSrc = oPasswordInput.getValueHelpIconSrc();
+				var temp = oPasswordInput.getValueHelpIconSrc().split("://");
 
-				if (sIconSrc === "sap-icon://show") {
-					oPasswordInput.setType("Text");
-					oPasswordInput.setValueHelpIconSrc("sap-icon://hide");
-				} else {
-					oPasswordInput.setType("Password");
-					oPasswordInput.setValueHelpIconSrc("sap-icon://show");
-				}
+				var state = temp.pop();
+
+				temp.push(ePassword.opposite_state[state]);
+
+				oPasswordInput.setType(ePassword.input_type[state]);
+				oPasswordInput.setValueHelpIconSrc(temp.join("://"));
 			},
 
 			// OnLogin press Function
@@ -39,25 +39,21 @@ sap.ui.define(
 				var oEmail = oView.byId("username");
 				var oPassword = oView.byId("password");
 
-				if (!this.validateEmail(oEmail.getValue())) {
-					// oEmail.setValueState("Error");
-					// oEmail.setValueStateText(
-					// 	"Please enter a valid email address"
-					// );
-					// return;
-				} else {
-					oEmail.setValueState("None");
-				}
+				// if (!this.validateEmail(oEmail.getValue())) {
+				//     oEmail.setValueState("Error");
+				//     oEmail.setValueStateText("Please enter a valid email address");
+				//     return;
+				// } else {
+				//     oEmail.setValueState("None");
+				// }
 
-				if (!oPassword.getValue()) {
-					oPassword.setValueState("Error");
-					oPassword.setValueStateText("Please enter your password");
-					return;
-				} else {
-					oPassword.setValueState("None");
-					// const oRouter = this.getOwnerComponent().getRouter();
-					// oRouter.navTo("RouteDashboard");
-				}
+				// if (!oPassword.getValue()) {
+				//     oPassword.setValueState("Error");
+				//     oPassword.setValueStateText("Please enter your password");
+				//     return;
+				// } else {
+				//     oPassword.setValueState("None");
+				// }
 
 				//Fetch Apis
 				// debugger;
@@ -65,7 +61,7 @@ sap.ui.define(
 				oModel.setProperty("/username", oEmail.getValue());
 				oModel.setProperty("/password", oPassword.getValue());
 
-				fetch("http://excavator:8000/sow_candent_api/login/", {
+				fetch(services.login, {
 					method: "POST",
 					body: JSON.stringify(oModel.getData()),
 				})
