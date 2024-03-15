@@ -83,23 +83,13 @@
 			"routes": [
 				{
 					"name": "RouteLogin",
-					"pattern": ":?query:",
+					"pattern": "",
 					"target": ["TargetLogin"]
 				},
 				{
 					"name": "RouteDashboard",
 					"pattern": "dashboard",
 					"target": ["TargetDashboard"]
-				},
-				{
-					"name": "RouteTable",
-					"pattern": "table",
-					"target": ["TargetTable"]
-				},
-				{
-					"name": "RouteAdmin",
-					"pattern": "admin",
-					"target": ["TargetAdmin"]
 				}
 			],
 			"targets": {
@@ -116,20 +106,6 @@
 					"clearControlAggregation": false,
 					"viewId": "Main",
 					"viewName": "Main"
-				},
-				"TargetTable": {
-					"viewType": "XML",
-					"transition": "slide",
-					"clearControlAggregation": false,
-					"viewId": "Table",
-					"viewName": "Table"
-				},
-				"TargetAdmin": {
-					"viewType": "XML",
-					"transition": "slide",
-					"clearControlAggregation": false,
-					"viewId": "Admin",
-					"viewName": "Admin"
 				}
 			}
 		},

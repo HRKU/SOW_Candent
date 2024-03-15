@@ -1,10 +1,17 @@
 sap.ui.define(
-	["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
-	function (Controller, JSONModel) {
+	[
+		"sap/ui/core/mvc/Controller",
+		"sap/ui/model/json/JSONModel",
+		"../model/formatter",
+	],
+	function (Controller, JSONModel, formatter) {
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Dashboard", {
-			onInit: function () {},
+			formatter: formatter,
+			onInit: function () {
+				console.log(window.document.cookie);
+			},
 			navAvatar() {
 				this.pPopover ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.AvatarMenu",
@@ -16,7 +23,7 @@ sap.ui.define(
 			formatter: {
 				calculateDuration(date) {
 					if (date) {
-						return new Date(date); // Create a date object
+						return new Date(date);
 					}
 					return {};
 				},

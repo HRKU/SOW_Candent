@@ -14,12 +14,6 @@ sap.ui.define(
 				this.getView().byId("password").setValueState("None");
 			},
 
-			// Email Validation
-			// validateEmail: function (username) {
-			//     var re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-			//     return re.test(String(username).toLowerCase());
-			// },
-
 			// Show/Hide Password Function
 			onShowPasswordSelect: function () {
 				var oPasswordInput = this.byId("password");
@@ -55,8 +49,6 @@ sap.ui.define(
 				//     oPassword.setValueState("None");
 				// }
 
-				//Fetch Apis
-				// debugger;
 				var oModel = new sap.ui.model.json.JSONModel();
 				oModel.setProperty("/username", oEmail.getValue());
 				oModel.setProperty("/password", oPassword.getValue());
@@ -66,9 +58,9 @@ sap.ui.define(
 					body: JSON.stringify(oModel.getData()),
 				})
 					.then((response) => {
-						// console.log(response.json());
 						if (response.status == 200) {
 							MessageToast.show("Login successful");
+
 							const oRouter = this.getOwnerComponent().getRouter();
 							oRouter.navTo("RouteDashboard");
 						} else {
@@ -80,9 +72,16 @@ sap.ui.define(
 					})
 					.then((data) => {
 						console.log(data);
+						if (data.token) {
+							window.document.cookie = `token=${data.token}; Max-Age=604800;`;
+							this.getRouter().navTo("RouteDashboard");
+						}
 					})
 					.catch((error) => {
 						MessageToast.show("Something Went Wrong " + error);
+					})
+					.finally(() => {
+						sap.ui.core.BusyIndicator.hide();
 					});
 			},
 		});

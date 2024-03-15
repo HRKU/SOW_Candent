@@ -22,7 +22,7 @@ sap.ui.define(
 			onAvatarPress() {
 				this.byId("dash").setVisible(false);
 				this.byId("table").setVisible(false);
-				this.byId("admin").setVisible(true)
+				this.byId("admin").setVisible(true);
 				this.byId("dashboard").setText("Admin");
 				this.byId("backButton").setVisible(true);
 			},

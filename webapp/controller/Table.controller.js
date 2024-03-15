@@ -11,7 +11,6 @@ sap.ui.define(
 
 		return Controller.extend("com.candentech.sowtracker.controller.Table", {
 			onInit: function () {
-				// const oModel = JSONModel("project.json");
 				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
 					"SrNo",
@@ -45,14 +44,11 @@ sap.ui.define(
 					cells: oCell,
 				});
 				oTable.setModel(oModel);
-				oTable.bindItems(
-					"docs>/agreements", // Adjust path as per your model structure
-					aColList
-				);
+				oTable.bindItems("docs>/agreements", aColList);
 			},
 			onOpenDialog() {
 				this.pDialog ??= this.loadFragment({
-					name: "com.candentech.sowtracker.view.AddSowDialog",
+					name: "com.candentech.sowtracker.view.fragments.AddSowDialog",
 				});
 
 				this.pDialog.then((oDialog) => oDialog.open());
@@ -87,7 +83,7 @@ sap.ui.define(
 					}
 				}
 				this.pDialog ??= this.loadFragment({
-					name: "com.candentech.sowtracker.view.AddSowDialog",
+					name: "com.candentech.sowtracker.view.fragments.AddSowDialog",
 				});
 
 				this.pDialog.then((oDialog) => oDialog.close());
@@ -145,7 +141,6 @@ sap.ui.define(
 					body: JSON.stringify(valuesToBeSent),
 				})
 					.then((response) => {
-						// console.log(response.json());
 						if (response.status == 201) {
 							MessageToast.show("Created Succesfully");
 						} else {
@@ -160,7 +155,7 @@ sap.ui.define(
 						MessageToast.show("Something Went Wrong " + error);
 					});
 				this.pDialog ??= this.loadFragment({
-					name: "com.candenxtech.sowtracker.view.AddSowDialog",
+					name: "com.candenxtech.sowtracker.view.fragments.AddSowDialog",
 				});
 				for (var key in oControls) {
 					if (oControls[key].getValue()) {
@@ -183,15 +178,23 @@ sap.ui.define(
 					"Status",
 				];
 
-				var iSrNo = this.byId("projectTable")
-					.getSelectedItem()
-					.getCells()[0]
-					.getText();
+				var oSelectedItem = this.byId("projectTable").getSelectedItem();
+				if (!oSelectedItem) {
+					MessageToast.show("Please select a row to edit");
+					return;
+				}
+
+				var iSrNo = oSelectedItem.getCells()[0].getText();
+				var oModel = oSelectedItem.getModel("docs");
+				var oData = oModel.getProperty(oSelectedItem.getBindingContextPath());
+
 				var oControls = {};
 				var valuesToBeSent = {};
+				debugger;
 				oIds.map((id) => {
 					oControls[id] = this.byId(id);
 				});
+
 				for (var key in oControls) {
 					if (!oControls[key].getValue()) {
 						oControls[key].setValueState("Error");
@@ -202,6 +205,7 @@ sap.ui.define(
 						valuesToBeSent[key] = oControls[key].getValue();
 					}
 				}
+
 				var startDate = new Date(valuesToBeSent["AgreementStartDate"]);
 				var endDate = new Date(valuesToBeSent["AgreementEndDate"]);
 				if (startDate >= endDate) {
@@ -214,19 +218,23 @@ sap.ui.define(
 					oControls["AgreementStartDate"].setValueState();
 				}
 
-				valuesToBeSent["SrNo"] = parseInt(iSrNo);
-				console.log(oControls, valuesToBeSent, "this is srNo", iSrNo);
+				valuesToBeSent["SrNo"] = oData.SrNo;
+				console.log(valuesToBeSent);
+
+				oModel.setProperty(
+					oSelectedItem.getBindingContextPath(),
+					valuesToBeSent
+				);
 
 				fetch("http://excavator:8000/sow_candent_api/agreements/update/", {
 					method: "PUT",
 					body: JSON.stringify(valuesToBeSent),
 				})
 					.then((response) => {
-						// console.log(response.json());
-						if (response.status == 200) {
-							MessageToast.show("Updated Succesfully");
+						if (response.ok) {
+							MessageToast.show("Updated Successfully");
 						} else {
-							MessageToast.show("Did not Update fields");
+							MessageToast.show("Failed to update fields");
 						}
 						return response.json();
 					})
@@ -234,7 +242,7 @@ sap.ui.define(
 						console.log(data);
 					})
 					.catch((error) => {
-						MessageToast.show("Something Went Wrong " + error);
+						MessageToast.show("Something went wrong: " + error);
 					});
 
 				for (var key in oControls) {
@@ -243,16 +251,15 @@ sap.ui.define(
 					}
 				}
 
-				this.pDialog ??= this.loadFragment({
-					name: "com.candentech.sowtracker.view.AddSowDialog",
-				});
-
-				this.pDialog.then((oDialog) => oDialog.close());
+				var oDialog = this.byId("idAddAndEditSowDialog");
+				if (oDialog) {
+					oDialog.close();
+				}
 			},
 
 			onOpenEdit() {
 				this.pDialog ??= this.loadFragment({
-					name: "com.candentech.sowtracker.view.AddSowDialog",
+					name: "com.candentech.sowtracker.view.fragments.AddSowDialog",
 				});
 
 				var oSelectedRow = this.byId("projectTable").getSelectedItem();
@@ -279,10 +286,9 @@ sap.ui.define(
 					var oDialog = this.byId("idAddAndEditSowDialog");
 
 					if (oSelectedRow) {
-						// Check if a row is selected
 						var items = oSelectedRow.getCells().map((i) => i.getText());
-						items.shift(); // Remove first item (presumably ID or index)
-						oIds.map((id, index) => this.byId(id).setValue(items[index])); // Populate input fields with data from the selected row
+						items.shift();
+						oIds.map((id, index) => this.byId(id).setValue(items[index]));
 					}
 
 					oDialog.setTitle("Edit Fields");
@@ -292,13 +298,11 @@ sap.ui.define(
 			},
 
 			onFileUpload(oEvent) {
-				var oFile = oEvent.getParameter("files")[0]; // Get the first file if multiple is false
+				var oFile = oEvent.getParameter("files")[0];
 
 				if (oFile) {
 					var formData = new FormData();
-					formData.append("excel_file", oFile); // Append the file with the key "excel_file"
-
-					// Assuming you have an API endpoint named "/upload" for file upload
+					formData.append("excel_file", oFile);
 					fetch("http://excavator:8000/sow_candent_api/upload_excel/", {
 						method: "POST",
 						body: formData,
@@ -308,15 +312,13 @@ sap.ui.define(
 								MessageToast.show("File Failed to upload");
 								throw new Error("Error uploading file");
 							}
-							return response.json(); // Assuming the server returns JSON response
+							return response.json();
 						})
 						.then((data) => {
-							// Handle successful upload
 							MessageToast.show("File Uploaded Successfully");
 							console.log("File uploaded successfully:", data);
 						})
 						.catch((error) => {
-							// Handle upload error
 							console.error("Error uploading file:", error);
 						});
 				} else {
@@ -328,17 +330,15 @@ sap.ui.define(
 				debugger;
 				const oTable = this.byId("projectTable");
 				const oSelectedItem = oTable.getSelectedItem();
+				if (!oSelectedItem) {
+					MessageToast.show("Please select the at least one Record!");
+					return;
+				}
 				const sPath = oSelectedItem.getBindingContext("docs").getPath();
 				const { SrNo: iSrNo } = oSelectedItem
 					.getModel("docs")
 					.getProperty(sPath);
 				window.oTable = oTable;
-				// debugger;
-				// Check whether the data are selected or not
-				if (!oSelectedItem) {
-					MessageToast.show("Please select the at least one Record!");
-					return;
-				}
 
 				MessageBox.confirm("Are you sure to delete the record?", {
 					title: "Confirm",

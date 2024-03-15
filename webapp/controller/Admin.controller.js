@@ -9,12 +9,7 @@ sap.ui.define([
 
 	return Controller.extend("com.candentech.sowtracker.controller.Admin", {
 
-		// onChange: function(oEvent) {
-		// 	var selectedItem = oEvent.getParameter("selectedItem");
-		// 	var selectedKey = selectedItem.getKey();
-		// 	// Do something with the selected key
-		// 	console.log("Selected Key: ", selectedKey);
-		//   }
+
 		handleOpen: function () {
 			var oDialog = this.getView().byId("idDialog");
 			oDialog.open();

@@ -95,20 +95,20 @@
                     <simple:axisTimeStrategy>
                         <axistime:StepwiseZoomStrategy
                             id="sss"
-                            zoomLevel="1"
+                            zoomLevel="5"
                         >
                             <axistime:totalHorizon>
                                 <config:TimeHorizon
                                     id="th"
-                                    endTime="20301029000000"
+                                    endTime="20261029000000"
                                     startTime="20221129000000"
                                 />
                             </axistime:totalHorizon>
                             <axistime:visibleHorizon>
                                 <config:TimeHorizon
                                     id="thv"
-                                    startTime="20230101000000"
-                                    endTime="20241029000000"
+                                    startTime="20220101000000"
+                                    endTime="20251029000000"
                                 />
                             </axistime:visibleHorizon>
                         </axistime:StepwiseZoomStrategy>

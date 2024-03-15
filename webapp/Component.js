@@ -23,6 +23,7 @@ sap.ui.define(
 			 * @override
 			 */
 			init: function () {
+				// sap.ui.core.BusyIndicator.show();
 				// call the base component's init function
 				UIComponent.prototype.init.apply(this, arguments);
 
@@ -31,6 +32,10 @@ sap.ui.define(
 
 				// set the device model
 				this.setModel(models.createDeviceModel(), "device");
+				// this.getRouter().attachBeforeRouteMatched(
+				// 	this.onBeforeRouteMatched,
+				// 	this
+				// );
 
 				fetch("http://excavator:8000/sow_candent_api/agreements/list/")
 					.then((res) => res.json())
@@ -61,6 +66,27 @@ sap.ui.define(
 						Object.keys(oModel.filtered).map(
 							(i) => (oModel.length[i] = oModel.filtered[i].length)
 						);
+						oModel.start_date = {};
+						oModel.end_date = {};
+						oModel.start_date = new Date(
+							Math.min(
+								...oModel.agreements
+									.map((agreement) =>
+										new Date(agreement.AgreementStartDate).getTime()
+									)
+									.filter((date) => !isNaN(date))
+							)
+						);
+						oModel.end_date = new Date(
+							Math.max(
+								...oModel.agreements
+									.map((agreement) =>
+										new Date(agreement.AgreementEndDate).getTime()
+									)
+									.filter((date) => !isNaN(date))
+							)
+						);
+
 						this.setModel(new JSONModel(oModel), "docs");
 
 						console.log(this.getModel("docs"));
@@ -69,9 +95,25 @@ sap.ui.define(
 							"the fetch is working just fine and here is the data from api, ",
 							data
 						);
+						sap.ui.core.BusyIndicator.hide();
 					})
-					.catch(console.error);
+					.catch((error) => {
+						console.error;
+						sap.ui.core.BusyIndicator.hide();
+					});
 			},
+			// onBeforeRouteMatched: function (oEvent) {
+			// 	// Access isAuthenticated from a model or service (replace with your logic)
+			// 	debugger;
+			// 	const isAuthenticated = false; // Replace with actual logic
+			// 	const allowedRoutes = ["RouteLogin"];
+			// 	const oArgs = oEvent.getParameters().name; // Assuming the route name is stored in "name" parameter
+			// 	console.log("viewName - ", oArgs);
+			// 	if (!isAuthenticated && !allowedRoutes.includes(oArgs)) {
+			// 		oEvent.preventDefault();
+			// 		this.getRouter().navTo(allowedRoutes[0]); // Navigate to "RouteLogin" if not authenticated
+			// 	}
+			// },
 		});
 	}
 );
