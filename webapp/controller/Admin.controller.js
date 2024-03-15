@@ -1,19 +1,14 @@
-sap.ui.define([
-			"sap/ui/core/mvc/Controller",
-			'sap/ui/model/json/JSONModel',
-			"com/candentech/sowtracker/enum/password",
-			"sap/f/Card",
-			"sap/m/MessageToast",
-			"sap/m/Text"
-		], function (
-			Controller,
-			MessageToast,
-			JSONModel,
-			ePassword,
-			Card,
-			Text
-		) {
-			"use strict";
+sap.ui.define(
+	[
+		"sap/ui/core/mvc/Controller",
+		"sap/ui/model/json/JSONModel",
+		"com/candentech/sowtracker/enum/password",
+		"sap/f/Card",
+		"sap/m/MessageToast",
+		"sap/m/Text",
+	],
+	function (Controller, MessageToast, JSONModel, ePassword, Card, Text) {
+		"use strict";
 
 			return Controller.extend("com.candentech.sowtracker.controller.Admin", {
 
@@ -31,32 +26,31 @@ sap.ui.define([
 						this.qDialog.then((oDialog) => oDialog.open());
 					},
 
-					handleClose: function () {
-						var oDialog = this.getView().byId("idDialog");
-						oDialog.close();
-					},
+			handleClose: function () {
+				var oDialog = this.getView().byId("idDialog");
+				oDialog.close();
+			},
 
-					/**
-					 * @override
-					 */
-					onInit: function () {
+			/**
+			 * @override
+			 */
+			onInit: function () {},
+			onShowPassword: function () {
+				var oPasswordInput = this.byId("idPassword");
+				var temp = oPasswordInput.getValueHelpIconSrc().split("://");
 
-					},
-					onShowPassword: function () {
-						var oPasswordInput = this.byId("idPassword");
-						var temp = oPasswordInput.getValueHelpIconSrc().split("://");
+				var state = temp.pop();
 
-						var state = temp.pop();
+				temp.push(ePassword.opposite_state[state]);
 
-						temp.push(ePassword.opposite_state[state]);
+				oPasswordInput.setType(ePassword.input_type[state]);
+				oPasswordInput.setValueHelpIconSrc(temp.join("://"));
+			},
 
-						oPasswordInput.setType(ePassword.input_type[state]);
-						oPasswordInput.setValueHelpIconSrc(temp.join("://"));
-					},
-
-					onDeleteButtonPress: function (oEvent) {
-						debugger;
-						// oEvent.oSource.oPropagatedProperties.oBindingContexts.usersData.sPath
-					}
-					});
-			});
+			onDeleteButtonPress: function (oEvent) {
+				debugger;
+				// oEvent.oSource.oPropagatedProperties.oBindingContexts.usersData.sPath
+			},
+		});
+	}
+);

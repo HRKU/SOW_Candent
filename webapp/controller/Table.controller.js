@@ -44,21 +44,25 @@ sap.ui.define(
 					cells: oCell,
 				});
 				oTable.setModel(oModel);
-				oTable.bindItems("docs>/agreements", aColList);
+				oTable.bindItems(
+					"docs>/agreements", // Adjust path as per your model structure
+					aColList
+				);
 			},
-
-			
 
 			onFilter: function (oEvent) {
 				const oTable = this.byId("projectTable");
 				const sQuery = oEvent.getParameter("newValue");
 				const oBinding = oTable.getBinding("items");
-			  
-				oBinding.filter([
-					new sap.ui.model.Filter("CompanyName", sap.ui.model.FilterOperator.Contains, sQuery),
 
+				oBinding.filter([
+					new sap.ui.model.Filter(
+						"CompanyName",
+						sap.ui.model.FilterOperator.Contains,
+						sQuery
+					),
 				]);
-			  },
+			},
 			onOpenDialog() {
 				this.pDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.fragments.AddSowDialog",
@@ -150,10 +154,10 @@ sap.ui.define(
 				console.log(valuesToBeSent);
 
 				fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
-				// fetch("http://yw:8000/sow_candent_api/agreements/create/", {
-						method: "POST",
-						body: JSON.stringify(valuesToBeSent),
-					})
+					// fetch("http://yw:8000/sow_candent_api/agreements/create/", {
+					method: "POST",
+					body: JSON.stringify(valuesToBeSent),
+				})
 					.then((response) => {
 						if (response.status == 201) {
 							MessageToast.show("Created Succesfully");
@@ -232,19 +236,13 @@ sap.ui.define(
 					oControls["AgreementStartDate"].setValueState();
 				}
 
-				valuesToBeSent["SrNo"] = oData.SrNo;
-				console.log(valuesToBeSent);
+				valuesToBeSent["SrNo"] = parseInt(iSrNo);
+				console.log(oControls, valuesToBeSent, "this is srNo", iSrNo);
 
-				oModel.setProperty(
-					oSelectedItem.getBindingContextPath(),
-					valuesToBeSent
-				);
-
-				// fetch("http://yw:8000/sow_candent_api/agreements/update/", {
 				fetch("http://excavator:8000/sow_candent_api/agreements/update/", {
-						method: "PUT",
-						body: JSON.stringify(valuesToBeSent),
-					})
+					method: "PUT",
+					body: JSON.stringify(valuesToBeSent),
+				})
 					.then((response) => {
 						if (response.ok) {
 							MessageToast.show("Updated Successfully");
@@ -322,9 +320,9 @@ sap.ui.define(
 					// Assuming you have an API endpoint named "/upload" for file upload
 					// fetch("http://yw:8000/sow_candent_api/upload_excel/", {
 					fetch("http://excavator:8000/sow_candent_api/upload_excel/", {
-							method: "POST",
-							body: formData,
-						})
+						method: "POST",
+						body: formData,
+					})
 						.then((response) => {
 							if (!response.ok) {
 								MessageToast.show("File Failed to upload");
@@ -356,9 +354,7 @@ sap.ui.define(
 					return;
 				}
 				const sPath = oSelectedItem.getBindingContext("docs").getPath();
-				const {
-					SrNo: iSrNo
-				} = oSelectedItem
+				const { SrNo: iSrNo } = oSelectedItem
 					.getModel("docs")
 					.getProperty(sPath);
 				window.oTable = oTable;
@@ -369,11 +365,11 @@ sap.ui.define(
 					onClose: function (sAction) {
 						if (sAction === "OK" && iSrNo) {
 							fetch(services.delete, {
-									method: "DELETE",
-									body: JSON.stringify({
-										SrNo: iSrNo,
-									}),
-								})
+								method: "DELETE",
+								body: JSON.stringify({
+									SrNo: iSrNo,
+								}),
+							})
 								.then((res) => {
 									if (res.ok) {
 										sap.m.MessageToast.show("Record deleted successfully.");

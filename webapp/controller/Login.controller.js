@@ -55,15 +55,17 @@ sap.ui.define(
 				oModel.setProperty("/username", oEmail.getValue());
 				oModel.setProperty("/password", oPassword.getValue());
 
-				fetch(services.login, {
-						method: "POST",
-						body: JSON.stringify(oModel.getData()),
-					})
+				fetch(services.login1, {
+					method: "POST",
+					body: JSON.stringify(oModel.getData()),
+				})
 					.then((response) => {
 						if (response.status == 200) {
 							return response.json();
 						} else {
-							throw new Error("Login failed. Please check your email and password.")
+							throw new Error(
+								"Login failed. Please check your email and password."
+							);
 						}
 					})
 					.then((data) => {
