@@ -16,12 +16,6 @@ sap.ui.define(
 				this.getView().byId("password").setValueState("None");
 			},
 
-			// Email Validation
-			// validateEmail: function (username) {
-			//     var re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-			//     return re.test(String(username).toLowerCase());
-			// },
-
 			// Show/Hide Password Function
 			onShowPasswordSelect: function () {
 				var oPasswordInput = this.byId("password");
@@ -57,8 +51,6 @@ sap.ui.define(
 				//     oPassword.setValueState("None");
 				// }
 
-				//Fetch Apis
-				// debugger;
 				var oModel = new sap.ui.model.json.JSONModel();
 				oModel.setProperty("/username", oEmail.getValue());
 				oModel.setProperty("/password", oPassword.getValue());
