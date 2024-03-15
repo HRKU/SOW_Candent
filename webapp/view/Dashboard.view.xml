@@ -48,6 +48,8 @@
                                 name="Employee Names"
                                 value="{docs>ProjectName}"
                             />
+                            <!-- i just want to figur out how it work -->
+                            <!-- value="{producst>ProjectName}" -->
                         </viz.data:dimensions>
                         <viz.data:measures>
                             <viz.data:MeasureDefinition

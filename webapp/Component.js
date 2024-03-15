@@ -37,7 +37,8 @@ sap.ui.define(
 				// 	this
 				// );
 
-				fetch("http://excavator:8000/sow_candent_api/agreements/list/")
+				// fetch("http://yw:8000/sow_candent_api/agreements/list")
+				fetch("http://excavator:8000/sow_candent_api/agreements/list")
 					.then((res) => res.json())
 					.then((data) => {
 						console.log(data);
@@ -96,6 +97,20 @@ sap.ui.define(
 							data
 						);
 						sap.ui.core.BusyIndicator.hide();
+					}).catch(console.error);
+
+
+					// fetch("http://yw:8000/sow_candent_api/create_user/")
+					fetch("http://excavator:8000/sow_candent_api/login/")
+					.then((res) => res.json())
+					.then((data) => {
+						console.log(data)
+						// var usersData= [];
+						// var oModel = {};
+						// this.setModel(new JSONModel(oModel), "users");
+						// console.log(this.getModel("users"));
+						this.setModel(new JSONModel(data), "users");
+						console.log("Login fetch is working poperly", data);
 					})
 					.catch((error) => {
 						console.error;
