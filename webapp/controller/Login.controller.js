@@ -9,7 +9,9 @@ sap.ui.define(
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Login", {
+			_oRouter: null,
 			onInit: function () {
+				this._oRouter = this.getOwnerComponent().getRouter();
 				this.getView().byId("username").setValueState("None");
 				this.getView().byId("password").setValueState("None");
 			},
@@ -62,27 +64,27 @@ sap.ui.define(
 				oModel.setProperty("/password", oPassword.getValue());
 
 				fetch(services.login, {
-					method: "POST",
-					body: JSON.stringify(oModel.getData()),
-				})
+						method: "POST",
+						body: JSON.stringify(oModel.getData()),
+					})
 					.then((response) => {
-						// console.log(response.json());
 						if (response.status == 200) {
-							MessageToast.show("Login successful");
-							const oRouter = this.getOwnerComponent().getRouter();
-							oRouter.navTo("RouteDashboard");
+							return response.json();
 						} else {
-							MessageToast.show(
-								"Login failed. Please check your email and password."
-							);
+							throw new Error("Login failed. Please check your email and password.")
 						}
-						return response.json();
 					})
 					.then((data) => {
 						console.log(data);
+						MessageToast.show("Login successful");
+						// debugger;
+						// document.cookie = `token=${data.token}; maxAge=${1000 * 60 * 60 * 24};`;
+						this._oRouter.navTo("RouteDashboard");
 					})
 					.catch((error) => {
+						// debugger
 						MessageToast.show("Something Went Wrong " + error);
+						document.cookie = `token=; maxAge=0;`;
 					});
 			},
 		});

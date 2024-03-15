@@ -50,6 +50,19 @@ sap.ui.define(
 					aColList
 				);
 			},
+
+			
+
+			onFilter: function (oEvent) {
+				const oTable = this.byId("projectTable");
+				const sQuery = oEvent.getParameter("newValue");
+				const oBinding = oTable.getBinding("items");
+			  
+				oBinding.filter([
+					new sap.ui.model.Filter("CompanyName", sap.ui.model.FilterOperator.Contains, sQuery),
+
+				]);
+			  },
 			onOpenDialog() {
 				this.pDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.AddSowDialog",
@@ -93,7 +106,7 @@ sap.ui.define(
 				this.pDialog.then((oDialog) => oDialog.close());
 			},
 			onSubmit() {
-				debugger;
+				// debugger;
 				var oIds = [
 					"CompanyName",
 					"ProjectName",
@@ -141,9 +154,10 @@ sap.ui.define(
 				console.log(valuesToBeSent);
 
 				fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
-					method: "POST",
-					body: JSON.stringify(valuesToBeSent),
-				})
+				// fetch("http://yw:8000/sow_candent_api/agreements/create/", {
+						method: "POST",
+						body: JSON.stringify(valuesToBeSent),
+					})
 					.then((response) => {
 						// console.log(response.json());
 						if (response.status == 201) {
@@ -217,10 +231,11 @@ sap.ui.define(
 				valuesToBeSent["SrNo"] = parseInt(iSrNo);
 				console.log(oControls, valuesToBeSent, "this is srNo", iSrNo);
 
+				// fetch("http://yw:8000/sow_candent_api/agreements/update/", {
 				fetch("http://excavator:8000/sow_candent_api/agreements/update/", {
-					method: "PUT",
-					body: JSON.stringify(valuesToBeSent),
-				})
+						method: "PUT",
+						body: JSON.stringify(valuesToBeSent),
+					})
 					.then((response) => {
 						// console.log(response.json());
 						if (response.status == 200) {
@@ -299,10 +314,11 @@ sap.ui.define(
 					formData.append("excel_file", oFile); // Append the file with the key "excel_file"
 
 					// Assuming you have an API endpoint named "/upload" for file upload
+					// fetch("http://yw:8000/sow_candent_api/upload_excel/", {
 					fetch("http://excavator:8000/sow_candent_api/upload_excel/", {
-						method: "POST",
-						body: formData,
-					})
+							method: "POST",
+							body: formData,
+						})
 						.then((response) => {
 							if (!response.ok) {
 								MessageToast.show("File Failed to upload");
@@ -325,31 +341,35 @@ sap.ui.define(
 			},
 
 			onDelete() {
-				debugger;
+				// debugger;
 				const oTable = this.byId("projectTable");
 				const oSelectedItem = oTable.getSelectedItem();
+
+				// Check whether the data are selected or not
+
+				if (!oSelectedItem) {
+					MessageToast.show("Please select the Record to delete");
+					return;
+				}
 				const sPath = oSelectedItem.getBindingContext("docs").getPath();
-				const { SrNo: iSrNo } = oSelectedItem
+				const {
+					SrNo: iSrNo
+				} = oSelectedItem
 					.getModel("docs")
 					.getProperty(sPath);
 				window.oTable = oTable;
 				// debugger;
-				// Check whether the data are selected or not
-				if (!oSelectedItem) {
-					MessageToast.show("Please select the at least one Record!");
-					return;
-				}
 
 				MessageBox.confirm("Are you sure to delete the record?", {
 					title: "Confirm",
 					onClose: function (sAction) {
 						if (sAction === "OK" && iSrNo) {
 							fetch(services.delete, {
-								method: "DELETE",
-								body: JSON.stringify({
-									SrNo: iSrNo,
-								}),
-							})
+									method: "DELETE",
+									body: JSON.stringify({
+										SrNo: iSrNo,
+									}),
+								})
 								.then((res) => {
 									if (res.ok) {
 										sap.m.MessageToast.show("Record deleted successfully.");
