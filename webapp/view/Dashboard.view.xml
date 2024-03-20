@@ -27,15 +27,66 @@
             justifyContent="Start"
             height="100%"
         >
-            <HBox
+            <FlexBox
                 id="vizframes"
                 height="auto"
                 class="sapUiSmallMarginBottom"
-                justifyContent="Start"
+                justifyContent="SpaceBetween"
             >
+                <viz:VizFrame
+                    id="barchartContainer"
+                    vizType="column"
+                    width="450px"
+                    height="300px"
+                    vizProperties="{title:{ text:'Close to Expiry'}, dataLabel:{ visible:true, showTotal:true }, legend:{ visible:true }, plotArea:{ background:{ visible:true, alpha:0 }}}"
+                    uiConfig="{applicationSet:'fiori'}"
+                >
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset
+                            id="bardata"
+                            data="{docs>/filtered/EXP}"
+                        >
+                            <viz.data:dimensions>
+                                <viz.data:DimensionDefinition
+                                    id="bardimension"
+                                    name="Employee Names"
+                                    value="{docs>ProjectName}"
+                                />
+                                <!-- i just want to figur out how it work -->
+                                <!-- value="{producst>ProjectName}" -->
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition
+                                    id="barmeasure"
+                                    name="data"
+                                    value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                />
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+
+                    <viz:feeds>
+                        <viz.feeds:FeedItem
+                            id='valueAxisFeed'
+                            uid="valueAxis"
+                            type="Measure"
+                            values="data"
+                        />
+                        <viz.feeds:FeedItem
+                            id='categoryAxisFeed'
+                            uid="categoryAxis"
+                            type="Dimension"
+                            values="Employee Names"
+                        />
+                    </viz:feeds>
+                    <viz:dependents>
+                        <Popover id="isapop" />
+                    </viz:dependents>
+                </viz:VizFrame>
                 <viz:VizFrame
                     id="chartContainer"
                     vizType="donut"
+                    width="450px"
                     height="300px"
                     vizProperties="{title:{ text:'Close to Expiry'},dataLabel:{visible:true,showTotal:true},legend:{visible:true}}"
                     uiConfig="{applicationSet:'fiori'}"
@@ -67,23 +118,20 @@
 
                     <viz:feeds>
                         <viz.feeds:FeedItem
-                            id='valueAxisFeed'
+                            id='size'
                             uid="size"
                             type="Measure"
                             values="Expires in"
                         />
                         <viz.feeds:FeedItem
-                            id='categoryAxisFeed'
+                            id='color'
                             uid="color"
                             type="Dimension"
                             values="Project Name"
                         />
                     </viz:feeds>
-                    <viz:dependents>
-                        <Popover id="isapop" />
-                    </viz:dependents>
                 </viz:VizFrame>
-            </HBox>
+            </FlexBox>
 
             <!-- gantt chart -->
 

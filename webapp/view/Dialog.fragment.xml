@@ -21,7 +21,6 @@
                 <Input
                     id="username"
                     placeholder="Enter username"
-                    liveChange="onInputChange"
                 />
             </VBox>
             <Label
@@ -33,11 +32,13 @@
                 id="password"
                 type="Password"
                 placeholder="Enter Password"
-                liveChange="onInputChange"
             />
             <VBox id="_IDGenVBox3" />
             <VBox id="_IDGenVBox4">
-                <Label text="Role" />
+                <Label
+                    id="_IDGenLabel1"
+                    text="Role"
+                />
                 <ComboBox
                     id="role"
                     placeholder="Select Role"
@@ -66,7 +67,7 @@
             justifyContent="SpaceBetween"
         >
             <Button
-                id="_IDGenButton1"
+                id="submit"
                 press=".onSubmit"
                 visible="true"
                 text="Submit"
@@ -74,7 +75,7 @@
                 class="sapUiTinyMarginTop sapUiTinyMarginBottom"
             />
             <Button
-                id="IDGenButton3"
+                id="save"
                 press=".onSave"
                 visible="false"
                 text="save"
@@ -82,7 +83,7 @@
                 class="sapUiTinyMarginTop sapUiTinyMarginBottom"
             />
             <Button
-                id="IDGenButton2"
+                id="close"
                 press=".handleClose"
                 text="close"
                 type="Emphasized"

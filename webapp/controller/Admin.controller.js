@@ -59,9 +59,22 @@ sap.ui.define(
 			},
 			handleClose: function () {
 				var oDialog = this.getView().byId("idDialog");
-				oDialog.close();
+
+				setTimeout(() => {
+					// debugger
+					var oDialog = this.byId("idDialog");
+					oDialog.setTitle("Add new Roles");
+					var oUsername = this.byId("username");
+					var oRole = this.byId("role");
+					this.byId("submit").setVisible(true);
+					this.byId("save").setVisible(false);
+
+					oUsername.setValue();
+					oUsername.setEditable(true);
+					oRole.setValue();
+					oDialog.close();
+				}, 50);
 			},
-			handleSubmit() {},
 
 			onSubmit: function () {
 				debugger;
@@ -119,7 +132,7 @@ sap.ui.define(
 
 				this.qDialog.then((oDialog) => oDialog.close());
 			},
-			onEditButtonPress: function (oEvent) {
+			onEdit(oEvent) {
 				const oBindingContext = oEvent.getSource().getBindingContext("users");
 				// const oBindingContext = oEvent.getSource().getBindingContext("users");
 				const sPath = oBindingContext.getPath();
@@ -128,8 +141,11 @@ sap.ui.define(
 				console.log(oModel);
 				const selectedUser = oModel.getProperty(sPath);
 
-				console.log(selectedUser);
-				// this.getView().setModel(new JSONModel(selectedUser), "user")
+				this.getView().setModel(
+					new sap.ui.model.json.JSONModel(selectedUser),
+					"user"
+				);
+
 				this.qDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.Dialog",
 				});
@@ -141,80 +157,59 @@ sap.ui.define(
 					oDialog.setTitle("Edit User");
 					var oUsername = this.byId("username");
 					var oRole = this.byId("role");
-					this.byId("_IDGenButton1").setVisible(false);
-					this.byId("_IDGenButton3").setVisible(true);
+					this.byId("submit").setVisible(false);
+					this.byId("save").setVisible(true);
 
 					console.log(oUsername);
 					oUsername.setValue(selectedUser.username);
 					oUsername.setEditable(false);
 					oRole.setValue(selectedUser.role);
-				}, 10);
+				}, 50);
 
-				// this.aDialog ??= this.loadFragment({
-				// 	name: "com.candentech.sowtracker.view.EditRole",
-				// 	id: "EditRoleDialog",
-				// 	addToDependents: true
-				// })
-				// this.aDialog.then((oDialog) => {
-
-				// 	oDialog.bindElement("sPath", oBindingContext.getPath())
-				// 	oDialog.open()
-				// 	var userNameInput = this.getView().byId("username")
-				// 	debugger;
-				// });
+				console.log(selectedUser);
 			},
-			onSubmitButtonPress: function (oEvent) {
+			onSave: function (oEvent) {
 				debugger;
-				// this.aDialog ??= this.loadFragment({
-				// 	name: "com.candentech.sowtracker.view.EditRole",
-				// 	id: "EditRoleDialog",
-				// });
-				const oBindingContext = oEvent.getSource().getBindingContext("users");
-				const sPath = oBindingContext.getPath();
 
-				const oModel = this.getView().getModel("user");
-				const selectedUser = oModel.getProperty(sPath);
+				var oRole, oPassword;
+				oPassword = this.byId("password").getValue();
+				oRole = this.byId("role").getValue();
 
-				this.aDialog.then((oDialog) => {
-					oDialog.attachEventOnce("submit", (oEvent) => {
-						// const newUsername = oEvent.getParameter("newUsername");
-						const newPassword = oEvent.getParameter("newPassword");
-						const newRole = oEvent.getParameter("newRole");
+				const oData = this.getView().getModel("user").getData();
+				console.log(oData);
+				var valuesTobeSent = {};
+				valuesTobeSent["role"] = oRole;
+				valuesTobeSent["id"] = oData.id;
+				if (oPassword) {
+					valuesTobeSent["password"] = oPassword;
+				}
+				console.log(valuesTobeSent);
 
-						// oModel.setProperty(sPath + "/username", newUsername);
-						oModel.setProperty(sPath + "/password", newPassword);
-						oModel.setProperty(sPath + "/role", newRole);
-
-						console.log(newRole);
-
-						fetch("http://yw:8001/sow_candent_api/userapi/", {
-							method: "PATCH",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify({
-								id: selectedUser.id,
-								password: newPassword,
-								role: newRole,
-							}),
-						})
-							.then((response) => {
-								if (!response.ok) {
-									throw new Error("HTTP error " + response.status);
-								}
-								return response.json();
-							})
-							.then((data) => {
-								console.log("User updated successfully", data);
-								oDialog.close();
-							})
-							.catch((error) => {
-								console.error("Error updating user:", error);
-							});
+				fetch("http://yw:8001/sow_candent_api/userapi/", {
+					method: "PATCH",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(valuesTobeSent),
+				})
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error("HTTP error " + response.status);
+						}
+						return response.json();
+					})
+					.then((data) => {
+						console.log("User updated successfully", data);
+					})
+					.catch((error) => {
+						console.error("Error updating user:", error);
+						return;
 					});
-				});
 
-				this.aDialog.then((oDialog) => oDialog.close());
+				this.qDialog ??= this.loadFragment({
+					name: "com.candentech.sowtracker.view.Dialog",
+				});
+				this.qDialog.then((oDialog) => oDialog.close());
 			},
 			// onCloseButtonPress: function () {
 			// 	this.aDialog ??= this.loadFragment({

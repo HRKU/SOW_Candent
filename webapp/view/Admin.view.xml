@@ -63,13 +63,13 @@
                             id="_IDGenButton3"
                             class="sapUiTinyMargin"
                             icon="{path:'users>username',formatter:'.formatter.bindDelete'}"
-                            press="onDeleteButtonPress"
+                            press=".onDeleteButtonPress"
                         />
                         <Button
                             id="_IDGenButton4"
                             class="sapUiTinyMargin"
                             icon="{path:'users>username',formatter:'.formatter.bindEdit'}"
-                            press="onEditButtonPress"
+                            press=".onEdit"
                         />
                     </HBox>
                 </f:GridListItem>
