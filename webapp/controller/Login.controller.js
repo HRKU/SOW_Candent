@@ -55,10 +55,10 @@ sap.ui.define(
 				oModel.setProperty("/username", oEmail.getValue());
 				oModel.setProperty("/password", oPassword.getValue());
 
-				fetch(services.login1, {
-					method: "POST",
-					body: JSON.stringify(oModel.getData()),
-				})
+				fetch(services.login, {
+						method: "POST",
+						body: JSON.stringify(oModel.getData()),
+					})
 					.then((response) => {
 						if (response.status == 200) {
 							return response.json();
@@ -78,7 +78,8 @@ sap.ui.define(
 					.catch((error) => {
 						// debugger
 						MessageToast.show("Something Went Wrong " + error);
-						document.cookie = `token=; maxAge=0;`;
+						// document.cookie = `token=; maxAge=0;`;
+						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
 					});
 			},
 		});

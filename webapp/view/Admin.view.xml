@@ -4,7 +4,6 @@
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:card="sap.f.cards"
     xmlns:core="sap.ui.core"
     displayBlock="true"
     height="100%"
@@ -14,14 +13,13 @@
         id="_IDGenPanel1"
         height="100%"
         width="100%">
-
-        
+               
             <f:GridList
 			id="gridList"
 			headerText="Users Details"
-			items="{users>/}">
+			items="{users>/users}">
 			<f:customLayout>
-				<grid:GridBoxLayout boxMinWidth="10rem"/>
+				<grid:GridBoxLayout boxMinWidth="15rem"/>
 			</f:customLayout>
 
 			<f:GridListItem>

@@ -153,8 +153,8 @@ sap.ui.define(
 
 				console.log(valuesToBeSent);
 
-				fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
-					// fetch("http://yw:8000/sow_candent_api/agreements/create/", {
+				// fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
+					fetch("http://yw:8001/sow_candent_api/agreements/create/", {
 					method: "POST",
 					body: JSON.stringify(valuesToBeSent),
 				})
@@ -208,7 +208,7 @@ sap.ui.define(
 
 				var oControls = {};
 				var valuesToBeSent = {};
-				debugger;
+
 				oIds.map((id) => {
 					oControls[id] = this.byId(id);
 				});
@@ -239,7 +239,8 @@ sap.ui.define(
 				valuesToBeSent["SrNo"] = parseInt(iSrNo);
 				console.log(oControls, valuesToBeSent, "this is srNo", iSrNo);
 
-				fetch("http://excavator:8000/sow_candent_api/agreements/update/", {
+				fetch("http://yw:8001/sow_candent_api/agreements/update/", {
+				// fetch("http://excavator:8000/sow_candent_api/agreements/update/", {
 					method: "PUT",
 					body: JSON.stringify(valuesToBeSent),
 				})
@@ -318,8 +319,8 @@ sap.ui.define(
 					formData.append("excel_file", oFile); // Append the file with the key "excel_file"
 
 					// Assuming you have an API endpoint named "/upload" for file upload
-					// fetch("http://yw:8000/sow_candent_api/upload_excel/", {
-					fetch("http://excavator:8000/sow_candent_api/upload_excel/", {
+					fetch("http://yw:8001/sow_candent_api/upload_excel/", {
+					// fetch("http://excavator:8000/sow_candent_api/upload_excel/", {
 						method: "POST",
 						body: formData,
 					})

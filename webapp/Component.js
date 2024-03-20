@@ -37,8 +37,8 @@ sap.ui.define(
 				// 	this
 				// );
 
-				// fetch("http://yw:8000/sow_candent_api/agreements/list")
-				fetch("http://excavator:8000/sow_candent_api/agreements/list")
+				fetch("http://yw:8001/sow_candent_api/agreements/list/")
+				// fetch("http://excavator:8000/sow_candent_api/agreements/list")
 					.then((res) => res.json())
 					.then((data) => {
 						console.log(data);
@@ -99,8 +99,8 @@ sap.ui.define(
 					}).catch(console.error);
 
 
-					// fetch("http://yw:8000/sow_candent_api/create_user/")
-					fetch("http://excavator:8000/sow_candent_api/login/")
+					fetch("http://yw:8001/sow_candent_api/userapi/")
+					// fetch("http://excavator:8000/sow_candent_api/login/")
 					.then((res) => res.json())
 					.then((data) => {
 						console.log(data)
