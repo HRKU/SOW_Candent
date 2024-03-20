@@ -210,7 +210,7 @@ sap.ui.define(
 
 				var oControls = {};
 				var valuesToBeSent = {};
-				debugger;
+
 				oIds.map((id) => {
 					oControls[id] = this.byId(id);
 				});
@@ -350,8 +350,11 @@ sap.ui.define(
 				// debugger;
 				const oTable = this.byId("projectTable");
 				const oSelectedItem = oTable.getSelectedItem();
+
+				// Check whether the data are selected or not
+
 				if (!oSelectedItem) {
-					MessageToast.show("Please select the at least one Record!");
+					MessageToast.show("Please select the Record to delete");
 					return;
 				}
 				const sPath = oSelectedItem.getBindingContext("docs").getPath();
@@ -360,6 +363,7 @@ sap.ui.define(
 					.getProperty(sPath);
 				console.log(sPath);
 				window.oTable = oTable;
+				// debugger;
 
 				MessageBox.confirm("Are you sure to delete the record?", {
 					title: "Confirm",

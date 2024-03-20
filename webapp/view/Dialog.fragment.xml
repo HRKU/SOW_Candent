@@ -5,7 +5,7 @@
     <Dialog
         id="idDialog"
         resizable="false"
-        draggable="false"
+        draggable="true"
         title="Add new Roles"
     >
         <VBox
@@ -14,13 +14,14 @@
         >
             <VBox id="_IDGenVBox2">
                 <Label
-                    id="_IDGenLabel1"
+                    id="userName"
                     showColon="true"
                     text="Username"
                 />
                 <Input
                     id="username"
                     placeholder="Enter username"
+                    liveChange="onInputChange"
                 />
             </VBox>
             <Label
@@ -29,35 +30,32 @@
                 text="Password"
             />
             <Input
-                id="idPassword"
+                id="password"
                 type="Password"
                 placeholder="Enter Password"
-                showValueHelp="true"
-                valueHelpIconSrc="sap-icon://show"
-                valueHelpRequest=".onShowPasswordSelect"
                 liveChange="onInputChange"
             />
             <VBox id="_IDGenVBox3" />
             <VBox id="_IDGenVBox4">
-                <Label
-                    id="_IDGenLabel2"
-                    text="Role"
-                />
-                <ComboBox id="_IDGenComboBox1">
+                <Label text="Role" />
+                <ComboBox
+                    id="role"
+                    placeholder="Select Role"
+                >
                     <core:Item
                         id="_IDGenItem1"
-                        key=""
-                        text="Administrator"
+                        key="admin"
+                        text="admin"
                     />
                     <core:Item
                         id="_IDGenItem2"
-                        key=""
-                        text="Editor"
+                        key="editor"
+                        text="editor"
                     />
                     <core:Item
                         id="_IDGenItem3"
-                        key=""
-                        text="Viewer"
+                        key="eiewer"
+                        text="viewer"
                     />
                 </ComboBox>
             </VBox>
@@ -69,15 +67,24 @@
         >
             <Button
                 id="_IDGenButton1"
-                press=".handleSubmit"
+                press=".onSubmit"
+                visible="true"
                 text="Submit"
                 type="Emphasized"
                 class="sapUiTinyMarginTop sapUiTinyMarginBottom"
             />
             <Button
-                id="_IDGenButton"
+                id="IDGenButton3"
+                press=".onSave"
+                visible="false"
+                text="save"
+                type="Emphasized"
+                class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+            />
+            <Button
+                id="IDGenButton2"
                 press=".handleClose"
-                text="Close"
+                text="close"
                 type="Emphasized"
                 class="sapUiTinyMarginTop sapUiTinyMarginBottom"
             />

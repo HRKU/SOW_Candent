@@ -60,11 +60,6 @@ sap.ui.define(
 
 				fetch(services.login, {
 					method: "POST",
-					headers: {
-						Accept: "application/json",
-						"Content-Type": "application/json",
-					},
-					credentials: "include",
 					body: JSON.stringify(oModel.getData()),
 				})
 					.then((response) => {
@@ -100,6 +95,7 @@ sap.ui.define(
 						// debugger
 						MessageToast.show("Something Went Wrong " + error);
 						// document.cookie = `token=; maxAge=0;`;
+						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
 						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
 					});
 			},

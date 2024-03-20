@@ -1,7 +1,7 @@
 sap.ui.define({
     state: {
-        show: "show",
-        hide: "hide"
+        show: "hide",
+        hide: "show"
     },
     opposite_state: {
         show: "hide",
