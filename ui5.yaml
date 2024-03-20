@@ -15,11 +15,11 @@ server:
             - /resources
             - /test-resources
           url: https://ui5.sap.com
-        backend:
-          - path: /sow_candent_api/
-            url: http://excavator:8000/sow_candent_api/
-            proxyTimeout: 3000
-            timeout: 3000
+        # backend:
+        #   - path: /sow_candent_api/
+        #     url: http://excavator:8000/sow_candent_api/
+        #     proxyTimeout: 3000
+        #     timeout: 3000
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

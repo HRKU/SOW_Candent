@@ -11,6 +11,7 @@
         class="sapUiResponsiveMargin"
         width="auto"
         mode="SingleSelectMaster"
+        autoPopinMode="true"
     >
         <headerToolbar>
             <OverflowToolbar id="toolbar">
@@ -25,30 +26,35 @@
                     icon="sap-icon://upload"
                     multiple="false"
                     change=".onFileUpload"
+                    visible="{path:'userdetails>/role',formatter:'.formatter.userChecker'}"
                 />
                 <Button
                     id="Delete"
                     icon="sap-icon://delete"
                     type="Emphasized"
                     press=".onDelete"
+                    visible="{path:'userdetails>/role',formatter:'.formatter.checkEditor'}"
                 />
                 <Button
                     id="Edit"
                     icon="sap-icon://edit"
                     type="Emphasized"
                     press=".onOpenEdit"
+                    visible="{path:'userdetails>/role',formatter:'.formatter.checkEditor'}"
                 />
                 <Button
                     id="Create"
                     icon="sap-icon://create-form"
                     type="Emphasized"
                     press=".onOpenDialog"
+                    visible="{path:'userdetails>/role',formatter:'.formatter.checkEditor'}"
                 />
-                <SearchField 
+                <SearchField
+                    id="_IDGenSearchField1"
                     placeholder="Search Company Name"
-                    key="propertyName" 
-                    liveChange="onFilter" 
-                    width="15rem"/>
+                    liveChange="onFilter"
+                    width="15rem"
+                />
             </OverflowToolbar>
         </headerToolbar>
     </Table>

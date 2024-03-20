@@ -16,5 +16,23 @@ sap.ui.define([], () => {
 		makeObject(date) {
 			Object.assign({}, date);
 		},
+		bindDelete: function () {
+			return "sap-icon://delete";
+		},
+		bindEdit: function () {
+			return "sap-icon://edit";
+		},
+		userChecker(sString) {
+			if (sString == "admin") {
+				return true;
+			}
+			return false;
+		},
+		checkEditor(sString) {
+			if (sString == "admin" || sString == "editor") {
+				return true;
+			}
+			return false;
+		},
 	};
 });

@@ -31,17 +31,27 @@
                     press=".setVisibleDash"
                     id="dashbutton"
                     icon="sap-icon://home"
+                    class="sapUiSmallMargin"
                 />
                 <Button
                     type="Neutral"
                     press=".setVisibleTable"
                     id="tablebutton"
                     icon="sap-icon://filter-fields"
+                    class="sapUiSmallMargin"
                 />
                 <Avatar
                     id="avatar"
                     displaySize="XS"
                     press=".onAvatarPress"
+                    class="sapUiSmallMargin"
+                />
+                <Button
+                    type="Emphasized"
+                    press=".onLogout"
+                    id="logoutbutton"
+                    text="logout"
+                    class="sapUiSmallMargin"
                 />
             </tnt:ToolHeader>
             <mvc:XMLView

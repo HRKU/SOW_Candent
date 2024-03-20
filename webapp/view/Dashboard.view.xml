@@ -20,72 +20,74 @@
         id="mainFlex"
         width="100%"
         justifyContent="Center"
-        height="100%"
     >
         <VBox
             id="leftSide"
             width="60%"
-            justifyContent="SpaceBetween"
+            justifyContent="Start"
             height="100%"
         >
-            <viz:VizFrame
-                id="chartContainer"
-                vizType="column"
-                width="auto"
-                height="300px"
-                vizProperties="{title:{ text:'Close to Expiry'},dataLabel:{visible:true,showTotal:true},legend:{visible:true}}"
-                class="sapUiLargeMarginBegin sapUiLargeMarginEnd sapUiSmallMarginTop"
-                uiConfig="{applicationSet:'fiori'}"
+            <HBox
+                id="vizframes"
+                height="auto"
+                class="sapUiSmallMarginBottom"
+                justifyContent="Start"
             >
-                <viz:dataset>
-                    <viz.data:FlattenedDataset
-                        id="_IDGenFlattenedDataset1"
-                        data="{docs>/filtered/EXP}"
-                    >
-                        <viz.data:dimensions>
-                            <viz.data:DimensionDefinition
-                                id="_IDGenDimensionDefinition1"
-                                name="Employee Names"
-                                value="{docs>ProjectName}"
-                            />
-                            <!-- i just want to figur out how it work -->
-                            <!-- value="{producst>ProjectName}" -->
-                        </viz.data:dimensions>
-                        <viz.data:measures>
-                            <viz.data:MeasureDefinition
-                                id="_IDGenMeasureDefinition1"
-                                name="data"
-                                value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
-                            />
-                        </viz.data:measures>
-                    </viz.data:FlattenedDataset>
-                </viz:dataset>
+                <viz:VizFrame
+                    id="chartContainer"
+                    vizType="donut"
+                    height="300px"
+                    vizProperties="{title:{ text:'Close to Expiry'},dataLabel:{visible:true,showTotal:true},legend:{visible:true}}"
+                    uiConfig="{applicationSet:'fiori'}"
+                    class="sapUiResponsiveMarginEnd"
+                >
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset
+                            id="_IDGenFlattenedDataset1"
+                            data="{docs>/status}"
+                        >
+                            <viz.data:dimensions>
+                                <viz.data:DimensionDefinition
+                                    id="_IDGenDimensionDefinition1"
+                                    name="Project Name"
+                                    value="{docs>name}"
+                                />
+                                <!-- i just want to figur out how it work -->
+                                <!-- value="{producst>ProjectName}" -->
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition
+                                    id="_IDGenMeasureDefinition1"
+                                    name="Expires in"
+                                    value="{path:'docs>length'}"
+                                />
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
 
-                <viz:feeds>
-                    <viz.feeds:FeedItem
-                        id='valueAxisFeed'
-                        uid="valueAxis"
-                        type="Measure"
-                        values="data"
-                    />
-                    <viz.feeds:FeedItem
-                        id='categoryAxisFeed'
-                        uid="categoryAxis"
-                        type="Dimension"
-                        values="Employee Names"
-                    />
-                </viz:feeds>
-                <viz:dependents>
-                    <Popover id="isapop" />
-                </viz:dependents>
-            </viz:VizFrame>
+                    <viz:feeds>
+                        <viz.feeds:FeedItem
+                            id='valueAxisFeed'
+                            uid="size"
+                            type="Measure"
+                            values="Expires in"
+                        />
+                        <viz.feeds:FeedItem
+                            id='categoryAxisFeed'
+                            uid="color"
+                            type="Dimension"
+                            values="Project Name"
+                        />
+                    </viz:feeds>
+                    <viz:dependents>
+                        <Popover id="isapop" />
+                    </viz:dependents>
+                </viz:VizFrame>
+            </HBox>
 
             <!-- gantt chart -->
 
-            <simple:GanttChartContainer
-                id="ganttContainer"
-                class="sapUiResponsiveMargin"
-            >
+            <simple:GanttChartContainer id="ganttContainer">
                 <simple:toolbar>
                     <simple:ContainerToolbar id="toolbar" />
                 </simple:toolbar>
@@ -97,7 +99,7 @@
                     <simple:axisTimeStrategy>
                         <axistime:StepwiseZoomStrategy
                             id="sss"
-                            zoomLevel="5"
+                            zoomLevel="2"
                         >
                             <axistime:totalHorizon>
                                 <config:TimeHorizon
@@ -109,7 +111,7 @@
                             <axistime:visibleHorizon>
                                 <config:TimeHorizon
                                     id="thv"
-                                    startTime="20220101000000"
+                                    startTime="20230101000000"
                                     endTime="20251029000000"
                                 />
                             </axistime:visibleHorizon>
@@ -167,13 +169,13 @@
         <VBox
             height="100%"
             id="abobo"
-            class="sapUiLargeMarginBegin"
+            width="auto"
         >
             <Panel
                 id="panel"
                 width="auto"
-                height="333px"
-                class="sapUiResponsiveMargin"
+                height="300px"
+                class="sapUiSmallMarginBegin"
             >
                 <f:Card id="Experies">
                     <f:header>
@@ -200,7 +202,7 @@
                                     </firstStatus>
                                     <ObjectAttribute
                                         id="expireTag"
-                                        text="expires in "
+                                        text="expires in"
                                     />
                                 </ObjectListItem>
                             </items>

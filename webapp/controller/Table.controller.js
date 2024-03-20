@@ -5,11 +5,13 @@ sap.ui.define(
 		"sap/m/MessageToast",
 		"sap/m/MessageBox",
 		"com/candentech/sowtracker/enum/services",
+		"../model/formatter",
 	],
-	(Controller, JSONModel, MessageToast, MessageBox, services) => {
+	(Controller, JSONModel, MessageToast, MessageBox, services, formatter) => {
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Table", {
+			formatter: formatter,
 			onInit: function () {
 				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
@@ -153,8 +155,8 @@ sap.ui.define(
 
 				console.log(valuesToBeSent);
 
-				fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
-					// fetch("http://yw:8000/sow_candent_api/agreements/create/", {
+				// fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
+				fetch("http://yw:8001/sow_candent_api/agreements/create/", {
 					method: "POST",
 					body: JSON.stringify(valuesToBeSent),
 				})
@@ -239,13 +241,18 @@ sap.ui.define(
 				valuesToBeSent["SrNo"] = parseInt(iSrNo);
 				console.log(oControls, valuesToBeSent, "this is srNo", iSrNo);
 
-				fetch("http://excavator:8000/sow_candent_api/agreements/update/", {
+				fetch("http://yw:8001/sow_candent_api/agreements/update/", {
 					method: "PUT",
 					body: JSON.stringify(valuesToBeSent),
 				})
 					.then((response) => {
 						if (response.ok) {
 							MessageToast.show("Updated Successfully");
+
+							oModel.setProperty(
+								oSelectedItem.getBindingContextPath(),
+								valuesToBeSent
+							);
 						} else {
 							MessageToast.show("Failed to update fields");
 						}
@@ -316,7 +323,7 @@ sap.ui.define(
 				if (oFile) {
 					var formData = new FormData();
 					formData.append("excel_file", oFile);
-					fetch("http://excavator:8000/sow_candent_api/upload_excel/", {
+					fetch("http://yw:8001/sow_candent_api/upload_excel/", {
 						method: "POST",
 						body: formData,
 					})
@@ -351,6 +358,7 @@ sap.ui.define(
 				const { SrNo: iSrNo } = oSelectedItem
 					.getModel("docs")
 					.getProperty(sPath);
+				console.log(sPath);
 				window.oTable = oTable;
 
 				MessageBox.confirm("Are you sure to delete the record?", {

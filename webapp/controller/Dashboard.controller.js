@@ -10,7 +10,7 @@ sap.ui.define(
 		return Controller.extend("com.candentech.sowtracker.controller.Dashboard", {
 			formatter: formatter,
 			onInit: function () {
-				console.log(window.document.cookie);
+				
 			},
 			navAvatar() {
 				this.pPopover ??= this.loadFragment({

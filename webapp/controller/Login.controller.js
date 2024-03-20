@@ -4,8 +4,9 @@ sap.ui.define(
 		"sap/m/MessageToast",
 		"com/candentech/sowtracker/enum/password",
 		"com/candentech/sowtracker/enum/services",
+		"sap/ui/model/json/JSONModel",
 	],
-	function (Controller, MessageToast, ePassword, services) {
+	function (Controller, MessageToast, ePassword, services, JSONModel) {
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Login", {
@@ -18,6 +19,7 @@ sap.ui.define(
 
 			// Show/Hide Password Function
 			onShowPasswordSelect: function () {
+				// debugger;
 				var oPasswordInput = this.byId("password");
 				var temp = oPasswordInput.getValueHelpIconSrc().split("://");
 
@@ -54,17 +56,20 @@ sap.ui.define(
 				var oModel = new sap.ui.model.json.JSONModel();
 				oModel.setProperty("/username", oEmail.getValue());
 				oModel.setProperty("/password", oPassword.getValue());
+				console.log(oModel);
 
-				fetch(services.login1, {
+				fetch(services.login, {
 					method: "POST",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json",
+					},
+					credentials: "include",
 					body: JSON.stringify(oModel.getData()),
 				})
 					.then((response) => {
 						if (response.status == 200) {
-							MessageToast.show("Login successful");
-
-							const oRouter = this.getOwnerComponent().getRouter();
-							oRouter.navTo("RouteDashboard");
+							return response.json();
 						} else {
 							throw new Error(
 								"Login failed. Please check your email and password."
@@ -73,18 +78,29 @@ sap.ui.define(
 					})
 					.then((data) => {
 						console.log(data);
-						// if (data.token) {
-						// 	// window.document.cookie = `token=${data.token}; Max-Age=604800;`;
-						// 	this.getRouter().navTo("RouteDashboard");
-						// }
+						MessageToast.show("Login successful");
+						// debugger;
+						document.cookie = `token=${data.token}; maxAge=${
+							1000 * 60 * 60 * 24
+						};`;
+						var oUserDetails = new JSONModel(
+							JSON.parse(
+								atob(
+									Object.fromEntries([document.cookie.split("=")]).token.split(
+										"."
+									)[1]
+								)
+							)
+						);
+						this.getOwnerComponent().setModel(oUserDetails, "userdetails");
+						this._oRouter.navTo("RouteDashboard");
+						location.reload();
 					})
 					.catch((error) => {
 						// debugger
 						MessageToast.show("Something Went Wrong " + error);
-					})
-					.finally(() => {
-						sap.ui.core.BusyIndicator.hide();
 						// document.cookie = `token=; maxAge=0;`;
+						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
 					});
 			},
 		});
