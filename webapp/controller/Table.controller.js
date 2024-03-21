@@ -156,7 +156,7 @@ sap.ui.define(
 				console.log(valuesToBeSent);
 
 				// fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
-				fetch("http://yw:8001/sow_candent_api/agreements/create/", {
+				fetch(services.agreementCreate, {
 					method: "POST",
 					body: JSON.stringify(valuesToBeSent),
 				})
@@ -241,7 +241,7 @@ sap.ui.define(
 				valuesToBeSent["SrNo"] = parseInt(iSrNo);
 				console.log(oControls, valuesToBeSent, "this is srNo", iSrNo);
 
-				fetch("http://yw:8001/sow_candent_api/agreements/update/", {
+				fetch(services.update, {
 					method: "PUT",
 					body: JSON.stringify(valuesToBeSent),
 				})
@@ -323,7 +323,7 @@ sap.ui.define(
 				if (oFile) {
 					var formData = new FormData();
 					formData.append("excel_file", oFile);
-					fetch("http://yw:8001/sow_candent_api/upload_excel/", {
+					fetch(services.uploadexcel, {
 						method: "POST",
 						body: formData,
 					})

@@ -32,23 +32,6 @@ sap.ui.define(
 			onInit: function () {
 				var oModel = this.getOwnerComponent().getModel("userdetails");
 				console.log("this is oModel -- ", oModel);
-				// if (oModel == "admin") {
-				// 	fetch("http://yw:8000/sow_candent_api/userapi/")
-				// 		.then((res) => res.json())
-				// 		.then((data) => {
-				// 			console.log(data);
-				// 			// var usersData= [];
-				// 			// var oModel = {};
-				// 			// this.setModel(new JSONModel(oModel), "users");
-				// 			// console.log(this.getModel("users"));
-				// 			this.getView().setModel(new JSONModel(data), "users");
-				// 			console.log("Login fetch is working poperly", data);
-				// 		})
-				// 		.catch((error) => {
-				// 			console.error;
-				// 			sap.ui.core.BusyIndicator.hide();
-				// 		});
-				// }
 			},
 			handleOpen: function () {
 				this.qDialog ??= this.loadFragment({
@@ -185,7 +168,7 @@ sap.ui.define(
 				}
 				console.log(valuesTobeSent);
 
-				fetch("http://yw:8001/sow_candent_api/userapi/", {
+				fetch(services.creatUser, {
 					method: "PATCH",
 					headers: {
 						"Content-Type": "application/json",
@@ -211,33 +194,7 @@ sap.ui.define(
 				});
 				this.qDialog.then((oDialog) => oDialog.close());
 			},
-			// onCloseButtonPress: function () {
-			// 	this.aDialog ??= this.loadFragment({
-			// 		name: "com.candentech.sowtracker.view.EditRole",
-			// 		id: "EditRoleDialog",
-			// 		addToDependents: true
-			// 	});
-
-			// 	this.aDialog.then((oDialog) => oDialog.close());
-
-			// },
-
-			/**
-			 * @override
-			 */
-			onInit: function () {},
-			// onShowPasswordSelect: function () {
-			// 	debugger;
-			// 	var oPasswordInput = this.byId("idPassword");
-			// 	var temp = oPasswordInput.getValueHelpIconSrc().split("://");
-
-			// 	var state = temp.pop();
-
-			// 	temp.push(ePassword.opposite_state[state]);
-
-			// 	oPasswordInput.setType(ePassword.input_type[state]);
-			// 	oPasswordInput.setValueHelpIconSrc(temp.join("://"));
-			// },
+			
 
 			onDeleteButtonPress: function (oEvent) {
 				debugger;
@@ -249,7 +206,7 @@ sap.ui.define(
 					title: "Confirm",
 					onClose: function (sAction) {
 						if (sAction === "OK" && id) {
-							fetch("http://yw:8001/sow_candent_api/userapi/", {
+							fetch(services.creatUser, {
 								method: "DELETE",
 								body: JSON.stringify({
 									id: id,

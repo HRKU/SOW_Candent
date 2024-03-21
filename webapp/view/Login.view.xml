@@ -18,18 +18,20 @@
                 justifyContent="Center"
                 height="100%"
                 alignItems="Center"
+                class="classFelxBox"
             >
-                <VBox id="idVBox">
-                    <form:SimpleForm id="idSimpleForm">
+                <VBox id="idVBox" class="classVBox">
+                    <form:SimpleForm id="idSimpleForm" class="classHBox">
                         <HBox
                             id="idHBox"
                             justifyContent="Center"
                             height="60px"
+                            
                         >
                             <Image
                                 id="idImage"
                                 class="imgClass"
-                                src="/Assets/images/img.jpeg"
+                                src="/Assets/images/img.png"
                                 width="100%"
                                 height="100%"
                             />
@@ -70,12 +72,12 @@
                             id="_IDGenHBox1"
                             justifyContent="End"
                         >
-                            <Link
+                            <!-- <Link
                                 id="idForgotPasswordLink"
                                 text="{i18n>ForgotPassword}"
                                 textAlign="End"
                                 class="sapUiTinyMarginTopBottom"
-                            />
+                            /> -->
                         </HBox>
                         <HBox
                             id="_IDGenHBox2"
