@@ -76,7 +76,7 @@ sap.ui.define(
 				this.setModel(oUserDetails, "userdetails");
 				var oModel = this.getModel("userdetails");
 				if (oModel) {
-					fetch("http://yw:8001/sow_candent_api/agreements/list/")
+					fetch(services.agreementList)
 						.then((res) => res.json())
 						.then((data) => {
 							console.log(data);
@@ -162,7 +162,7 @@ sap.ui.define(
 								data
 							);
 
-							fetch("http://yw:8001/sow_candent_api/userapi/")
+							fetch(services.creatUser)
 								.then((res) => res.json())
 								.then((data) => {
 									this.setModel(new JSONModel(data), "users");

@@ -8,7 +8,7 @@
     <Table
         id="projectTable"
         alternateRowColors="true"
-        class="sapUiResponsiveMargin"
+        class="sapUiResponsiveMargin sapUiSmallMargin"
         width="auto"
         mode="SingleSelectMaster"
         autoPopinMode="true"

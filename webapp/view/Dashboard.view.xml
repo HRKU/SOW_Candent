@@ -30,7 +30,7 @@
             <FlexBox
                 id="vizframes"
                 height="auto"
-                class="sapUiSmallMarginBottom"
+                class="sapUiSmallMarginBottom sapUiSmallMarginTop"
                 justifyContent="SpaceBetween"
             >
                 <viz:VizFrame
@@ -240,7 +240,7 @@
                 id="panel"
                 width="auto"
                 height="300px"
-                class="sapUiSmallMarginBegin"
+                class="sapUiSmallMarginBegin sapUiSmallMarginTop"
             >
                 <f:Card id="Experies">
                     <f:header>
