@@ -16,7 +16,7 @@ sap.ui.define(
 				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
 					"SrNo",
-					"CompanyName",
+					// "CompanyName",
 					"Type",
 					"AgreementNo",
 					"ProjectName",
@@ -46,10 +46,12 @@ sap.ui.define(
 					cells: oCell,
 				});
 				oTable.setModel(oModel);
-				oTable.bindItems(
-					"docs>/agreements", // Adjust path as per your model structure
-					aColList
-				);
+				var oSorter = new sap.ui.model.Sorter("CompanyName", false, true);
+				oTable.bindItems({
+					path: "docs>/agreements",
+					template: aColList,
+					sorter: oSorter,
+				});
 			},
 
 			onFilter: function (oEvent) {
@@ -66,6 +68,7 @@ sap.ui.define(
 				]);
 			},
 			onOpenDialog() {
+				// debugger;
 				this.pDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.fragments.AddSowDialog",
 				});
@@ -128,8 +131,6 @@ sap.ui.define(
 					oControls[id] = this.byId(id);
 				});
 
-				console.log(oControls);
-
 				for (var key in oControls) {
 					if (!oControls[key].getValue()) {
 						oControls[key].setValueState("Error");
@@ -153,8 +154,6 @@ sap.ui.define(
 					oControls["AgreementStartDate"].setValueState();
 				}
 
-				console.log(valuesToBeSent);
-
 				// fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
 				fetch("http://yw:8001/sow_candent_api/agreements/create/", {
 					method: "POST",
@@ -163,14 +162,13 @@ sap.ui.define(
 					.then((response) => {
 						if (response.status == 201) {
 							MessageToast.show("Created Succesfully");
+							this.refresh();
 						} else {
 							MessageToast.show("Did not Create field");
 						}
 						return response.json();
 					})
-					.then((data) => {
-						console.log(data);
-					})
+					.then((data) => {})
 					.catch((error) => {
 						MessageToast.show("Something Went Wrong " + error);
 					});
@@ -357,6 +355,7 @@ sap.ui.define(
 					MessageToast.show("Please select the Record to delete");
 					return;
 				}
+				console.log(oSelectedItem);
 				const sPath = oSelectedItem.getBindingContext("docs").getPath();
 				const { SrNo: iSrNo } = oSelectedItem
 					.getModel("docs")
@@ -391,6 +390,95 @@ sap.ui.define(
 						}
 					},
 				});
+			},
+			refresh() {
+				fetch("http://yw:8001/sow_candent_api/agreements/list/")
+					.then((res) => res.json())
+					.then((data) => {
+						console.log(data);
+						var oModel = {};
+						oModel.agreements = {};
+						oModel.agreements = data;
+						oModel.filtered = {};
+						oModel.filtered.All = oModel.agreements;
+						oModel.filtered.MSA = oModel.agreements.filter(
+							(i) => i.Type == "MSA"
+						);
+						oModel.filtered.SOW = oModel.agreements.filter(
+							(i) => i.Type == "SOW"
+						);
+						oModel.filtered.NDA = oModel.agreements.filter(
+							(i) => i.Type == "NDA"
+						);
+						oModel.filtered.EXP = oModel.agreements
+							.filter((i) => i.Status === "Active")
+							.filter((i) => {
+								const diff = new Date(i.AgreementEndDate) - new Date();
+								const remaining_days = Math.round(diff / (1000 * 60 * 60 * 24));
+								if (remaining_days < 30) {
+									return remaining_days;
+								} else {
+									return null;
+								}
+							});
+
+						// oModel.status = {
+						// 	active: oModel.agreements.filter((i) => i.Status === "Active")
+						// 		.length,
+						// 	inactive: oModel.agreements.filter(
+						// 		(i) => i.Status === "Inactive"
+						// 	).length,
+						// };
+
+						oModel.status = oModel.agreements
+							.map((i) => i.Status)
+							.getUnique()
+							.map((name) => ({
+								name,
+								length: oModel.agreements.filter((i) => i.Status === name)
+									.length,
+								data: oModel.agreements.filter((i) => i.Status === name),
+							}));
+
+						// oModel.status = oModel.agreements.map()
+
+						oModel.length = {};
+						Object.keys(oModel.filtered).map(
+							(i) => (oModel.length[i] = oModel.filtered[i].length)
+						);
+						oModel.start_date = {};
+						oModel.end_date = {};
+						oModel.start_date = new Date(
+							Math.min(
+								...oModel.agreements
+									.map((agreement) =>
+										new Date(agreement.AgreementStartDate).getTime()
+									)
+									.filter((date) => !isNaN(date))
+							)
+						);
+						oModel.end_date = new Date(
+							Math.max(
+								...oModel.agreements
+									.map((agreement) =>
+										new Date(agreement.AgreementEndDate).getTime()
+									)
+									.filter((date) => !isNaN(date))
+							)
+						);
+
+						this.getOwnerComponent().setModel(new JSONModel(oModel), "docs");
+
+						console.log(this.getModel("docs"));
+
+						console.log(
+							"the fetch is working just fine and here is the data from api, ",
+							data
+						);
+
+						sap.ui.core.BusyIndicator.hide();
+					})
+					.catch(console.error);
 			},
 		});
 	}

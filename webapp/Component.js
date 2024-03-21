@@ -18,16 +18,7 @@ sap.ui.define(
 				manifest: "json",
 			},
 
-			/**
-			 * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
-			 * @public
-			 * @override
-			 */
-			init: function () {
-				// sap.ui.core.BusyIndicator.show();
-				// call the base component's init function
-				UIComponent.prototype.init.apply(this, arguments);
-
+			setup_customization: function () {
 				window.Array.prototype.getUnique = function () {
 					var o = {},
 						a = [],
@@ -41,6 +32,20 @@ sap.ui.define(
 					}
 					return a;
 				};
+			},
+
+			/**
+			 * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
+			 * @public
+			 * @override
+			 */
+			init: function () {
+				// sap.ui.core.BusyIndicator.show();
+				// call the base component's init function
+				UIComponent.prototype.init.apply(this, arguments);
+
+				// js array customization
+				this.setup_customization();
 
 				// enable routing
 				this.getRouter().initialize();
@@ -52,18 +57,22 @@ sap.ui.define(
 				// 	this
 				// );
 
+				this.initialize_data();
+			},
+
+			getUser: function () {
+				return JSON.parse(
+					atob(
+						Object.fromEntries([document.cookie.split("=")]).token.split(".")[1]
+					)
+				);
+			},
+
+			initialize_data: function () {
 				if (!document.cookie) {
 					return;
 				}
-				var oUserDetails = new JSONModel(
-					JSON.parse(
-						atob(
-							Object.fromEntries([document.cookie.split("=")]).token.split(
-								"."
-							)[1]
-						)
-					)
-				);
+				var oUserDetails = new JSONModel(this.getUser());
 				this.setModel(oUserDetails, "userdetails");
 				var oModel = this.getModel("userdetails");
 				if (oModel) {
@@ -156,11 +165,6 @@ sap.ui.define(
 							fetch("http://yw:8001/sow_candent_api/userapi/")
 								.then((res) => res.json())
 								.then((data) => {
-									// console.log(data);
-									// var usersData= [];
-									// var oModel = {};
-									// this.setModel(new JSONModel(oModel), "users");
-									// console.log(this.getModel("users"));
 									this.setModel(new JSONModel(data), "users");
 									console.log("Login fetch is working poperly", data);
 								})

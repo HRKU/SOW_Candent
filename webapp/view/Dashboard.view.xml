@@ -38,28 +38,37 @@
                     vizType="column"
                     width="450px"
                     height="300px"
-                    vizProperties="{title:{ text:'Close to Expiry'}, dataLabel:{ visible:true, showTotal:true }, legend:{ visible:true }, plotArea:{ background:{ visible:true, alpha:0 }}}"
+                    vizProperties="{
+                        title:{ text:'Close to Expiry'},
+                        dataLabel:{ visible:true, showTotal:true },
+                        legend:{ visible:true },
+                        plotArea:{ colorPalette:['#6C32A9','#BA066C','#5D36FF','#5B738B'] }}"
                     uiConfig="{applicationSet:'fiori'}"
                 >
                     <viz:dataset>
                         <viz.data:FlattenedDataset
                             id="bardata"
-                            data="{docs>/filtered/EXP}"
+                            data="{path:'docs>/filtered/EXP',sorter : {
+                            path : 'Type',descending:true
+                            }}"
                         >
                             <viz.data:dimensions>
                                 <viz.data:DimensionDefinition
                                     id="bardimension"
-                                    name="Employee Names"
+                                    name="projectName"
                                     value="{docs>ProjectName}"
                                 />
-                                <!-- i just want to figur out how it work -->
-                                <!-- value="{producst>ProjectName}" -->
+                                <viz.data:DimensionDefinition
+                                    id="bardimension1"
+                                    name="type"
+                                    value="{docs>Type}"
+                                />
                             </viz.data:dimensions>
                             <viz.data:measures>
                                 <viz.data:MeasureDefinition
                                     id="barmeasure"
                                     name="data"
-                                    value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                    value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiryChart'}"
                                 />
                             </viz.data:measures>
                         </viz.data:FlattenedDataset>
@@ -76,19 +85,27 @@
                             id='categoryAxisFeed'
                             uid="categoryAxis"
                             type="Dimension"
-                            values="Employee Names"
+                            values="projectName"
+                        />
+                        <viz.feeds:FeedItem
+                            id='colorFeed'
+                            uid="color"
+                            type="Dimension"
+                            values="type"
                         />
                     </viz:feeds>
-                    <viz:dependents>
-                        <Popover id="isapop" />
-                    </viz:dependents>
                 </viz:VizFrame>
+
                 <viz:VizFrame
                     id="chartContainer"
                     vizType="donut"
                     width="450px"
                     height="300px"
-                    vizProperties="{title:{ text:'Close to Expiry'},dataLabel:{visible:true,showTotal:true},legend:{visible:true}}"
+                    vizProperties="{
+                        title:{text:''},
+                        dataLabel:{visible:true,showTotal:true,numberFormatter:{formatString:'0'}},
+                        legend:{visible:true},
+                        plotArea:{ colorPalette:['#6C32A9','#BA066C'] }}"
                     uiConfig="{applicationSet:'fiori'}"
                     class="sapUiResponsiveMarginEnd"
                 >
@@ -239,19 +256,19 @@
                         >
                             <items>
                                 <ObjectListItem
-                                    id="lis"
+                                    type="Navigation"
+                                    id="list"
                                     title="{docs>ProjectName}"
+                                    intro="{docs>CompanyName}"
+                                    number="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                    numberState="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
                                 >
                                     <firstStatus>
                                         <ObjectStatus
-                                            id="expiresIn"
-                                            text="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                            id="doctypes"
+                                            text="{docs>Type}"
                                         />
                                     </firstStatus>
-                                    <ObjectAttribute
-                                        id="expireTag"
-                                        text="expires in"
-                                    />
                                 </ObjectListItem>
                             </items>
                         </List>

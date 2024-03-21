@@ -66,17 +66,7 @@
                             width="100%"
                             liveChange="onInputChange"
                         />
-                        <HBox
-                            id="_IDGenHBox1"
-                            justifyContent="End"
-                        >
-                            <Link
-                                id="idForgotPasswordLink"
-                                text="{i18n>ForgotPassword}"
-                                textAlign="End"
-                                class="sapUiTinyMarginTopBottom"
-                            />
-                        </HBox>
+
                         <HBox
                             id="_IDGenHBox2"
                             justifyContent="Center"

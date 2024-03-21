@@ -14,83 +14,26 @@
     <VBox
         id="adminpage"
         height="auto"
-        width="100%"
+        width="auto"
         justifyContent="Start"
+        class="sapUiResponsiveMargin"
     >
-        <Panel
-            id="_IDGenPanel1"
-            width="100%"
-            visible="{path:'userdetails>/role',formatter:'.formatter.userChecker'}"
+        <Table
+            id="myTable"
+            class="sapUiSmallMarginBottom"
+            width="auto"
         >
-            <f:GridList
-                id="gridList"
-                headerText="Users Details"
-                items="{users>/users}"
-            >
-                <f:customLayout>
-                    <grid:GridBoxLayout
-                        id="_IDGenGridBoxLayout1"
-                        boxMinWidth="15rem"
-                    />
-                </f:customLayout>
-
-                <f:GridListItem id="_IDGenGridListItem1">
-                    <HBox id="insideGridListitem">
-                        <VBox
-                            id="GirdListContainer"
-                            class="sapUiSmallMargin"
-                        >
-                            <layoutData>
-                                <FlexItemData
-                                    id="_IDGenFlexItemData1"
-                                    growFactor="1"
-                                    shrinkFactor="0"
-                                />
-                            </layoutData>
-
-                            <Title
-                                id="_IDGenTitle2"
-                                text="{users>username}"
-                                wrapping="true"
-                            />
-                            <Label
-                                id="_IDGenLabel6"
-                                text="{users>role}"
-                                wrapping="true"
-                            />
-                        </VBox>
-                        <Button
-                            id="_IDGenButton3"
-                            class="sapUiTinyMargin"
-                            icon="{path:'users>username',formatter:'.formatter.bindDelete'}"
-                            press=".onDeleteButtonPress"
-                        />
-                        <Button
-                            id="_IDGenButton4"
-                            class="sapUiTinyMargin"
-                            icon="{path:'users>username',formatter:'.formatter.bindEdit'}"
-                            press=".onEdit"
-                        />
-                    </HBox>
-                </f:GridListItem>
-            </f:GridList>
-        </Panel>
-
-        <Table id="myTable">
             <headerToolbar>
-                <OverflowToolbar id="_IDGenOverflowToolbar1">
+                <OverflowToolbar
+                    id="_IDGenOverflowToolbar1"
+                    design="Solid"
+                >
                     <content>
                         <Title
                             id="_IDGenTitle1"
                             text="Roles and Permission"
                         />
                         <ToolbarSpacer id="_IDGenToolbarSpacer1" />
-                        <Button
-                            visible="{path:'userdetails>/role',formatter:'.formatter.userChecker'}"
-                            id="_IDGenButton2"
-                            text="Add Role"
-                            press=".handleOpen"
-                        />
                     </content>
                 </OverflowToolbar>
             </headerToolbar>
@@ -161,11 +104,11 @@
                     <cells>
                         <Text
                             id="_IDGenObjectIdentifier7"
-                            text="viewer"
+                            text="Viewer"
                         />
                         <Text
                             id="_IDGenObjectIdentifier8"
-                            text="can only view data"
+                            text="Can only view data"
                         />
                         <Text
                             id="_IDGenObjectIdentifier9"
@@ -175,5 +118,80 @@
                 </ColumnListItem>
             </items>
         </Table>
+        <Panel
+            id="_IDGenPanel1"
+            width="100%"
+            visible="{path:'userdetails>/role',formatter:'.formatter.userChecker'}"
+        >
+            <headerToolbar>
+                <Toolbar id="addusertoolar">
+                    <Title
+                        id="userlistTitle"
+                        titleStyle="H5"
+                        text="User Details"
+                    />
+                    <ToolbarSpacer id="spacer" />
+
+                    <Button
+                        visible="{path:'userdetails>/role',formatter:'.formatter.userChecker'}"
+                        id="_IDGenButton2"
+                        text="Add User"
+                        press=".handleOpen"
+                    />
+                </Toolbar>
+            </headerToolbar>
+            <f:GridList
+                id="gridList"
+                items="{users>/users}"
+            >
+                <f:headerToolbar />
+                <f:customLayout>
+                    <grid:GridBoxLayout
+                        id="_IDGenGridBoxLayout1"
+                        boxMinWidth="15rem"
+                    />
+                </f:customLayout>
+
+                <f:GridListItem id="_IDGenGridListItem1">
+                    <HBox id="insideGridListitem">
+                        <VBox
+                            id="GirdListContainer"
+                            class="sapUiSmallMargin"
+                        >
+                            <layoutData>
+                                <FlexItemData
+                                    id="_IDGenFlexItemData1"
+                                    growFactor="1"
+                                    shrinkFactor="0"
+                                />
+                            </layoutData>
+
+                            <Title
+                                id="_IDGenTitle2"
+                                text="{users>username}"
+                                wrapping="true"
+                            />
+                            <Label
+                                id="_IDGenLabel6"
+                                text="{users>role}"
+                                wrapping="true"
+                            />
+                        </VBox>
+                        <Button
+                            id="_IDGenButton3"
+                            class="sapUiTinyMargin"
+                            icon="{path:'users>username',formatter:'.formatter.bindDelete'}"
+                            press=".onDeleteButtonPress"
+                        />
+                        <Button
+                            id="_IDGenButton4"
+                            class="sapUiTinyMargin"
+                            icon="{path:'users>username',formatter:'.formatter.bindEdit'}"
+                            press=".onEdit"
+                        />
+                    </HBox>
+                </f:GridListItem>
+            </f:GridList>
+        </Panel>
     </VBox>
 </mvc:View>

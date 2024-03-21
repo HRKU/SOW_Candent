@@ -9,9 +9,7 @@ sap.ui.define(
 
 		return Controller.extend("com.candentech.sowtracker.controller.Dashboard", {
 			formatter: formatter,
-			onInit: function () {
-				
-			},
+			onInit: function () {},
 			navAvatar() {
 				this.pPopover ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.AvatarMenu",
@@ -31,8 +29,34 @@ sap.ui.define(
 					let x = Math.round(
 						Math.abs((new Date(date) - new Date()) / (1000 * 60 * 60 * 24))
 					);
-					if (x < 30) {
+					if (x < 30 && x > 0) {
+						return `${x} Day${x > 1 ? "s" : ""}`;
+					}
+
+					return;
+				},
+				calculateExpiryChart(date) {
+					let x = Math.round(
+						Math.abs((new Date(date) - new Date()) / (1000 * 60 * 60 * 24))
+					);
+					if (x < 30 && x > 0) {
 						return x;
+					}
+
+					return;
+				},
+				expiryColor(date) {
+					let x = Math.round(
+						Math.abs((new Date(date) - new Date()) / (1000 * 60 * 60 * 24))
+					);
+					if (x > 15 && x < 30) {
+						return "Success";
+					}
+					if (x > 5 && x <= 15) {
+						return "Warning";
+					}
+					if (x <= 5) {
+						return "Error";
 					}
 
 					return;
@@ -40,13 +64,13 @@ sap.ui.define(
 				getShapeColor(doctype) {
 					switch (doctype) {
 						case "MSA":
-							return "sapUiAccent8";
+							return "sapUiAccent3";
 						case "NDA":
-							return "sapUiAccent2";
-						case "SLA":
 							return "sapUiAccent5";
+						case "SOW":
+							return "sapUiAccent9";
 						default:
-							return "sapUiAccent4";
+							return "sapUiAccent10";
 					}
 				},
 			},
