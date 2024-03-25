@@ -9,13 +9,29 @@ sap.ui.define(
 
 		return Controller.extend("com.candentech.sowtracker.controller.Dashboard", {
 			formatter: formatter,
-			onInit: function () {},
-			navAvatar() {
-				this.pPopover ??= this.loadFragment({
-					name: "com.candentech.sowtracker.view.AvatarMenu",
-				});
+			onInit: function () {
+				// , '#5B738B''#6C32A9', '#BA066C',
+			},
+			navAvatar() {},
+			routeToTable: function (oEvent) {
+				debugger;
+				const oSelectedValue = oEvent
+					.getParameter("data")
+					.map((i) => i.data)
+					.pop();
 
-				this.pPopover.then((oPopover) => oPopover.open());
+				var oParent = this.getView().getParent().getParent();
+				oParent.byId("dash").setVisible(false);
+				oParent.byId("admin").setVisible(false);
+				var oTable = oParent.byId("table");
+				oTable.setVisible(true);
+				oParent.byId("dashboard").setText("Table Data");
+				var oSearchField = oTable.byId("_IDGenSearchField1");
+				console.log(oSelectedValue, oEvent);
+
+				oSearchField.setValue(oSelectedValue["type"]);
+
+				oSearchField.fireSearch({ query: oSelectedValue["type"] });
 			},
 
 			formatter: {
@@ -39,11 +55,8 @@ sap.ui.define(
 					let x = Math.round(
 						Math.abs((new Date(date) - new Date()) / (1000 * 60 * 60 * 24))
 					);
-					if (x < 30 && x > 0) {
-						return x;
-					}
 
-					return;
+					return x;
 				},
 				expiryColor(date) {
 					let x = Math.round(
@@ -76,7 +89,9 @@ sap.ui.define(
 			},
 			filterDocs(oEvent) {
 				debugger;
-				var oBinding = this.byId("mainTable").getBinding("rows");
+				var oBinding = this.byId("barchartContainer")
+					.getDataset()
+					.getBinding("data");
 				var sSelectedKey = oEvent
 					.getSource()
 					.getCustomData()

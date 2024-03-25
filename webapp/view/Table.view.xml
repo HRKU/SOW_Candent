@@ -51,8 +51,8 @@
                 />
                 <SearchField
                     id="_IDGenSearchField1"
-                    placeholder="Search Company Name"
-                    liveChange="onFilter"
+                    placeholder="Search via Type of Document"
+                    search=".onFilter"
                     width="15rem"
                 />
             </OverflowToolbar>

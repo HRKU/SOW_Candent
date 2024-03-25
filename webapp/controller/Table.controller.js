@@ -13,10 +13,11 @@ sap.ui.define(
 		return Controller.extend("com.candentech.sowtracker.controller.Table", {
 			formatter: formatter,
 			onInit: function () {
-				const oModel = this.getOwnerComponent().getModel("docs");
+				this.byId("_IDGenSearchField1").getValue();
+				const oModel = this.getOwnerComponent().getModel("trial");
 				const oLabels = [
 					"SrNo",
-					// "CompanyName",
+					"CompanyName",
 					"Type",
 					"AgreementNo",
 					"ProjectName",
@@ -37,7 +38,7 @@ sap.ui.define(
 						}),
 					});
 					var cell1 = new sap.m.Text({
-						text: "{docs>" + i + "}",
+						text: "{trial>" + i + "}",
 					});
 					oCell.push(cell1);
 					oTable.addColumn(oColumn);
@@ -48,20 +49,20 @@ sap.ui.define(
 				oTable.setModel(oModel);
 				var oSorter = new sap.ui.model.Sorter("CompanyName", false, true);
 				oTable.bindItems({
-					path: "docs>/agreements",
+					path: "trial>/agreements",
 					template: aColList,
 					sorter: oSorter,
 				});
 			},
 
 			onFilter: function (oEvent) {
+				debugger;
 				const oTable = this.byId("projectTable");
-				const sQuery = oEvent.getParameter("newValue");
+				const sQuery = oEvent.getParameter("query");
 				const oBinding = oTable.getBinding("items");
-
 				oBinding.filter([
 					new sap.ui.model.Filter(
-						"CompanyName",
+						"Type",
 						sap.ui.model.FilterOperator.Contains,
 						sQuery
 					),

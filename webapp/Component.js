@@ -85,6 +85,9 @@ sap.ui.define(
 							oModel.agreements = data;
 							oModel.filtered = {};
 							oModel.filtered.All = oModel.agreements;
+							oModel.filtered.AllActive = oModel.agreements.filter(
+								(i) => i.Status == "Active"
+							);
 							oModel.filtered.MSA = oModel.agreements.filter(
 								(i) => i.Type == "MSA"
 							);
