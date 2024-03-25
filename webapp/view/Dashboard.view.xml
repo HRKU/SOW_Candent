@@ -4,6 +4,8 @@
     xmlns:viz.data="sap.viz.ui5.data"
     controllerName="com.candentech.sowtracker.controller.Dashboard"
     xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:lf="sap.ui.layout.form"
     xmlns:rowmodes="sap.ui.table.rowmodes"
     xmlns:shapes="sap.gantt.simple.shapes"
     xmlns:config="sap.gantt.config"
@@ -21,13 +23,101 @@
         width="100%"
         justifyContent="Center"
     >
+
+    
         <VBox
             id="leftSide"
-            width="60%"
+            width="80%"
             justifyContent="Start"
             height="100%"
         >
-            <FlexBox
+
+        <Carousel
+    id="carouselSample"
+    backgroundDesign="Transparent"
+    pages="{trial>/data}"
+    showPageIndicator="false">
+    <customLayout>
+        <CarouselLayout visiblePagesCount="4"/>
+    </customLayout>
+    
+    <ScrollContainer 
+        horizontal="false" 
+        class="">
+        <f:Card>
+            <f:header>
+                <cards:Header
+                    title="Urgent Expiries"
+                    iconSrc="sap-icon://alert"
+                    iconDisplayShape="Square" />
+            </f:header>
+                
+            <f:content class="sapUiSmallMarginBegin">
+                <l:VerticalLayout class="" width="100%">
+                    <l:BlockLayout>
+                        <l:BlockLayoutRow>
+                            <l:BlockLayoutCell  width="1">
+                                <VBox class="sapUiTinyMarginBottom" backgroundDesign="Transparent">
+                                    <Text text="{trial>client_name}"/>
+                                    <GenericTag text="{trial>project_name}" status="Error" design="StatusIconHidden">
+                                        <ObjectNumber unit="2 Days"/>
+                                    </GenericTag>
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+                    </l:BlockLayout>
+                </l:VerticalLayout>
+            </f:content>
+        </f:Card>               
+    </ScrollContainer>
+</Carousel>
+
+<!-- <Carousel
+    id="carouselSample"
+    backgroundDesign="Transparent"
+    pages=""
+    showPageIndicator="false">
+    <customLayout>
+        <CarouselLayout visiblePagesCount="4"/>
+    </customLayout>
+    
+    <ScrollContainer 
+        horizontal="false" 
+        class="">
+        <f:Card>
+            <f:header>
+                <cards:Header
+                    title="Urgent Expiaries"
+                    iconSrc="sap-icon://alert"
+                    iconDisplayShape="Square" />
+            </f:header>
+                
+            <f:content class="sapUiSmallMarginBegin">
+                
+        <l:VerticalLayout class="" width="100%">
+							<l:BlockLayout>
+								<l:BlockLayoutRow>
+									<l:BlockLayoutCell  width="1">
+										<VBox class="sapUiTinyMarginBottom">
+                                            <Text text="Condentech"/>
+											<GenericTag text="Sow Tracker" design="StatusIconHidden" status="Error">
+                                                <ObjectNumber state="Error" number="2" unit="Days"/>
+                                            </GenericTag>
+										</VBox>
+									</l:BlockLayoutCell>
+								</l:BlockLayoutRow>
+							</l:BlockLayout>
+						</l:VerticalLayout>
+            </f:content>
+        </f:Card>               
+    </ScrollContainer>
+</Carousel> -->
+                                            <!-- <Text text="{docs>ProjectName}"/>
+                                            <Text text="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"/>
+											<Label text="{docs>Type}" /> -->
+
+
+        <FlexBox
                 id="vizframes"
                 height="auto"
                 class="sapUiSmallMarginBottom sapUiSmallMarginTop"
@@ -36,8 +126,9 @@
                 <viz:VizFrame
                     id="barchartContainer"
                     vizType="column"
-                    width="450px"
+                    width="700px"
                     height="300px"
+                    selectData=".onSelectData"
                     vizProperties="{
                         title:{ text:'Close to Expiry'},
                         dataLabel:{ visible:true, showTotal:true },
@@ -96,7 +187,7 @@
                     </viz:feeds>
                 </viz:VizFrame>
 
-                <viz:VizFrame
+                <!-- <viz:VizFrame
                     id="chartContainer"
                     vizType="donut"
                     width="450px"
@@ -120,8 +211,8 @@
                                     name="Project Name"
                                     value="{docs>name}"
                                 />
-                                <!-- i just want to figur out how it work -->
-                                <!-- value="{producst>ProjectName}" -->
+                            
+                            
                             </viz.data:dimensions>
                             <viz.data:measures>
                                 <viz.data:MeasureDefinition
@@ -147,12 +238,13 @@
                             values="Project Name"
                         />
                     </viz:feeds>
-                </viz:VizFrame>
+                </viz:VizFrame> -->
+
             </FlexBox>
 
             <!-- gantt chart -->
 
-            <simple:GanttChartContainer id="ganttContainer">
+            <!-- <simple:GanttChartContainer id="ganttContainer">
                 <simple:toolbar>
                     <simple:ContainerToolbar id="toolbar" />
                 </simple:toolbar>
@@ -229,20 +321,45 @@
                         </table:Table>
                     </simple:table>
                 </simple:GanttChartWithTable>
-            </simple:GanttChartContainer>
+            </simple:GanttChartContainer> -->
+            <HBox
+             justifyContent="Center" width="100%" backgroundDesign="Translucent">
+                <ObjectHeader
+		        id="oh1"
+		        responsive="true"
+		        numberState="Success"
+                title="Total Documents"
+                class="classObjectHeader">
+		        <headerContainer class="oh1innerHeader">
+		        	<HeaderContainer scrollStep="200" id="headerContainer">
+		        		<NumericContent scale="ALL" value="16" valueColor="None" press=".filterDocs" />
+		        		<NumericContent scale="MSA" value="4" valueColor="Error" press=".filterDocs" />
+		        		<NumericContent scale="NDA" value="5" valueColor="Critical" press=".filterDocs" />
+		        		<NumericContent scale="SOW" value="7" valueColor="Good" press=".filterDocs" />
+		        	</HeaderContainer>
+                    <!-- <HeaderContainer scrollStep="200" id="headerContainer">
+                        <NumericContent scale="ALL" value="{docs>/length/All}" valueColor="None" press=".filterDocs" />
+                        <NumericContent scale="MSA" value="{docs>/length/MSA}" valueColor="{= ${docs>/length/MSA} > 10 ? 'Good' : ${docs>/length/MSA} > 5 ? 'Neutral' : ${docs>/length/MSA} >= 1 ? 'Error' : 'None' }" press=".filterDocs" />
+                        <NumericContent scale="NDA" value="{docs>/length/NDA}" valueColor="{= ${docs>/length/NDA} > 10 ? 'Good' : ${docs>/length/NDA} > 5 ? 'Neutral' : ${docs>/length/NDA} >= 1 ? 'Error' : 'None' }" press=".filterDocs" />
+                        <NumericContent scale="SOW" value="{docs>/length/SOW}" valueColor="{= ${docs>/length/SOW} > 10 ? 'Good' : ${docs>/length/SOW} > 5 ? 'Neutral' : ${docs>/length/SOW} >= 1 ? 'Error' : 'None' }" press=".filterDocs" />
+                    </HeaderContainer> -->
+		        </headerContainer>
+	        </ObjectHeader>
+            </HBox>
         </VBox>
+        
         <VBox
             height="100%"
             id="abobo"
             width="auto"
         >
-            <Panel
+            <!-- <Panel
                 id="panel"
                 width="auto"
                 height="300px"
                 class="sapUiSmallMarginBegin sapUiSmallMarginTop"
-            >
-                <f:Card id="Experies">
+            > -->
+                <!-- <f:Card id="Experies">
                     <f:header>
                         <cards:Header
                             id="ipi"
@@ -273,10 +390,10 @@
                             </items>
                         </List>
                     </f:content>
-                </f:Card>
-            </Panel>
+                </f:Card> -->
+            <!-- </Panel> -->
 
-            <HBox id="innerProj">
+            <!-- <HBox id="innerProj">
                 <GenericTile
                     press=".filterDocs"
                     id="_IDGenGenericTile1"
@@ -355,33 +472,9 @@
                         />
                     </TileContent>
                 </GenericTile>
-            </HBox>
-            <!-- <GenericTile
-                id="NavTable"
-                frameType="TwoByHalf"
-                class="sapUiResponsiveMargin"
-                press=".navTable"
-            >
-                <TileContent
-                    id="navContent"
-                    state="Loaded"
-                >
-                    <content>
-                        <Title
-                            id="sadasd"
-                            text="GO TO TABLE"
-                            class="sapUiMarginSmallStart sapThemeHighlight"
-                        />
-                    </content>
-                </TileContent>
-                <TileContent id="arrow">
-                    <core:Icon
-                        id="hell"
-                        src="sap-icon://arrow-right"
-                        class="sapUiMarginSmallStart sapThemeHighlight"
-                    />
-                </TileContent>
-            </GenericTile> -->
+            </HBox> -->
+            
+            
         </VBox>
     </FlexBox>
 </mvc:View>

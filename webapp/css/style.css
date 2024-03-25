@@ -79,3 +79,6 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
     color: #999; 
 }
 
+.classObjectHeader {
+	width: 800px;
+}

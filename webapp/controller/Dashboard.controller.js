@@ -17,7 +17,9 @@ sap.ui.define(
 
 				this.pPopover.then((oPopover) => oPopover.open());
 			},
-
+			onSelectData: function (oEvent) {
+				console.log(oEvent);
+			},
 			formatter: {
 				calculateDuration(date) {
 					if (date) {
@@ -90,7 +92,7 @@ sap.ui.define(
 						sap.ui.model.FilterOperator.EQ,
 						sSelectedKey
 					);
-					console.log(newFilter);
+					console.log("filter" + newFilter);
 					oBinding.filter(newFilter);
 				}
 			},

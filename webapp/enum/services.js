@@ -1,21 +1,20 @@
-sap.ui.define(
-	{
+const hostname = "http://yw:8000/sow_candent_api"
+
+sap.ui.define({
 		// Login Api
-		login: "http://yw:8001/sow_candent_api/login/",
+		login: hostname + "/login/",
 		// delete api
-		delete: "http://yw:8001/sow_candent_api/agreements/delete/",
-		// List
-		list: "http://yw:8001/sow_candent_api/agreements/list",
+		delete: hostname + "/agreements/delete/",
 		//uploadExcel api
-		uploadexcel: "http://yw:8001/sow_candent_api/upload_excel/",
+		uploadexcel: hostname + "/upload_excel/",
 		//createuser api
-		creatUser: "http://yw:8001/sow_candent_api/userapi/",
+		creatUser: hostname + "/userapi/",
 		//agreementList api
-		agreementList: "http://yw:8001/sow_candent_api/agreements/list",
+		agreementList: hostname + "/agreements/list",
 		//agreementCreate api
-		agreementCreate: "http://yw:8001/sow_candent_api/agreements/create/",
+		agreementCreate: hostname + "/agreements/create/",
 		// update
-		update: "http://yw:8001/sow_candent_api/agreements/update/",
+		update: hostname + "/agreements/update/",
 	},
 	true
 );

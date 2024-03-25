@@ -16,7 +16,7 @@ sap.ui.define(
 				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
 					"SrNo",
-					// "CompanyName",
+					"CompanyName",
 					"Type",
 					"AgreementNo",
 					"ProjectName",
@@ -154,7 +154,6 @@ sap.ui.define(
 					oControls["AgreementStartDate"].setValueState();
 				}
 
-				// fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
 				fetch(services.agreementCreate, {
 					method: "POST",
 					body: JSON.stringify(valuesToBeSent),
@@ -392,7 +391,7 @@ sap.ui.define(
 				});
 			},
 			refresh() {
-				fetch("http://yw:8001/sow_candent_api/agreements/list/")
+				fetch(services.agreementList)
 					.then((res) => res.json())
 					.then((data) => {
 						console.log(data);

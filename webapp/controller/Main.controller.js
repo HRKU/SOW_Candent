@@ -9,10 +9,10 @@ sap.ui.define(
 
 		return Controller.extend("com.candentech.sowtracker.controller.Main", {
 			onInit: function () {
-				if (!document.cookie) {
-					this.getOwnerComponent().getRouter().navTo("RouteLogin", {}, true);
-					location.reload();
-				}
+				// if (!document.cookie) {
+				// 	this.getOwnerComponent().getRouter().navTo("RouteLogin", {}, true);
+				// 	location.reload();
+				// }
 			},
 			setVisibleDash() {
 				this.byId("dash").setVisible(true);
