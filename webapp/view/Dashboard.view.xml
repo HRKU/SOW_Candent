@@ -15,13 +15,153 @@
     displayBlock="true"
     xmlns:f="sap.f"
     xmlns:cards="sap.f.cards"
+    xmlns:l="sap.ui.layout"
+    xmlns:lf="sap.ui.layout.form"
 >
-    <viz:VizFrame
-        id="barchartContainer"
-        vizType="column"
-        width="auto"
-        vizProperties='{
-        "title": { "text": "Close to Expiry" },
+    <Carousel
+        id="carouselSample"
+        backgroundDesign="Transparent"
+        pages="{trial>/agreements}"
+        showPageIndicator="false"
+        class="sapUiTinyMargin"
+    >
+        <customLayout>
+            <CarouselLayout
+                id="_IDGenCarouselLayout1"
+                visiblePagesCount="4"
+            />
+        </customLayout>
+
+        <f:Card id="_IDGenCard1">
+            <f:content>
+                <l:VerticalLayout
+                    id="_IDGenVerticalLayout1"
+                    width="100%"
+                >
+                    <l:BlockLayout id="_IDGenBlockLayout1">
+                        <l:BlockLayoutRow id="_IDGenBlockLayoutRow1">
+                            <l:BlockLayoutCell
+                                id="_IDGenBlockLayoutCell1"
+                                width="1"
+                            >
+                                <VBox
+                                    id="_IDGenVBox1"
+                                    class="sapUiTinyMarginBottom"
+                                    backgroundDesign="Transparent"
+                                >
+                                    <Text
+                                        id="_IDGenText1"
+                                        text="{trial>CompanyName}"
+                                    />
+                                    <GenericTag
+                                        id="_IDGenGenericTag1"
+                                        text="{trial>ProjectName}"
+                                        status="Error"
+                                        design="StatusIconHidden"
+                                    >
+                                        <ObjectNumber
+                                            id="_IDGenObjectNumber1"
+                                            unit="2 Days"
+                                        />
+                                    </GenericTag>
+                                </VBox>
+                            </l:BlockLayoutCell>
+                        </l:BlockLayoutRow>
+                    </l:BlockLayout>
+                </l:VerticalLayout>
+            </f:content>
+        </f:Card>
+    </Carousel>
+    <FlexBox
+        id="vizbox"
+        justifyContent="SpaceAround"
+        backgroundDesign="Transparent"
+    >
+        <viz:VizFrame
+            id="barchartContainer"
+            vizType="column"
+            vizProperties='{
+        "title": { "text": "Urgent Expiry" },
+        "dataLabel": { "visible": true, "showTotal": true },
+        "legend": { "visible": true },
+        "categoryAxis": { "label": { "linesOfWrap": 2, "angle": 0 } },
+        "plotArea": {
+            "gridline": { "visible": false },
+            "background": { "visible": false },
+            "colorPalette": ["#0057d2","#2ca02c", "#ff4500", "#5D36FF", "#5B738B"],
+            "dataPointSize": { "max": true }
+        }
+    }'
+            uiConfig="{ applicationSet: 'fiori' }"
+            selectData=".routeToTable"
+            class="sapUiTinyMarginBottom"
+        >
+            <viz:dataset>
+                <viz.data:FlattenedDataset
+                    id="bardata"
+                    data="{path:'trial>/agreements',sorter : {
+                            path : 'Type',descending:true
+                            }}"
+                >
+                    <viz.data:dimensions>
+                        <viz.data:DimensionDefinition
+                            id="companydimension"
+                            name="Company Name"
+                            value="{docs>CompanyName}"
+                        />
+                        <viz.data:DimensionDefinition
+                            id="projectdimension"
+                            name="project name"
+                            value="{docs>ProjectName}"
+                        />
+                        <viz.data:DimensionDefinition
+                            id="bardimension1"
+                            name="type"
+                            value="{docs>Type}"
+                        />
+                    </viz.data:dimensions>
+                    <viz.data:measures>
+                        <viz.data:MeasureDefinition
+                            id="barmeasure"
+                            name="Expiry In Days"
+                            value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiryChart'}"
+                        />
+                    </viz.data:measures>
+                </viz.data:FlattenedDataset>
+            </viz:dataset>
+
+            <viz:feeds>
+                <viz.feeds:FeedItem
+                    id='valueAxisFeed'
+                    uid="valueAxis"
+                    type="Measure"
+                    values="Expiry In Days"
+                />
+                <viz.feeds:FeedItem
+                    id='categoryAxisFeedC'
+                    uid="categoryAxis"
+                    type="Dimension"
+                    values="Company Name"
+                />
+                <viz.feeds:FeedItem
+                    id='categoryAxisFeedP'
+                    uid="categoryAxis"
+                    type="Dimension"
+                    values="project name"
+                />
+                <viz.feeds:FeedItem
+                    id='colorFeed'
+                    uid="color"
+                    type="Dimension"
+                    values="type"
+                />
+            </viz:feeds>
+        </viz:VizFrame>
+        <viz:VizFrame
+            id="barchartContainer2"
+            vizType="column"
+            vizProperties='{
+        "title": { "text": "All Data" },
         "dataLabel": { "visible": true, "showTotal": true },
         "legend": { "visible": true },
         "categoryAxis": { "label": { "linesOfWrap": 2, "angle": 0 } },
@@ -32,70 +172,128 @@
             "dataPointSize": { "max": true }
         }
     }'
-        uiConfig="{ applicationSet: 'fiori' }"
-        selectData=".routeToTable"
-    >
-        <viz:dataset>
-            <viz.data:FlattenedDataset
-                id="bardata"
-                data="{path:'trial>/agreements',sorter : {
+            uiConfig="{ applicationSet: 'fiori' }"
+            selectData=".routeToTable"
+            class="sapUiTinyMarginBottom"
+        >
+            <viz:dataset>
+                <viz.data:FlattenedDataset
+                    id="bardata2"
+                    data="{path:'trial>/agreements',sorter : {
                             path : 'Type',descending:true
                             }}"
-            >
-                <viz.data:dimensions>
-                    <viz.data:DimensionDefinition
-                        id="companydimension"
-                        name="Company Name"
-                        value="{docs>CompanyName}"
-                    />
-                    <viz.data:DimensionDefinition
-                        id="projectdimension"
-                        name="project name"
-                        value="{docs>ProjectName}"
-                    />
-                    <viz.data:DimensionDefinition
-                        id="bardimension1"
-                        name="type"
-                        value="{docs>Type}"
-                    />
-                </viz.data:dimensions>
-                <viz.data:measures>
-                    <viz.data:MeasureDefinition
-                        id="barmeasure"
-                        name="Expiry In Days"
-                        value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiryChart'}"
-                    />
-                </viz.data:measures>
-            </viz.data:FlattenedDataset>
-        </viz:dataset>
+                >
+                    <viz.data:dimensions>
+                        <viz.data:DimensionDefinition
+                            id="companydimension2"
+                            name="Company Name"
+                            value="{docs>CompanyName}"
+                        />
+                        <viz.data:DimensionDefinition
+                            id="projectdimension2"
+                            name="project name"
+                            value="{docs>ProjectName}"
+                        />
+                        <viz.data:DimensionDefinition
+                            id="bardimension12"
+                            name="type"
+                            value="{docs>Type}"
+                        />
+                    </viz.data:dimensions>
+                    <viz.data:measures>
+                        <viz.data:MeasureDefinition
+                            id="barmeasure2"
+                            name="Expiry In Days"
+                            value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiryChart'}"
+                        />
+                    </viz.data:measures>
+                </viz.data:FlattenedDataset>
+            </viz:dataset>
 
-        <viz:feeds>
-            <viz.feeds:FeedItem
-                id='valueAxisFeed'
-                uid="valueAxis"
-                type="Measure"
-                values="Expiry In Days"
-            />
-            <viz.feeds:FeedItem
-                id='categoryAxisFeedC'
-                uid="categoryAxis"
-                type="Dimension"
-                values="Company Name"
-            />
-            <viz.feeds:FeedItem
-                id='categoryAxisFeedP'
-                uid="categoryAxis"
-                type="Dimension"
-                values="project name"
-            />
-            <viz.feeds:FeedItem
-                id='colorFeed'
-                uid="color"
-                type="Dimension"
-                values="type"
-            />
-        </viz:feeds>
-    </viz:VizFrame>
+            <viz:feeds>
+                <viz.feeds:FeedItem
+                    id='valueAxisFeed2'
+                    uid="valueAxis"
+                    type="Measure"
+                    values="Expiry In Days"
+                />
+                <viz.feeds:FeedItem
+                    id='categoryAxisFeedC2'
+                    uid="categoryAxis"
+                    type="Dimension"
+                    values="Company Name"
+                />
+                <viz.feeds:FeedItem
+                    id='categoryAxisFeedP2'
+                    uid="categoryAxis"
+                    type="Dimension"
+                    values="project name"
+                />
+                <viz.feeds:FeedItem
+                    id='colorFeed2'
+                    uid="color"
+                    type="Dimension"
+                    values="type"
+                />
+            </viz:feeds>
+        </viz:VizFrame>
+    </FlexBox>
+
+    <HBox
+        id="_IDGenHBox1"
+        justifyContent="Center"
+        width="100%"
+        backgroundDesign="Translucent"
+    >
+        <ObjectHeader
+            id="oh1"
+            responsive="true"
+            numberState="Success"
+            class="classObjectHeader"
+        >
+            <headerContainer>
+                <HeaderContainer
+                    scrollStep="200"
+                    id="headerContainer"
+                >
+                    <NumericContent
+                        id="_IDGenNumericContent1"
+                        scale="ALL"
+                        value="16"
+                        valueColor="None"
+                        press=".filterDocs"
+                    />
+                    <NumericContent
+                        id="_IDGenNumericContent2"
+                        scale="MSA"
+                        value="4"
+                        valueColor="Error"
+                        press=".filterDocs"
+                    />
+                    <NumericContent
+                        id="_IDGenNumericContent3"
+                        scale="NDA"
+                        value="5"
+                        valueColor="Critical"
+                        press=".filterDocs"
+                    />
+                    <NumericContent
+                        id="_IDGenNumericContent4"
+                        scale="SOW"
+                        value="7"
+                        valueColor="Good"
+                        press=".filterDocs"
+                    />
+                </HeaderContainer>
+                <!-- <HeaderContainer scrollStep="200" id="headerContainer">
+                        <NumericContent scale="ALL" value="{docs>/length/All}" valueColor="None" press=".filterDocs" />
+                        <NumericContent scale="MSA" value="{docs>/length/MSA}" valueColor="{= ${docs>/length/MSA} > 10 ? 'Good' : ${docs>/length/MSA} > 5 ? 'Neutral' : ${docs>/length/MSA} >= 1 ? 'Error' : 'None' }" press=".filterDocs" />
+                        <NumericContent scale="NDA" value="{docs>/length/NDA}" valueColor="{= ${docs>/length/NDA} > 10 ? 'Good' : ${docs>/length/NDA} > 5 ? 'Neutral' : ${docs>/length/NDA} >= 1 ? 'Error' : 'None' }" press=".filterDocs" />
+                        <NumericContent scale="SOW" value="{docs>/length/SOW}" valueColor="{= ${docs>/length/SOW} > 10 ? 'Good' : ${docs>/length/SOW} > 5 ? 'Neutral' : ${docs>/length/SOW} >= 1 ? 'Error' : 'None' }" press=".filterDocs" />
+                    </HeaderContainer> -->
+            </headerContainer>
+        </ObjectHeader>
+    </HBox>
 
     <!-- <viz:VizFrame
                     id="chartContainer"

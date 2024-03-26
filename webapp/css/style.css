@@ -17,65 +17,72 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 }
 
 .classFelxBox {
-    position: relative;
-    width: 100%;
-    height: 100%;
+	position: relative;
+	width: 100%;
+	height: 100%;
 }
 .classFlexBoxDash {
-	background-image: url(../Assets/images/BG.png);
+	background-image: linear-gradient(
+		to right top,
+		#051937,
+		#004d7a,
+		#008793,
+		#00bf72,
+		#a8eb12
+	);
 	background-repeat: no-repeat;
 	background-size: inherit;
-	background-position: top left;
+	background-position: center;
 }
-.classFelxBox::before, .classFelxBox::after {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
-	
-	.classFelxBox::before {
-		background-image: url(../Assets/images/BG.png);
-		z-index: -2; 
-		background-size: 100%;
-		background-position: left;
-		rotate: 180;
-	}
-	
-	.classFelxBox::after {
-		background-image: url(../Assets/images/BG1.png); 
-		z-index: -1; 
-		background-position: left;
-		background-size: 50%;
-	}
+.classFelxBox::before,
+.classFelxBox::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.classFelxBox {
+	background-image: linear-gradient(
+		to right top,
+		#051937,
+		#004d7a,
+		#008793,
+		#00bf72,
+		#a8eb12
+	);
+
+	background-size: 100%;
+	background-position: left;
+	rotate: 180;
+}
 
 .classHBox {
-    background-color: rgba(255, 255, 255, 0.3); 
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    width: 500px;
-    backdrop-filter: blur(10px); 
+	background-color: rgba(255, 255, 255, 0.3);
+	padding: 15px;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+	width: 500px;
+	backdrop-filter: blur(10px);
 }
 
 .emailClass input,
 .pwdClass input {
-    padding: 10px; 
-    width: 100%; 
+	padding: 10px;
+	width: 100%;
 }
 
 .emailClass input:focus,
 .pwdClass input:focus {
-    outline: none;
-    border-color: blue; 
+	outline: none;
+	border-color: blue;
 }
 
 .emailClass input::placeholder,
 .pwdClass input::placeholder {
-    color: #999; 
+	color: #999;
 }
-
