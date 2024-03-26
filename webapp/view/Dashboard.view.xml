@@ -21,7 +21,7 @@
     <Carousel
         id="carouselSample"
         backgroundDesign="Transparent"
-        pages="{trial>/agreements}"
+        pages="{docs>/filtered/EXP}"
         showPageIndicator="false"
         class="sapUiTinyMargin"
     >
@@ -51,11 +51,11 @@
                                 >
                                     <Text
                                         id="_IDGenText1"
-                                        text="{trial>CompanyName}"
+                                        text="{docs>CompanyName}"
                                     />
                                     <GenericTag
                                         id="_IDGenGenericTag1"
-                                        text="{trial>ProjectName}"
+                                        text="{docs>ProjectName}"
                                         status="Error"
                                         design="StatusIconHidden"
                                     >
@@ -99,7 +99,7 @@
             <viz:dataset>
                 <viz.data:FlattenedDataset
                     id="bardata"
-                    data="{path:'trial>/agreements',sorter : {
+                    data="{path:'docs>/filtered/EXP',sorter : {
                             path : 'Type',descending:true
                             }}"
                 >
@@ -179,7 +179,7 @@
             <viz:dataset>
                 <viz.data:FlattenedDataset
                     id="bardata2"
-                    data="{path:'trial>/agreements',sorter : {
+                    data="{path:'docs>/filtered/AllActive',sorter : {
                             path : 'Type',descending:true
                             }}"
                 >
@@ -252,7 +252,7 @@
             class="classObjectHeader"
         >
             <headerContainer>
-                <HeaderContainer
+                <!-- <HeaderContainer
                     scrollStep="200"
                     id="headerContainer"
                 >
@@ -284,13 +284,40 @@
                         valueColor="Good"
                         press=".filterDocs"
                     />
+                </HeaderContainer> -->
+                <HeaderContainer
+                    scrollStep="200"
+                    id="headerContainer"
+                >
+                    <NumericContent
+                        id="_IDGenNumericContent1"
+                        scale="ALL"
+                        value="{docs>/length/All}"
+                        valueColor="None"
+                        press=".filterDocs"
+                    />
+                    <NumericContent
+                        id="_IDGenNumericContent2"
+                        scale="MSA"
+                        value="{docs>/length/MSA}"
+                        valueColor="{= ${docs>/length/MSA} > 10 ? 'Good' : ${docs>/length/MSA} > 5 ? 'Neutral' : ${docs>/length/MSA} >= 1 ? 'Error' : 'None' }"
+                        press=".filterDocs"
+                    />
+                    <NumericContent
+                        id="_IDGenNumericContent3"
+                        scale="NDA"
+                        value="{docs>/length/NDA}"
+                        valueColor="{= ${docs>/length/NDA} > 10 ? 'Good' : ${docs>/length/NDA} > 5 ? 'Neutral' : ${docs>/length/NDA} >= 1 ? 'Error' : 'None' }"
+                        press=".filterDocs"
+                    />
+                    <NumericContent
+                        id="_IDGenNumericContent4"
+                        scale="SOW"
+                        value="{docs>/length/SOW}"
+                        valueColor="{= ${docs>/length/SOW} > 10 ? 'Good' : ${docs>/length/SOW} > 5 ? 'Neutral' : ${docs>/length/SOW} >= 1 ? 'Error' : 'None' }"
+                        press=".filterDocs"
+                    />
                 </HeaderContainer>
-                <!-- <HeaderContainer scrollStep="200" id="headerContainer">
-                        <NumericContent scale="ALL" value="{docs>/length/All}" valueColor="None" press=".filterDocs" />
-                        <NumericContent scale="MSA" value="{docs>/length/MSA}" valueColor="{= ${docs>/length/MSA} > 10 ? 'Good' : ${docs>/length/MSA} > 5 ? 'Neutral' : ${docs>/length/MSA} >= 1 ? 'Error' : 'None' }" press=".filterDocs" />
-                        <NumericContent scale="NDA" value="{docs>/length/NDA}" valueColor="{= ${docs>/length/NDA} > 10 ? 'Good' : ${docs>/length/NDA} > 5 ? 'Neutral' : ${docs>/length/NDA} >= 1 ? 'Error' : 'None' }" press=".filterDocs" />
-                        <NumericContent scale="SOW" value="{docs>/length/SOW}" valueColor="{= ${docs>/length/SOW} > 10 ? 'Good' : ${docs>/length/SOW} > 5 ? 'Neutral' : ${docs>/length/SOW} >= 1 ? 'Error' : 'None' }" press=".filterDocs" />
-                    </HeaderContainer> -->
             </headerContainer>
         </ObjectHeader>
     </HBox>
