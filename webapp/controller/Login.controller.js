@@ -55,7 +55,7 @@ sap.ui.define(
 				oModel.setProperty("/username", oEmail.getValue());
 				oModel.setProperty("/password", oPassword.getValue());
 
-				fetch(services.login1, {
+				fetch(services.login, {
 					method: "POST",
 					body: JSON.stringify(oModel.getData()),
 				})
