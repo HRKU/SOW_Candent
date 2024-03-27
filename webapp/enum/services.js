@@ -1,15 +1,22 @@
+const hostname = "http://192.168.1.53:8001/sow_candent_api";
+//"localhost" instead of ip address for yash laptop
+
 sap.ui.define(
-	// "http://excavator:8000/sow_candent_api/login/","http://yw:8000/sow_candent_api/login/"
 	{
-		login: "http://192.168.1.53:8001/sow_candent_api/login/",
-		// login1: "http://excavator:8000/sow_candent_api/login/",
-		// delete: "http://excavator:8000/sow_candent_api/agreements/delete/",
-		// list: "http://excavator:8000/sow_candent_api/agreements/list",
-		// uploadexcel: "http://excavator:8000/sow_candent_api/upload_excel/",
-		// login: "http://yw:8000/sow_candent_api/login/",
-		// delete: "http://yw:8000/sow_candent_api/agreements/delete/",
-		// list: "http://yw:8000/sow_candent_api/agreements/list"
-		// uploadexcel: "http://yw:8000/sow_candent_api/upload_excel/",
+		// Login Api
+		login: hostname + "/login/",
+		// delete api
+		delete: hostname + "/agreements/delete/",
+		//uploadExcel api
+		uploadexcel: hostname + "/upload_excel/",
+		//createuser api
+		creatUser: hostname + "/userapi/",
+		//agreementList api
+		agreementList: hostname + "/agreements/list",
+		//agreementCreate api
+		agreementCreate: hostname + "/agreements/create/",
+		// update
+		update: hostname + "/agreements/update/",
 	},
 	true
 );

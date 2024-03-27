@@ -5,12 +5,15 @@ sap.ui.define(
 		"sap/m/MessageToast",
 		"sap/m/MessageBox",
 		"com/candentech/sowtracker/enum/services",
+		"../model/formatter",
 	],
-	(Controller, JSONModel, MessageToast, MessageBox, services) => {
+	(Controller, JSONModel, MessageToast, MessageBox, services, formatter) => {
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Table", {
+			formatter: formatter,
 			onInit: function () {
+				this.byId("_IDGenSearchField1").getValue();
 				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
 					"SrNo",
@@ -44,26 +47,80 @@ sap.ui.define(
 					cells: oCell,
 				});
 				oTable.setModel(oModel);
-				oTable.bindItems(
-					"docs>/agreements", // Adjust path as per your model structure
-					aColList
-				);
+				var oSorter = new sap.ui.model.Sorter("CompanyName", false, true);
+				oTable.bindItems({
+					path: "docs>/agreements",
+					template: aColList,
+					sorter: oSorter,
+				});
+			},
+			onFilter: function () {
+				// Retrieve the filter values from SearchFields and ComboBox
+				var sType = this.byId("_IDGenSearchField1").getValue();
+				var sCompanyName = this.byId("_IDGenSearchField2").getValue();
+				var sProjectName = this.byId("_IDGenSearchField3").getValue();
+				var sStatus = this.byId("filterStatusComboBox").getValue();
+
+				// Filter the data based on the retrieved values
+				var aFilters = [];
+				if (sType) {
+					aFilters.push(
+						new sap.ui.model.Filter(
+							"Type",
+							sap.ui.model.FilterOperator.Contains,
+							sType
+						)
+					);
+				}
+				if (sCompanyName) {
+					aFilters.push(
+						new sap.ui.model.Filter(
+							"CompanyName",
+							sap.ui.model.FilterOperator.Contains,
+							sCompanyName
+						)
+					);
+				}
+				if (sProjectName) {
+					aFilters.push(
+						new sap.ui.model.Filter(
+							"ProjectName",
+							sap.ui.model.FilterOperator.Contains,
+							sProjectName
+						)
+					);
+				}
+				if (sStatus) {
+					aFilters.push(
+						new sap.ui.model.Filter(
+							"Status",
+							sap.ui.model.FilterOperator.EQ,
+							sStatus
+						)
+					);
+				}
+
+				// Apply the filters to your table or list
+				var oTable = this.byId("projectTable");
+				var oBinding = oTable.getBinding("items");
+				oBinding.filter(aFilters);
 			},
 
-			onFilter: function (oEvent) {
-				const oTable = this.byId("projectTable");
-				const sQuery = oEvent.getParameter("newValue");
-				const oBinding = oTable.getBinding("items");
+			onClearFilter: function () {
+				// Clear the values of SearchFields and ComboBox
+				this.byId("_IDGenSearchField1").setValue("");
+				this.byId("_IDGenSearchField2").setValue("");
+				this.byId("_IDGenSearchField3").setValue("");
+				this.byId("filterStatusComboBox").setSelectedKey("");
 
-				oBinding.filter([
-					new sap.ui.model.Filter(
-						"CompanyName",
-						sap.ui.model.FilterOperator.Contains,
-						sQuery
-					),
-				]);
+				// Reset the filters
+				var oTable = this.byId("projectTable");
+				var oBinding = oTable.getBinding("items");
+				oBinding.filter([]);
 			},
+
 			onOpenDialog() {
+				// debugger;
 				this.pDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.fragments.AddSowDialog",
 				});
@@ -126,8 +183,6 @@ sap.ui.define(
 					oControls[id] = this.byId(id);
 				});
 
-				console.log(oControls);
-
 				for (var key in oControls) {
 					if (!oControls[key].getValue()) {
 						oControls[key].setValueState("Error");
@@ -151,24 +206,21 @@ sap.ui.define(
 					oControls["AgreementStartDate"].setValueState();
 				}
 
-				console.log(valuesToBeSent);
-
-				fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
-					// fetch("http://yw:8000/sow_candent_api/agreements/create/", {
+				// fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
+				fetch(services.agreementCreate, {
 					method: "POST",
 					body: JSON.stringify(valuesToBeSent),
 				})
 					.then((response) => {
 						if (response.status == 201) {
 							MessageToast.show("Created Succesfully");
+							this.refresh();
 						} else {
 							MessageToast.show("Did not Create field");
 						}
 						return response.json();
 					})
-					.then((data) => {
-						console.log(data);
-					})
+					.then((data) => {})
 					.catch((error) => {
 						MessageToast.show("Something Went Wrong " + error);
 					});
@@ -208,7 +260,7 @@ sap.ui.define(
 
 				var oControls = {};
 				var valuesToBeSent = {};
-				debugger;
+
 				oIds.map((id) => {
 					oControls[id] = this.byId(id);
 				});
@@ -239,13 +291,18 @@ sap.ui.define(
 				valuesToBeSent["SrNo"] = parseInt(iSrNo);
 				console.log(oControls, valuesToBeSent, "this is srNo", iSrNo);
 
-				fetch("http://excavator:8000/sow_candent_api/agreements/update/", {
+				fetch(services.update, {
 					method: "PUT",
 					body: JSON.stringify(valuesToBeSent),
 				})
 					.then((response) => {
 						if (response.ok) {
 							MessageToast.show("Updated Successfully");
+
+							oModel.setProperty(
+								oSelectedItem.getBindingContextPath(),
+								valuesToBeSent
+							);
 						} else {
 							MessageToast.show("Failed to update fields");
 						}
@@ -316,7 +373,7 @@ sap.ui.define(
 				if (oFile) {
 					var formData = new FormData();
 					formData.append("excel_file", oFile);
-					fetch("http://excavator:8000/sow_candent_api/upload_excel/", {
+					fetch(services.uploadexcel, {
 						method: "POST",
 						body: formData,
 					})
@@ -343,15 +400,21 @@ sap.ui.define(
 				// debugger;
 				const oTable = this.byId("projectTable");
 				const oSelectedItem = oTable.getSelectedItem();
+
+				// Check whether the data are selected or not
+
 				if (!oSelectedItem) {
-					MessageToast.show("Please select the at least one Record!");
+					MessageToast.show("Please select the Record to delete");
 					return;
 				}
+				console.log(oSelectedItem);
 				const sPath = oSelectedItem.getBindingContext("docs").getPath();
 				const { SrNo: iSrNo } = oSelectedItem
 					.getModel("docs")
 					.getProperty(sPath);
+				console.log(sPath);
 				window.oTable = oTable;
+				// debugger;
 
 				MessageBox.confirm("Are you sure to delete the record?", {
 					title: "Confirm",
@@ -379,6 +442,95 @@ sap.ui.define(
 						}
 					},
 				});
+			},
+			refresh() {
+				fetch("http://yw:8001/sow_candent_api/agreements/list/")
+					.then((res) => res.json())
+					.then((data) => {
+						console.log(data);
+						var oModel = {};
+						oModel.agreements = {};
+						oModel.agreements = data;
+						oModel.filtered = {};
+						oModel.filtered.All = oModel.agreements;
+						oModel.filtered.MSA = oModel.agreements.filter(
+							(i) => i.Type == "MSA"
+						);
+						oModel.filtered.SOW = oModel.agreements.filter(
+							(i) => i.Type == "SOW"
+						);
+						oModel.filtered.NDA = oModel.agreements.filter(
+							(i) => i.Type == "NDA"
+						);
+						oModel.filtered.EXP = oModel.agreements
+							.filter((i) => i.Status === "Active")
+							.filter((i) => {
+								const diff = new Date(i.AgreementEndDate) - new Date();
+								const remaining_days = Math.round(diff / (1000 * 60 * 60 * 24));
+								if (remaining_days < 30) {
+									return remaining_days;
+								} else {
+									return null;
+								}
+							});
+
+						// oModel.status = {
+						// 	active: oModel.agreements.filter((i) => i.Status === "Active")
+						// 		.length,
+						// 	inactive: oModel.agreements.filter(
+						// 		(i) => i.Status === "Inactive"
+						// 	).length,
+						// };
+
+						oModel.status = oModel.agreements
+							.map((i) => i.Status)
+							.getUnique()
+							.map((name) => ({
+								name,
+								length: oModel.agreements.filter((i) => i.Status === name)
+									.length,
+								data: oModel.agreements.filter((i) => i.Status === name),
+							}));
+
+						// oModel.status = oModel.agreements.map()
+
+						oModel.length = {};
+						Object.keys(oModel.filtered).map(
+							(i) => (oModel.length[i] = oModel.filtered[i].length)
+						);
+						oModel.start_date = {};
+						oModel.end_date = {};
+						oModel.start_date = new Date(
+							Math.min(
+								...oModel.agreements
+									.map((agreement) =>
+										new Date(agreement.AgreementStartDate).getTime()
+									)
+									.filter((date) => !isNaN(date))
+							)
+						);
+						oModel.end_date = new Date(
+							Math.max(
+								...oModel.agreements
+									.map((agreement) =>
+										new Date(agreement.AgreementEndDate).getTime()
+									)
+									.filter((date) => !isNaN(date))
+							)
+						);
+
+						this.getOwnerComponent().setModel(new JSONModel(oModel), "docs");
+
+						console.log(this.getModel("docs"));
+
+						console.log(
+							"the fetch is working just fine and here is the data from api, ",
+							data
+						);
+
+						sap.ui.core.BusyIndicator.hide();
+					})
+					.catch(console.error);
 			},
 		});
 	}

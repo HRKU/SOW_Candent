@@ -15,47 +15,119 @@
     displayBlock="true"
     xmlns:f="sap.f"
     xmlns:cards="sap.f.cards"
+    xmlns:l="sap.ui.layout"
+    xmlns:lf="sap.ui.layout.form"
 >
-    <FlexBox
-        id="mainFlex"
-        width="100%"
-        justifyContent="Center"
-        height="100%"
-    >
-        <VBox
-            id="leftSide"
-            width="60%"
-            justifyContent="SpaceBetween"
-            height="100%"
+    <!-- this is my first desgin  -->
+
+    <!-- <HBox id="mainbox">
+        <Panel
+            id="panel"
+            width="auto"
+            height="650px"
+            class="sapUiSmallMargin"
         >
+            <f:Card id="Experies">
+                <f:header>
+                    <cards:Header
+                        id="ipi"
+                        title="Urgent Expiries"
+                    />
+                </f:header>
+                <f:content>
+                    <List
+                        id="as"
+                        items="{docs>/filtered/EXP}"
+                    >
+                        <items>
+                            <ObjectListItem
+                                type="Navigation"
+                                id="list"
+                                title="{docs>Type}"
+                                intro="{docs>CompanyName}"
+                                number="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                numberState="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
+                                press=".routeToTableViaCard"
+                            >
+                                <firstStatus>
+                                    <ObjectStatus
+                                        id="doctypes"
+                                        text="{docs>Type}"
+                                    />
+                                </firstStatus>
+                            </ObjectListItem>
+                        </items>
+                    </List>
+                </f:content>
+            </f:Card>
+        </Panel>
+
+        <Carousel
+            width="950px"
+            id="carouselSample1"
+            backgroundDesign="Transparent"
+            showPageIndicator="false"
+            height="auto"
+            pageIndicatorBackgroundDesign="Transparent"
+            pageIndicatorBorderDesign="None"
+            loop="true"
+            class="sapUiSmallMargin"
+        >
+            <customLayout>
+                <CarouselLayout
+                    id="_IDGenCarouselLayout2"
+                    visiblePagesCount="1"
+                />
+            </customLayout>
             <viz:VizFrame
-                id="chartContainer"
+                id="barchartContainer"
+                width="950px"
+                height="650px"
                 vizType="column"
-                width="auto"
-                height="300px"
-                vizProperties="{title:{ text:'Close to Expiry'},dataLabel:{visible:true,showTotal:true},legend:{visible:true}}"
-                class="sapUiLargeMarginBegin sapUiLargeMarginEnd sapUiSmallMarginTop"
-                uiConfig="{applicationSet:'fiori'}"
+                vizProperties='{
+                        "title": { "text": "Urgent Expiry" },
+                        "dataLabel": { "visible": true, "showTotal": true },
+                        "legend": { "visible": true },
+                        "categoryAxis": { "label": { "linesOfWrap": 2, "angle": 0 } },
+                        "plotArea": {
+                            "gridline": { "visible": false },
+                            "background": { "visible": false },
+                            "colorPalette": ["#0057d2","#2ca02c", "#ff4500", "#5D36FF", "#5B738B"],
+                            "dataPointSize": { "max": true }
+                        }
+                    }'
+                uiConfig="{ applicationSet: 'fiori' }"
+                selectData=".routeToTableViaChart"
             >
                 <viz:dataset>
                     <viz.data:FlattenedDataset
-                        id="_IDGenFlattenedDataset1"
-                        data="{docs>/filtered/EXP}"
+                        id="bardata"
+                        data="{path:'docs>/filtered/EXP',sorter : {
+                            path : 'Type',descending:true
+                            }}"
                     >
                         <viz.data:dimensions>
                             <viz.data:DimensionDefinition
-                                id="_IDGenDimensionDefinition1"
-                                name="Employee Names"
+                                id="companydimension"
+                                name="Company Name"
+                                value="{docs>CompanyName}"
+                            />
+                            <viz.data:DimensionDefinition
+                                id="projectdimension"
+                                name="project name"
                                 value="{docs>ProjectName}"
                             />
-                            <!-- i just want to figur out how it work -->
-                            <!-- value="{producst>ProjectName}" -->
+                            <viz.data:DimensionDefinition
+                                id="bardimension1"
+                                name="type"
+                                value="{docs>Type}"
+                            />
                         </viz.data:dimensions>
                         <viz.data:measures>
                             <viz.data:MeasureDefinition
-                                id="_IDGenMeasureDefinition1"
-                                name="data"
-                                value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                id="barmeasure"
+                                name="Expiry In Days"
+                                value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiryChart'}"
                             />
                         </viz.data:measures>
                     </viz.data:FlattenedDataset>
@@ -66,25 +138,516 @@
                         id='valueAxisFeed'
                         uid="valueAxis"
                         type="Measure"
-                        values="data"
+                        values="Expiry In Days"
                     />
                     <viz.feeds:FeedItem
-                        id='categoryAxisFeed'
+                        id='categoryAxisFeedC'
                         uid="categoryAxis"
                         type="Dimension"
-                        values="Employee Names"
+                        values="Company Name"
+                    />
+                    <viz.feeds:FeedItem
+                        id='categoryAxisFeedP'
+                        uid="categoryAxis"
+                        type="Dimension"
+                        values="project name"
+                    />
+                    <viz.feeds:FeedItem
+                        id='colorFeed'
+                        uid="color"
+                        type="Dimension"
+                        values="type"
                     />
                 </viz:feeds>
-                <viz:dependents>
-                    <Popover id="isapop" />
-                </viz:dependents>
             </viz:VizFrame>
+            <viz:VizFrame
+                id="barchartContainer3"
+                width="950px"
+                height="650px"
+                vizType="column"
+                vizProperties='{
+                        "title": { "text": "All Data" },
+                        "dataLabel": { "visible": true, "showTotal": true },
+                        "legend": { "visible": true },
+                        "categoryAxis": { "label": { "linesOfWrap": 2, "angle": 0 } },
+                        "plotArea": {
+                            "gridline": { "visible": false },
+                            "background": { "visible": false },
+                            "colorPalette": ["#0057d2","#6C32A9", "#BA066C", "#5D36FF", "#5B738B"],
+                            "dataPointSize": { "max": true }
+                        }
+                    }'
+                uiConfig="{ applicationSet: 'fiori' }"
+                selectData=".routeToTableViaChart"
+            >
+                <viz:dataset>
+                    <viz.data:FlattenedDataset
+                        id="bardata3"
+                        data="{path:'docs>/filtered/AllActive',sorter : {
+                            path : 'Type',descending:true
+                            }}"
+                    >
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition
+                                id="companydimension3"
+                                name="Company Name"
+                                value="{docs>CompanyName}"
+                            />
+                            <viz.data:DimensionDefinition
+                                id="projectdimension3"
+                                name="project name"
+                                value="{docs>ProjectName}"
+                            />
+                            <viz.data:DimensionDefinition
+                                id="bardimension13"
+                                name="type"
+                                value="{docs>Type}"
+                            />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition
+                                id="barmeasure3"
+                                name="Expiry In Days"
+                                value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiryChart'}"
+                            />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
 
-            <!-- gantt chart -->
+                <viz:feeds>
+                    <viz.feeds:FeedItem
+                        id='valueAxisFeed3'
+                        uid="valueAxis"
+                        type="Measure"
+                        values="Expiry In Days"
+                    />
+                    <viz.feeds:FeedItem
+                        id='categoryAxisFeedC3'
+                        uid="categoryAxis"
+                        type="Dimension"
+                        values="Company Name"
+                    />
+                    <viz.feeds:FeedItem
+                        id='categoryAxisFeedP3'
+                        uid="categoryAxis"
+                        type="Dimension"
+                        values="project name"
+                    />
+                    <viz.feeds:FeedItem
+                        id='colorFeed3'
+                        uid="color"
+                        type="Dimension"
+                        values="type"
+                    />
+                </viz:feeds>
+            </viz:VizFrame>
+        </Carousel>
+        <VBox id="tags">
+            <GenericTile
+                press=".filterDocs1"
+                id="_IDGenGenericTile1"
+                class="sapUiSmallMargin sapUiMarginDown"
+                frameType="OneByHalf"
+                header="Total Documents"
+            >
+                <customData>
+                    <core:CustomData key="All" />
+                </customData>
+                <TileContent id="_IDGenTileContent1">
+                    <Title
+                        id="_IDGenTitle1"
+                        titleStyle="H2"
+                        text="{docs>/length/All}"
+                        class="sapUiMarginSmallStart sapThemeHighlight"
+                    />
+                </TileContent>
+            </GenericTile>
+            <GenericTile
+                press=".filterDocs1"
+                id="_IDGenGenericTile"
+                class="sapUiSmallMargin sapUiMarginDown"
+                frameType="OneByHalf"
+                header="SOW"
+            >
+                <customData>
+                    <core:CustomData key="SOW" />
+                </customData>
+                <TileContent id="_IDGenTileContent">
+                    <Title
+                        id="_IDGenTitle"
+                        titleStyle="H2"
+                        text="{docs>/length/SOW}"
+                        class="sapUiMarginSmallStart sapThemeHighlight"
+                    />
+                </TileContent>
+            </GenericTile>
 
-            <simple:GanttChartContainer
+            <GenericTile
+                press=".filterDocs1"
+                id="_IDGenGenericTile2"
+                class="sapUiSmallMargin sapUiMarginDown"
+                frameType="OneByHalf"
+                header="MSA"
+            >
+                <customData>
+                    <core:CustomData key="MSA" />
+                </customData>
+                <TileContent id="_IDGenTileContent2">
+                    <Title
+                        id="_IDGenTitle2"
+                        titleStyle="H2"
+                        text="{docs>/length/MSA}"
+                        class="sapUiMarginSmallStart sapThemeHighlight"
+                    />
+                </TileContent>
+            </GenericTile>
+            <GenericTile
+                header="NDA"
+                press=".filterDocs1"
+                id="_IDGenGenericTile4"
+                class="sapUiSmallMargin sapUiMarginDown"
+                frameType="OneByHalf"
+            >
+                <customData>
+                    <core:CustomData key="NDA" />
+                </customData>
+                <TileContent id="_IDGenTileContent4">
+                    <Title
+                        id="_IDGenTitle3"
+                        titleStyle="H2"
+                        text="{docs>/length/NDA}"
+                        class="sapUiMarginSmallStart sapThemeHighlight"
+                    />
+                </TileContent>
+            </GenericTile>
+        </VBox>
+    </HBox> -->
+
+    <!-- this is the Second Desgin  -->
+    <Carousel
+        id="carouselSample"
+        backgroundDesign="Transparent"
+        pages="{docs>/filtered/EXP}"
+        showPageIndicator="false"
+        width="auto"
+        class="sapUiMediumMarginBegin sapUiMediumMarginEnd sapUiTinyMarginTop sapUiTinyMarginBottom"
+        height="auto"
+        pageIndicatorBackgroundDesign="Transparent"
+        pageIndicatorBorderDesign="None"
+        loop="true"
+    >
+        <customLayout>
+            <CarouselLayout
+                id="_IDGenCarouselLayout1"
+                visiblePagesCount="3"
+            />
+        </customLayout>
+        <FlexBox
+            id="_IDGenFlexBox1"
+            justifyContent="Center"
+        >
+            <!-- Add FlexBox -->
+            <GenericTile
+                id="GenericTile1"
+                header="{docs>CompanyName}"
+                subheader="{docs>ProjectName}"
+                class="sapUiTinyMarginBottom"
+                frameType="TwoByHalf"
+                press=".routeToTableViaTile"
+            >
+                <tileContent>
+                    <TileContent id="asd">
+                        <GenericTag
+                            id="_IDGenGenericTag1"
+                            text="{docs>ProjectName}"
+                            status="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
+                            design="StatusIconHidden"
+                        >
+                            <ObjectNumber
+                                id="_IDGenObjectNumber1"
+                                unit="2 Days"
+                            />
+                        </GenericTag>
+                    </TileContent>
+                </tileContent>
+            </GenericTile>
+        </FlexBox>
+        <!-- Close FlexBox -->
+    </Carousel>
+
+    <FlexBox
+        id="vizbox"
+        justifyContent="SpaceAround"
+        backgroundDesign="Transparent"
+    >
+        <viz:VizFrame
+            id="barchartContainer1"
+            vizType="column"
+            vizProperties='{
+        "title": { "text": "Urgent Expiry" },
+        "dataLabel": { "visible": true, "showTotal": true },
+        "legend": { "visible": true },
+        "categoryAxis": { "label": { "linesOfWrap": 2, "angle": 0 } },
+        "plotArea": {
+            "gridline": { "visible": false },
+            "background": { "visible": false },
+            "colorPalette": ["#0057d2","#2ca02c", "#ff4500", "#5D36FF", "#5B738B"],
+            "dataPointSize": { "max": true }
+        }
+    }'
+            uiConfig="{ applicationSet: 'fiori' }"
+            selectData=".routeToTableViaChart"
+            class="sapUiTinyMarginBottom"
+        >
+            <viz:dataset>
+                <viz.data:FlattenedDataset
+                    id="bardata1"
+                    data="{path:'docs>/filtered/EXP',sorter : {
+                            path : 'Type',descending:true
+                            }}"
+                >
+                    <viz.data:dimensions>
+                        <viz.data:DimensionDefinition
+                            id="companydimension1"
+                            name="Company Name"
+                            value="{docs>CompanyName}"
+                        />
+                        <viz.data:DimensionDefinition
+                            id="projectdimension1"
+                            name="project name"
+                            value="{docs>ProjectName}"
+                        />
+                        <viz.data:DimensionDefinition
+                            id="bardimension11"
+                            name="type"
+                            value="{docs>Type}"
+                        />
+                    </viz.data:dimensions>
+                    <viz.data:measures>
+                        <viz.data:MeasureDefinition
+                            id="barmeasure1"
+                            name="Expiry In Days"
+                            value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiryChart'}"
+                        />
+                    </viz.data:measures>
+                </viz.data:FlattenedDataset>
+            </viz:dataset>
+
+            <viz:feeds>
+                <viz.feeds:FeedItem
+                    id='valueAxisFeed1'
+                    uid="valueAxis"
+                    type="Measure"
+                    values="Expiry In Days"
+                />
+                <viz.feeds:FeedItem
+                    id='categoryAxisFeedC1'
+                    uid="categoryAxis"
+                    type="Dimension"
+                    values="Company Name"
+                />
+                <viz.feeds:FeedItem
+                    id='categoryAxisFeedP1'
+                    uid="categoryAxis"
+                    type="Dimension"
+                    values="project name"
+                />
+                <viz.feeds:FeedItem
+                    id='colorFeed1'
+                    uid="color"
+                    type="Dimension"
+                    values="type"
+                />
+            </viz:feeds>
+        </viz:VizFrame>
+        <viz:VizFrame
+            id="barchartContainer2"
+            vizType="column"
+            vizProperties='{
+        "title": { "text": "All Data" },
+        "dataLabel": { "visible": true, "showTotal": true },
+        "legend": { "visible": true },
+        "categoryAxis": { "label": { "linesOfWrap": 2, "angle": 0 } },
+        "plotArea": {
+            "gridline": { "visible": false },
+            "background": { "visible": false },
+            "colorPalette": ["#0057d2","#6C32A9", "#BA066C", "#5D36FF", "#5B738B"],
+            "dataPointSize": { "max": true }
+        }
+    }'
+            uiConfig="{ applicationSet: 'fiori' }"
+            selectData=".routeToTableViaChart"
+            class="sapUiTinyMarginBottom"
+        >
+            <viz:dataset>
+                <viz.data:FlattenedDataset
+                    id="bardata2"
+                    data="{path:'docs>/filtered/AllActive',sorter : {
+                            path : 'Type',descending:true
+                            }}"
+                >
+                    <viz.data:dimensions>
+                        <viz.data:DimensionDefinition
+                            id="companydimension2"
+                            name="Company Name"
+                            value="{docs>CompanyName}"
+                        />
+                        <viz.data:DimensionDefinition
+                            id="projectdimension2"
+                            name="project name"
+                            value="{docs>ProjectName}"
+                        />
+                        <viz.data:DimensionDefinition
+                            id="bardimension12"
+                            name="type"
+                            value="{docs>Type}"
+                        />
+                    </viz.data:dimensions>
+                    <viz.data:measures>
+                        <viz.data:MeasureDefinition
+                            id="barmeasure2"
+                            name="Expiry In Days"
+                            value="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiryChart'}"
+                        />
+                    </viz.data:measures>
+                </viz.data:FlattenedDataset>
+            </viz:dataset>
+
+            <viz:feeds>
+                <viz.feeds:FeedItem
+                    id='valueAxisFeed2'
+                    uid="valueAxis"
+                    type="Measure"
+                    values="Expiry In Days"
+                />
+                <viz.feeds:FeedItem
+                    id='categoryAxisFeedC2'
+                    uid="categoryAxis"
+                    type="Dimension"
+                    values="Company Name"
+                />
+                <viz.feeds:FeedItem
+                    id='categoryAxisFeedP2'
+                    uid="categoryAxis"
+                    type="Dimension"
+                    values="project name"
+                />
+                <viz.feeds:FeedItem
+                    id='colorFeed2'
+                    uid="color"
+                    type="Dimension"
+                    values="type"
+                />
+            </viz:feeds>
+        </viz:VizFrame>
+    </FlexBox>
+
+    <HBox
+        id="_IDGenHBox1"
+        justifyContent="Center"
+        width="100%"
+        backgroundDesign="Translucent"
+    >
+        <ObjectHeader
+            id="oh1"
+            responsive="true"
+            numberState="Success"
+            class="classObjectHeader"
+        >
+            <headerContainer>
+                <HeaderContainer
+                    scrollStep="200"
+                    id="headerContainer"
+                >
+                    <NumericContent
+                        id="_IDGenNumericContent1"
+                        scale="ALL"
+                        value="{docs>/length/All}"
+                        valueColor="None"
+                        press=".filterDocs"
+                    />
+                    <NumericContent
+                        id="_IDGenNumericContent2"
+                        scale="MSA"
+                        value="{docs>/length/MSA}"
+                        valueColor="Good"
+                        press=".filterDocs"
+                    />
+                    <NumericContent
+                        id="_IDGenNumericContent3"
+                        scale="NDA"
+                        value="{docs>/length/NDA}"
+                        valueColor="Error"
+                        press=".filterDocs"
+                    />
+                    <NumericContent
+                        id="_IDGenNumericContent4"
+                        scale="SOW"
+                        value="{docs>/length/SOW}"
+                        valueColor="Critical"
+                        press=".filterDocs"
+                    />
+                </HeaderContainer>
+            </headerContainer>
+        </ObjectHeader>
+    </HBox>
+
+    <!-- <viz:VizFrame
+                    id="chartContainer"
+                    vizType="donut"
+                    width="450px"
+                    height="300px"
+                    vizProperties="{
+                        title:{text:''},
+                        dataLabel:{visible:true,showTotal:true,numberFormatter:{formatString:'0'}},
+                        legend:{visible:true},
+                        plotArea:{ colorPalette:['#6C32A9','#BA066C'] }}"
+                    uiConfig="{applicationSet:'fiori'}"
+                    class="sapUiResponsiveMarginEnd"
+                >
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset
+                            id="_IDGenFlattenedDataset1"
+                            data="{docs>/status}"
+                        >
+                            <viz.data:dimensions>
+                                <viz.data:DimensionDefinition
+                                    id="_IDGenDimensionDefinition1"
+                                    name="Project Name"
+                                    value="{docs>name}"
+                                />
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition
+                                    id="_IDGenMeasureDefinition1"
+                                    name="Expires in"
+                                    value="{path:'docs>length'}"
+                                />
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+
+                    <viz:feeds>
+                        <viz.feeds:FeedItem
+                            id='size'
+                            uid="size"
+                            type="Measure"
+                            values="Expires in"
+                        />
+                        <viz.feeds:FeedItem
+                            id='color'
+                            uid="color"
+                            type="Dimension"
+                            values="Project Name"
+                        />
+                    </viz:feeds>
+                </viz:VizFrame> -->
+
+    <!-- gantt chart -->
+
+    <!-- <simple:GanttChartContainer
                 id="ganttContainer"
-                class="sapUiResponsiveMargin"
+                width="50%"
             >
                 <simple:toolbar>
                     <simple:ContainerToolbar id="toolbar" />
@@ -97,7 +660,7 @@
                     <simple:axisTimeStrategy>
                         <axistime:StepwiseZoomStrategy
                             id="sss"
-                            zoomLevel="5"
+                            zoomLevel="2"
                         >
                             <axistime:totalHorizon>
                                 <config:TimeHorizon
@@ -109,7 +672,7 @@
                             <axistime:visibleHorizon>
                                 <config:TimeHorizon
                                     id="thv"
-                                    startTime="20220101000000"
+                                    startTime="20230101000000"
                                     endTime="20251029000000"
                                 />
                             </axistime:visibleHorizon>
@@ -162,18 +725,18 @@
                         </table:Table>
                     </simple:table>
                 </simple:GanttChartWithTable>
-            </simple:GanttChartContainer>
-        </VBox>
-        <VBox
-            height="100%"
-            id="abobo"
-            class="sapUiLargeMarginBegin"
-        >
-            <Panel
+            </simple:GanttChartContainer> -->
+
+    <!-- <VBox
+        height="100%"
+        id="abobo"
+        width="auto"
+    > -->
+    <!-- <Panel
                 id="panel"
                 width="auto"
-                height="333px"
-                class="sapUiResponsiveMargin"
+                height="300px"
+                class="sapUiSmallMarginBegin sapUiSmallMarginTop"
             >
                 <f:Card id="Experies">
                     <f:header>
@@ -189,27 +752,27 @@
                         >
                             <items>
                                 <ObjectListItem
-                                    id="lis"
+                                    type="Navigation"
+                                    id="list"
                                     title="{docs>ProjectName}"
+                                    intro="{docs>CompanyName}"
+                                    number="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                    numberState="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
                                 >
                                     <firstStatus>
                                         <ObjectStatus
-                                            id="expiresIn"
-                                            text="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                            id="doctypes"
+                                            text="{docs>Type}"
                                         />
                                     </firstStatus>
-                                    <ObjectAttribute
-                                        id="expireTag"
-                                        text="expires in "
-                                    />
                                 </ObjectListItem>
                             </items>
                         </List>
                     </f:content>
                 </f:Card>
-            </Panel>
+            </Panel> -->
 
-            <HBox id="innerProj">
+    <!-- <HBox id="innerProj">
                 <GenericTile
                     press=".filterDocs"
                     id="_IDGenGenericTile1"
@@ -248,8 +811,8 @@
                         />
                     </TileContent>
                 </GenericTile>
-            </HBox>
-            <HBox id="2nd">
+            </HBox> -->
+    <!-- <HBox id="2nd">
                 <GenericTile
                     press=".filterDocs"
                     id="_IDGenGenericTile2"
@@ -288,8 +851,8 @@
                         />
                     </TileContent>
                 </GenericTile>
-            </HBox>
-            <!-- <GenericTile
+            </HBox> -->
+    <!-- <GenericTile
                 id="NavTable"
                 frameType="TwoByHalf"
                 class="sapUiResponsiveMargin"
@@ -315,6 +878,5 @@
                     />
                 </TileContent>
             </GenericTile> -->
-        </VBox>
-    </FlexBox>
+    <!-- </VBox> -->
 </mvc:View>

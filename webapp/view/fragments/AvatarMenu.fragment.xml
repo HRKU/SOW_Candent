@@ -2,12 +2,31 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
 >
-    <Popover id="AvatarMenu">
-        <VBox id="hello">
-            <Text
-                id="this"
-                text="aksjdnaskjdn"
-            />
-        </VBox>
+    <Popover
+        id="AvatarMenu"
+        title="{userdetails>/username}"
+        contentWidth="200px"
+        placement="Bottom"
+        ariaLabelledBy="master-title"
+    >
+        <List
+            id="_IDGenList1"
+            mode="SingleSelectMaster"
+        >
+            <items>
+                <StandardListItem
+                    id="_IDGenStandardListItem1"
+                    title="Logout"
+                    icon="sap-icon://log"
+                    press="onLogout"
+                />
+                <StandardListItem
+                    id="_IDGenStandardListItem2"
+                    title="Go to Admin Page"
+                    icon="sap-icon://employee"
+                    press="onAdminPage"
+                />
+            </items>
+        </List>
     </Popover>
 </core:FragmentDefinition>

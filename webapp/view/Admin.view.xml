@@ -1,151 +1,197 @@
-<mvc:View xmlns:table="sap.ui.table"
+<mvc:View
+    xmlns:table="sap.ui.table"
     controllerName="com.candentech.sowtracker.controller.Admin"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:grid="sap.ui.layout.cssgrid"
-	xmlns:card="sap.f.cards"
+    xmlns:card="sap.f.cards"
     xmlns:core="sap.ui.core"
     displayBlock="true"
     height="100%"
     busyIndicatorDelay="0"
 >
-    <Panel
-        id="_IDGenPanel1"
-        height="100%"
-        width="100%">
+    <VBox
+        id="adminpage"
+        height="auto"
+        width="auto"
+        justifyContent="Start"
+        class="sapUiResponsiveMargin"
+    >
+        <Table
+            id="myTable"
+            class="sapUiSmallMarginBottom"
+            width="auto"
+        >
+            <headerToolbar>
+                <OverflowToolbar
+                    id="_IDGenOverflowToolbar1"
+                    design="Solid"
+                >
+                    <content>
+                        <Title
+                            id="_IDGenTitle1"
+                            text="Roles and Permission"
+                        />
+                        <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                    </content>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column id="_IDGenColumn1">
+                    <header>
+                        <Label
+                            id="_IDGenLabel3"
+                            text="Name"
+                        />
+                    </header>
+                </Column>
+                <Column id="_IDGenColumn2">
+                    <header>
+                        <Label
+                            id="_IDGenLabel4"
+                            text="Description"
+                        />
+                    </header>
+                </Column>
+                <Column id="_IDGenColumn3">
+                    <header>
+                        <Label
+                            id="_IDGenLabel5"
+                            text="Permission"
+                        />
+                    </header>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem id="_IDGenColumnListItem1">
+                    <cells>
+                        <Text
+                            id="_IDGenObjectIdentifier1"
+                            text="Administrator"
+                        />
+                        <Text
+                            id="_IDGenObjectIdentifier2"
+                            text="Full Access to all feature and data"
+                        />
+                        <Text
+                            id="_IDGenObjectIdentifier3"
+                            text="read own data, create user, edit user, delete user, create roles, edit roles delete roles, manage permission"
+                        />
+                    </cells>
+                </ColumnListItem>
+            </items>
+            <items>
+                <ColumnListItem id="_IDGenColumnListItem2">
+                    <cells>
+                        <Text
+                            id="_IDGenObjectIdentifier4"
+                            text="Editor"
+                        />
+                        <Text
+                            id="_IDGenObjectIdentifier5"
+                            text="Can create,edit, and delete their own data"
+                        />
+                        <Text
+                            id="_IDGenObjectIdentifier6"
+                            text="read own data, creatte own dat, edit own data, delete own data, read all data"
+                        />
+                    </cells>
+                </ColumnListItem>
+            </items>
+            <items>
+                <ColumnListItem id="_IDGenColumnListItem3">
+                    <cells>
+                        <Text
+                            id="_IDGenObjectIdentifier7"
+                            text="Viewer"
+                        />
+                        <Text
+                            id="_IDGenObjectIdentifier8"
+                            text="Can only view data"
+                        />
+                        <Text
+                            id="_IDGenObjectIdentifier9"
+                            text="read all data"
+                        />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <Panel
+            id="_IDGenPanel1"
+            width="100%"
+            visible="{path:'userdetails>/role',formatter:'.formatter.userChecker'}"
+        >
+            <headerToolbar>
+                <Toolbar id="addusertoolar">
+                    <Title
+                        id="userlistTitle"
+                        titleStyle="H5"
+                        text="User Details"
+                    />
+                    <ToolbarSpacer id="spacer" />
 
-        
+                    <Button
+                        visible="{path:'userdetails>/role',formatter:'.formatter.userChecker'}"
+                        id="_IDGenButton2"
+                        text="Add User"
+                        press=".handleOpen"
+                    />
+                </Toolbar>
+            </headerToolbar>
             <f:GridList
-			id="gridList"
-			headerText="Users Details"
-			items="{users>/}">
-			<f:customLayout>
-				<grid:GridBoxLayout boxMinWidth="10rem"/>
-			</f:customLayout>
+                id="gridList"
+                items="{users>/users}"
+            >
+                <f:headerToolbar />
+                <f:customLayout>
+                    <grid:GridBoxLayout
+                        id="_IDGenGridBoxLayout1"
+                        boxMinWidth="15rem"
+                    />
+                </f:customLayout>
 
-			<f:GridListItem>
+                <f:GridListItem id="_IDGenGridListItem1">
+                    <HBox id="insideGridListitem">
+                        <VBox
+                            id="GirdListContainer"
+                            class="sapUiSmallMargin"
+                        >
+                            <layoutData>
+                                <FlexItemData
+                                    id="_IDGenFlexItemData1"
+                                    growFactor="1"
+                                    shrinkFactor="0"
+                                />
+                            </layoutData>
 
-                <HBox>
-				    <VBox class="sapUiSmallMargin">
-				    	<layoutData>
-				    		<FlexItemData growFactor="1" shrinkFactor="0" />
-				    	</layoutData>
-
-				    	<Title text="{users>username}" wrapping="true" />
-				    	<Label text="{users>role}" wrapping="true" />
-				    </VBox>
-                    <Button class="sapUiTinyMargin" icon="sap-icon://delete" press="onDeleteButtonPress"/>
-                    <Button class="sapUiTinyMargin" icon="sap-icon://edit" press="onEditButtonPress"/>
-                </HBox>
-			</f:GridListItem>
-		</f:GridList>
-
-        <Page id="idPanel">
-
-            <Table id="myTable">
-                <headerToolbar>
-                    <OverflowToolbar id="_IDGenOverflowToolbar1">
-                        <content>
                             <Title
-                                id="_IDGenTitle1"
-                                text="Roles and Permission"
+                                id="_IDGenTitle2"
+                                text="{users>username}"
+                                wrapping="true"
                             />
-                            <ToolbarSpacer id="_IDGenToolbarSpacer1" />
-                            <Button
-                                id="_IDGenButton2"
-                                text="Add Role"
-                                press=".handleOpen"
-                            />
-                        </content>
-                    </OverflowToolbar>
-                </headerToolbar>
-                <columns>
-                    <Column id="_IDGenColumn1">
-                        <header>
                             <Label
-                                id="_IDGenLabel3"
-                                text="Name"
+                                id="_IDGenLabel6"
+                                text="{users>role}"
+                                wrapping="true"
                             />
-                        </header>
-                    </Column>
-                    <Column id="_IDGenColumn2">
-                        <header>
-                            <Label
-                                id="_IDGenLabel4"
-                                text="Description"
-                            />
-                        </header>
-                    </Column>
-                    <Column id="_IDGenColumn3">
-                        <header>
-                            <Label
-                                id="_IDGenLabel5"
-                                text="Permission"
-                            />
-                        </header>
-                    </Column>
-                </columns>
-                <items>
-                    <ColumnListItem id="_IDGenColumnListItem1">
-                        <cells>
-                            <Text
-                                id="_IDGenObjectIdentifier1"
-                                text="Administrator"
-                            />
-                            <Text
-                                id="_IDGenObjectIdentifier2"
-                                text="Full Access to all feature and data"
-                            />
-                            <Text
-                                id="_IDGenObjectIdentifier3"
-                                text="read own data, create user, edit user, delete user, create roles, edit roles delete roles, manage permission"
-                            />
-                        </cells>
-                    </ColumnListItem>
-                </items>
-                <items>
-                    <ColumnListItem id="_IDGenColumnListItem2">
-                        <cells>
-                            <Text
-                                id="_IDGenObjectIdentifier4"
-                                text="Editor"
-                            />
-                            <Text
-                                id="_IDGenObjectIdentifier5"
-                                text="Can create,edit, and delete their own data"
-                            />
-                            <Text
-                                id="_IDGenObjectIdentifier6"
-                                text="read own data, creatte own dat, edit own data, delete own data, read all data"
-                            />
-                        </cells>
-                    </ColumnListItem>
-                </items>
-                <items>
-                    <ColumnListItem id="_IDGenColumnListItem3">
-                        <cells>
-                            <Text
-                                id="_IDGenObjectIdentifier7"
-                                text="viewer"
-                            />
-                            <Text
-                                id="_IDGenObjectIdentifier8"
-                                text="can only view data"
-                            />
-                            <Text
-                                id="_IDGenObjectIdentifier9"
-                                text="read all data"
-                            />
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
-
-            
-        </Page>
-    </Panel>
-    
-
-
+                        </VBox>
+                        <Button
+                            id="_IDGenButton3"
+                            class="sapUiTinyMargin"
+                            icon="{path:'users>username',formatter:'.formatter.bindDelete'}"
+                            press=".onDeleteButtonPress"
+                        />
+                        <Button
+                            id="_IDGenButton4"
+                            class="sapUiTinyMargin"
+                            icon="{path:'users>username',formatter:'.formatter.bindEdit'}"
+                            press=".onEdit"
+                        />
+                    </HBox>
+                </f:GridListItem>
+            </f:GridList>
+        </Panel>
+    </VBox>
 </mvc:View>

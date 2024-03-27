@@ -1,79 +1,94 @@
-
-
-
 <core:FragmentDefinition
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
 >
-               <Dialog
-                id="idDialog"
-                resizable="false"
-                draggable="false"
-                title="Add new Roles"
-            >
-                <VBox
-                    id="_IDGenVBox1"
-                    class="sapUiSmallMargin"
+    <Dialog
+        id="idDialog"
+        resizable="false"
+        draggable="true"
+        title="Add new Roles"
+    >
+        <VBox
+            id="_IDGenVBox1"
+            class="sapUiSmallMargin"
+        >
+            <VBox id="_IDGenVBox2">
+                <Label
+                    id="userName"
+                    showColon="true"
+                    text="Username"
+                />
+                <Input
+                    id="username"
+                    placeholder="Enter username"
+                />
+            </VBox>
+            <Label
+                id="Password"
+                showColon="true"
+                text="Password"
+            />
+            <Input
+                id="password"
+                type="Password"
+                placeholder="Enter Password"
+            />
+            <VBox id="_IDGenVBox3" />
+            <VBox id="_IDGenVBox4">
+                <Label
+                    id="_IDGenLabel1"
+                    text="Role"
+                />
+                <ComboBox
+                    id="role"
+                    placeholder="Select Role"
                 >
-                    <VBox id="_IDGenVBox2">
-                        <Label
-                            id="_IDGenLabel1"
-                            showColon="true"
-                            text="Username"
-                        />
-                        <Input
-                            id="username"
-                            placeholder="Enter username"
-                        />
-                    </VBox>
-                    <Label
-                        id="Password"
-                        showColon="true"
-                        text="Password"
+                    <core:Item
+                        id="_IDGenItem1"
+                        key="admin"
+                        text="admin"
                     />
-                    <Input
-                        id="idPassword"
-                        type="Password"
-                        placeholder="Enter Password"
-                        showValueHelp="true"
-                        valueHelpIconSrc="sap-icon://show"
-                        valueHelpRequest=".onShowPassword"
-                        liveChange="onInputChange"
+                    <core:Item
+                        id="_IDGenItem2"
+                        key="editor"
+                        text="editor"
                     />
-                    <VBox id="_IDGenVBox3" />
-                    <VBox id="_IDGenVBox4">
-                    <Label text="Role" />
-                        <ComboBox id="_IDGenComboBox1">
-                            <core:Item
-                                id="_IDGenItem1"
-                                key=""
-                                text="Administrator"
-                            />
-                            <core:Item
-                                id="_IDGenItem2"
-                                key=""
-                                text="Editor"
-                            />
-                            <core:Item
-                                id="_IDGenItem3"
-                                key=""
-                                text="Viewer"
-                            />
-                        </ComboBox>
-                    </VBox>
-                </VBox>
-                <HBox
-                    id="_IDGenHBox1"
-                    class="sapUiSmallMargin"
-                >
-                    <Button
-                        id="_IDGenButton1"
-                        press=".handleClose"
-                        text="Submit"
-                        type="Emphasized"
-                        class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+                    <core:Item
+                        id="_IDGenItem3"
+                        key="eiewer"
+                        text="viewer"
                     />
-                </HBox>
-            </Dialog>
-
+                </ComboBox>
+            </VBox>
+        </VBox>
+        <HBox
+            id="_IDGenHBox1"
+            class="sapUiSmallMargin"
+            justifyContent="SpaceBetween"
+        >
+            <Button
+                id="submit"
+                press=".onSubmit"
+                visible="true"
+                text="Submit"
+                type="Emphasized"
+                class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+            />
+            <Button
+                id="save"
+                press=".onSave"
+                visible="false"
+                text="save"
+                type="Emphasized"
+                class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+            />
+            <Button
+                id="close"
+                press=".handleClose"
+                text="close"
+                type="Emphasized"
+                class="sapUiTinyMarginTop sapUiTinyMarginBottom"
+            />
+        </HBox>
+    </Dialog>
 </core:FragmentDefinition>

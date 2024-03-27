@@ -11,6 +11,7 @@
     <Page
         id="idPage"
         showHeader="false"
+        class="classFelxBox"
     >
         <content>
             <FlexBox
@@ -19,8 +20,14 @@
                 height="100%"
                 alignItems="Center"
             >
-                <VBox id="idVBox">
-                    <form:SimpleForm id="idSimpleForm">
+                <VBox
+                    id="idVBox"
+                    class="classVBox"
+                >
+                    <form:SimpleForm
+                        id="idSimpleForm"
+                        class="classHBox"
+                    >
                         <HBox
                             id="idHBox"
                             justifyContent="Center"
@@ -29,7 +36,7 @@
                             <Image
                                 id="idImage"
                                 class="imgClass"
-                                src="/Assets/images/img.jpeg"
+                                src="/Assets/images/img.png"
                                 width="100%"
                                 height="100%"
                             />
@@ -66,17 +73,6 @@
                             width="100%"
                             liveChange="onInputChange"
                         />
-                        <HBox
-                            id="_IDGenHBox1"
-                            justifyContent="End"
-                        >
-                            <Link
-                                id="idForgotPasswordLink"
-                                text="{i18n>ForgotPassword}"
-                                textAlign="End"
-                                class="sapUiTinyMarginTopBottom"
-                            />
-                        </HBox>
                         <HBox
                             id="_IDGenHBox2"
                             justifyContent="Center"

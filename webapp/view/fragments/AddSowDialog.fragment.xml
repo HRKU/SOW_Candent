@@ -22,7 +22,6 @@
                             id="idLblInpCltName"
                             text="Company Name"
                             design="Bold"
-                            class=""
                         />
                         <Input
                             id="CompanyName"

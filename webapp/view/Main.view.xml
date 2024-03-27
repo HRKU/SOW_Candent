@@ -8,18 +8,19 @@
     <Page
         id="mainPage"
         showHeader="false"
+        class="classFlexBoxDash"
     >
         <content>
             <tnt:ToolHeader
                 id="MainHeader"
                 class="sapUiTinyMargin"
             >
-                <Button
+                <!-- <Button
                     id="backButton"
                     icon="sap-icon://nav-back"
                     visible="false"
                     press=".onNavBack"
-                />
+                /> -->
                 <Title
                     id="dashboard"
                     text="Dashboard"
@@ -31,17 +32,27 @@
                     press=".setVisibleDash"
                     id="dashbutton"
                     icon="sap-icon://home"
+                    class="sapUiSmallMargin"
                 />
                 <Button
                     type="Neutral"
                     press=".setVisibleTable"
                     id="tablebutton"
                     icon="sap-icon://filter-fields"
+                    class="sapUiSmallMargin"
                 />
                 <Avatar
                     id="avatar"
                     displaySize="XS"
                     press=".onAvatarPress"
+                    class="sapUiSmallMargin"
+                />
+                <Button
+                    type="Emphasized"
+                    press=".onLogout"
+                    id="logoutbutton"
+                    text="logout"
+                    class="sapUiSmallMargin"
                 />
             </tnt:ToolHeader>
             <mvc:XMLView
