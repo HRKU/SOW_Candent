@@ -161,25 +161,19 @@ sap.ui.define(
 			},
 			filterDocs(oEvent) {
 				debugger;
-				var oBinding = this.byId("barchartContainer")
-					.getDataset()
-					.getBinding("data");
+
 				var oBinding1 = this.byId("barchartContainer1")
 					.getDataset()
 					.getBinding("data");
 				var oBinding2 = this.byId("barchartContainer2")
 					.getDataset()
 					.getBinding("data");
-				var oBinding3 = this.byId("barchartContainer3")
-					.getDataset()
-					.getBinding("data");
+
 				var sSelectedKey = oEvent.getSource().getProperty("scale"); // Use getProperty instead of accessing directly via mProperties
 
 				// Clear previous filters before applying new ones
 				oBinding1.filter([]);
 				oBinding2.filter([]);
-				oBinding3.filter([]);
-				oBinding.filter([]);
 
 				if (sSelectedKey === "ALL" || !sSelectedKey) {
 					// Handle null or undefined sSelectedKey
@@ -194,8 +188,6 @@ sap.ui.define(
 					// Apply the same filter to all bindings
 					oBinding1.filter(newFilter);
 					oBinding2.filter(newFilter);
-					oBinding3.filter(newFilter);
-					oBinding.filter(newFilter);
 				}
 			},
 			filterDocs1(oEvent) {
