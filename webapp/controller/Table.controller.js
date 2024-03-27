@@ -14,7 +14,7 @@ sap.ui.define(
 			formatter: formatter,
 			onInit: function () {
 				this.byId("_IDGenSearchField1").getValue();
-				const oModel = this.getOwnerComponent().getModel("trial");
+				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
 					"SrNo",
 					"CompanyName",
@@ -38,7 +38,7 @@ sap.ui.define(
 						}),
 					});
 					var cell1 = new sap.m.Text({
-						text: "{trial>" + i + "}",
+						text: "{docs>" + i + "}",
 					});
 					oCell.push(cell1);
 					oTable.addColumn(oColumn);
@@ -49,7 +49,7 @@ sap.ui.define(
 				oTable.setModel(oModel);
 				var oSorter = new sap.ui.model.Sorter("CompanyName", false, true);
 				oTable.bindItems({
-					path: "trial>/agreements",
+					path: "docs>/agreements",
 					template: aColList,
 					sorter: oSorter,
 				});

@@ -11,6 +11,7 @@
     <Page
         id="idPage"
         showHeader="false"
+        class="classFelxBox"
     >
         <content>
             <FlexBox
@@ -18,7 +19,6 @@
                 justifyContent="Center"
                 height="100%"
                 alignItems="Center"
-                class="classFelxBox"
             >
                 <VBox
                     id="idVBox"
@@ -73,7 +73,6 @@
                             width="100%"
                             liveChange="onInputChange"
                         />
-
                         <HBox
                             id="_IDGenHBox2"
                             justifyContent="Center"

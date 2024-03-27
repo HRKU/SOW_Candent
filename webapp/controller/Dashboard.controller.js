@@ -47,7 +47,7 @@ sap.ui.define(
 				debugger;
 				var oProjectName = oEvent
 					.getSource()
-					.getBindingContext("trial")
+					.getBindingContext("docs")
 					.getProperty("ProjectName");
 				const oSelctedItem = oEvent.getSource().mProperties;
 				var oParent = this.getView().getParent().getParent();
@@ -73,17 +73,17 @@ sap.ui.define(
 				debugger;
 				var oProjectName = oEvent
 					.getSource()
-					.getBindingContext("trial")
+					.getBindingContext("docs")
 					.getProperty("ProjectName");
 				var oCompanyName = oEvent
 					.getSource()
-					.getBindingContext("trial")
+					.getBindingContext("docs")
 					.getProperty("CompanyName");
 				var oType = oEvent
 					.getSource()
-					.getBindingContext("trial")
+					.getBindingContext("docs")
 					.getProperty("Type");
-				const oSelctedItem = oEvent.getSource().mProperties;
+
 				var oParent = this.getView().getParent().getParent();
 				oParent.byId("dash").setVisible(false);
 				oParent.byId("admin").setVisible(false);
@@ -164,20 +164,71 @@ sap.ui.define(
 				var oBinding = this.byId("barchartContainer")
 					.getDataset()
 					.getBinding("data");
-				var sSelectedKey = oEvent
-					.getSource()
-					.getCustomData()
-					.map((i) => i.getKey())
-					.pop();
+				var oBinding1 = this.byId("barchartContainer1")
+					.getDataset()
+					.getBinding("data");
+				var oBinding2 = this.byId("barchartContainer2")
+					.getDataset()
+					.getBinding("data");
+				var oBinding3 = this.byId("barchartContainer3")
+					.getDataset()
+					.getBinding("data");
+				var sSelectedKey = oEvent.getSource().getProperty("scale"); // Use getProperty instead of accessing directly via mProperties
+
+				// Clear previous filters before applying new ones
+				oBinding1.filter([]);
+				oBinding2.filter([]);
+				oBinding3.filter([]);
 				oBinding.filter([]);
-				if (sSelectedKey === "All") {
-				} else if (sSelectedKey) {
+
+				if (sSelectedKey === "ALL" || !sSelectedKey) {
+					// Handle null or undefined sSelectedKey
+					return;
+				} else {
 					var newFilter = new sap.ui.model.Filter(
 						"Type",
 						sap.ui.model.FilterOperator.EQ,
 						sSelectedKey
 					);
-					console.log(newFilter);
+
+					// Apply the same filter to all bindings
+					oBinding1.filter(newFilter);
+					oBinding2.filter(newFilter);
+					oBinding3.filter(newFilter);
+					oBinding.filter(newFilter);
+				}
+			},
+			filterDocs1(oEvent) {
+				debugger;
+				var oBinding = this.byId("barchartContainer")
+					.getDataset()
+					.getBinding("data");
+
+				var oBinding3 = this.byId("barchartContainer3")
+					.getDataset()
+					.getBinding("data");
+				var sSelectedKey = oEvent
+					.getSource()
+					.getCustomData()
+					.map((i) => i.getKey())
+					.pop();
+
+				oBinding3.filter([]);
+				oBinding.filter([]);
+
+				if (sSelectedKey === "All" || !sSelectedKey) {
+					// Handle null or undefined sSelectedKey
+					return;
+				} else {
+					var newFilter = new sap.ui.model.Filter(
+						"Type",
+						sap.ui.model.FilterOperator.EQ,
+						sSelectedKey
+					);
+
+					// Apply the same filter to all bindings
+
+					oBinding3.filter(newFilter);
 					oBinding.filter(newFilter);
 				}
 			},

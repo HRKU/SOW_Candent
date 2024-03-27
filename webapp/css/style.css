@@ -29,17 +29,6 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 
 	background-position: center;
 }
-.classFelxBox::before,
-.classFelxBox::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-repeat: no-repeat;
-	background-size: cover;
-}
 
 .classFelxBox {
 	background: linear-gradient(-45deg, #c252ee, #783ce7, #2370d5, #23a5d5);

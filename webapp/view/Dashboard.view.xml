@@ -19,6 +19,7 @@
     xmlns:lf="sap.ui.layout.form"
 >
     <!-- this is my first desgin  -->
+
     <!-- <HBox id="mainbox">
         <Panel
             id="panel"
@@ -36,16 +37,16 @@
                 <f:content>
                     <List
                         id="as"
-                        items="{trial>/agreements}"
+                        items="{docs>/filtered/EXP}"
                     >
                         <items>
                             <ObjectListItem
                                 type="Navigation"
                                 id="list"
-                                title="{trial>Type}"
-                                intro="{trial>CompanyName}"
-                                number="{path:'trial>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
-                                numberState="{path:'trial>AgreementEndDate', formatter:'.formatter.expiryColor'}"
+                                title="{docs>Type}"
+                                intro="{docs>CompanyName}"
+                                number="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                                numberState="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
                                 press=".routeToTableViaCard"
                             >
                                 <firstStatus>
@@ -101,7 +102,7 @@
                 <viz:dataset>
                     <viz.data:FlattenedDataset
                         id="bardata"
-                        data="{path:'trial>/agreements',sorter : {
+                        data="{path:'docs>/filtered/EXP',sorter : {
                             path : 'Type',descending:true
                             }}"
                     >
@@ -182,7 +183,7 @@
                 <viz:dataset>
                     <viz.data:FlattenedDataset
                         id="bardata3"
-                        data="{path:'trial>/agreements',sorter : {
+                        data="{path:'docs>/filtered/AllActive',sorter : {
                             path : 'Type',descending:true
                             }}"
                     >
@@ -243,7 +244,7 @@
         </Carousel>
         <VBox id="tags">
             <GenericTile
-                press=".filterDocs"
+                press=".filterDocs1"
                 id="_IDGenGenericTile1"
                 class="sapUiSmallMargin sapUiMarginDown"
                 frameType="OneByHalf"
@@ -262,7 +263,7 @@
                 </TileContent>
             </GenericTile>
             <GenericTile
-                press=".filterDocs"
+                press=".filterDocs1"
                 id="_IDGenGenericTile"
                 class="sapUiSmallMargin sapUiMarginDown"
                 frameType="OneByHalf"
@@ -282,7 +283,7 @@
             </GenericTile>
 
             <GenericTile
-                press=".filterDocs"
+                press=".filterDocs1"
                 id="_IDGenGenericTile2"
                 class="sapUiSmallMargin sapUiMarginDown"
                 frameType="OneByHalf"
@@ -302,7 +303,7 @@
             </GenericTile>
             <GenericTile
                 header="NDA"
-                press=".filterDocs"
+                press=".filterDocs1"
                 id="_IDGenGenericTile4"
                 class="sapUiSmallMargin sapUiMarginDown"
                 frameType="OneByHalf"
@@ -326,7 +327,7 @@
     <Carousel
         id="carouselSample"
         backgroundDesign="Transparent"
-        pages="{trial>/agreements}"
+        pages="{docs>/filtered/EXP}"
         showPageIndicator="false"
         width="auto"
         class="sapUiMediumMarginBegin sapUiMediumMarginEnd sapUiTinyMarginTop sapUiTinyMarginBottom"
@@ -343,8 +344,8 @@
         </customLayout>
         <GenericTile
             id="GenericTile1"
-            header="{trial>CompanyName}"
-            subheader="{trial>ProjectName}"
+            header="{docs>CompanyName}"
+            subheader="{docs>ProjectName}"
             class="sapUiTinyMarginBottom"
             frameType="TwoByHalf"
             press=".routeToTableViaTile"
@@ -353,8 +354,8 @@
                 <TileContent id="asd">
                     <GenericTag
                         id="_IDGenGenericTag1"
-                        text="{trial>ProjectName}"
-                        status="{path:'trial>AgreementEndDate', formatter:'.formatter.expiryColor'}"
+                        text="{docs>ProjectName}"
+                        status="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
                         design="StatusIconHidden"
                     >
                         <ObjectNumber
@@ -394,7 +395,7 @@
             <viz:dataset>
                 <viz.data:FlattenedDataset
                     id="bardata1"
-                    data="{path:'trial>/agreements',sorter : {
+                    data="{path:'docs>/filtered/EXP',sorter : {
                             path : 'Type',descending:true
                             }}"
                 >
@@ -474,7 +475,7 @@
             <viz:dataset>
                 <viz.data:FlattenedDataset
                     id="bardata2"
-                    data="{path:'trial>/agreements',sorter : {
+                    data="{path:'docs>/filtered/AllActive',sorter : {
                             path : 'Type',descending:true
                             }}"
                 >
@@ -554,42 +555,6 @@
                     <NumericContent
                         id="_IDGenNumericContent1"
                         scale="ALL"
-                        value="16"
-                        valueColor="None"
-                        press=".filterDocs"
-                    />
-                    <NumericContent
-                        id="_IDGenNumericContent2"
-                        scale="MSA"
-                        value="4"
-                        valueColor="Error"
-                        press=".filterDocs"
-                    />
-                    <NumericContent
-                        id="_IDGenNumericContent3"
-                        scale="NDA"
-                        value="5"
-                        valueColor="Critical"
-                        press=".filterDocs"
-                    />
-                    <NumericContent
-                        id="_IDGenNumericContent4"
-                        scale="SOW"
-                        value="7"
-                        valueColor="Good"
-                        press=".filterDocs"
-                    />
-                </HeaderContainer>
-            </headerContainer>
-        </ObjectHeader>
-    </HBox>
-    <!-- <HeaderContainer
-                    scrollStep="200"
-                    id="headerContainer"
-                >
-                    <NumericContent
-                        id="_IDGenNumericContent1"
-                        scale="ALL"
                         value="{docs>/length/All}"
                         valueColor="None"
                         press=".filterDocs"
@@ -598,24 +563,27 @@
                         id="_IDGenNumericContent2"
                         scale="MSA"
                         value="{docs>/length/MSA}"
-                        valueColor="{= ${docs>/length/MSA} > 10 ? 'Good' : ${docs>/length/MSA} > 5 ? 'Neutral' : ${docs>/length/MSA} >= 1 ? 'Error' : 'None' }"
+                        valueColor="Good"
                         press=".filterDocs"
                     />
                     <NumericContent
                         id="_IDGenNumericContent3"
                         scale="NDA"
                         value="{docs>/length/NDA}"
-                        valueColor="{= ${docs>/length/NDA} > 10 ? 'Good' : ${docs>/length/NDA} > 5 ? 'Neutral' : ${docs>/length/NDA} >= 1 ? 'Error' : 'None' }"
+                        valueColor="Error"
                         press=".filterDocs"
                     />
                     <NumericContent
                         id="_IDGenNumericContent4"
                         scale="SOW"
                         value="{docs>/length/SOW}"
-                        valueColor="{= ${docs>/length/SOW} > 10 ? 'Good' : ${docs>/length/SOW} > 5 ? 'Neutral' : ${docs>/length/SOW} >= 1 ? 'Error' : 'None' }"
+                        valueColor="Critical"
                         press=".filterDocs"
                     />
-                </HeaderContainer> -->
+                </HeaderContainer>
+            </headerContainer>
+        </ObjectHeader>
+    </HBox>
 
     <!-- <viz:VizFrame
                     id="chartContainer"

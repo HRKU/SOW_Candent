@@ -1,4 +1,5 @@
-const hostname = "http://192.168.1.54:8000/sow_candent_api";
+const hostname = "http://192.168.1.53:8001/sow_candent_api";
+//"localhost" instead of ip address
 
 sap.ui.define(
 	{
