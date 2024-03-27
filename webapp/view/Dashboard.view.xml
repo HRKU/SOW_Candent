@@ -385,6 +385,7 @@
         <viz:VizFrame
             id="barchartContainer1"
             vizType="column"
+            height="450px"
             vizProperties='{
         "title": { "text": "Urgent Expiry" },
         "dataLabel": { "visible": true, "showTotal": true },
@@ -399,7 +400,7 @@
     }'
             uiConfig="{ applicationSet: 'fiori' }"
             selectData=".routeToTableViaChart"
-            class="sapUiTinyMarginBottom"
+            class="sapUiSmallMarginBottom"
         >
             <viz:dataset>
                 <viz.data:FlattenedDataset
@@ -464,6 +465,7 @@
         </viz:VizFrame>
         <viz:VizFrame
             id="barchartContainer2"
+            height="450px"
             vizType="column"
             vizProperties='{
         "title": { "text": "All Data" },
@@ -479,7 +481,7 @@
     }'
             uiConfig="{ applicationSet: 'fiori' }"
             selectData=".routeToTableViaChart"
-            class="sapUiTinyMarginBottom"
+            class="sapUiSmallMarginBottom"
         >
             <viz:dataset>
                 <viz.data:FlattenedDataset
