@@ -327,7 +327,9 @@
     <Carousel
         id="carouselSample"
         backgroundDesign="Transparent"
-        pages="{docs>/filtered/EXP}"
+        pages="{path:'docs>/filtered/EXP',sorter:{
+                            path : 'AgreementEndDate',descending:false
+                            }}"
         showPageIndicator="false"
         width="auto"
         class="sapUiMediumMarginBegin sapUiMediumMarginEnd sapUiTinyMarginTop sapUiTinyMarginBottom"
@@ -365,7 +367,7 @@
                         >
                             <ObjectNumber
                                 id="_IDGenObjectNumber1"
-                                unit="2 Days"
+                                unit="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
                             />
                         </GenericTag>
                     </TileContent>
