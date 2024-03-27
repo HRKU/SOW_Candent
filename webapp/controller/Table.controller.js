@@ -54,20 +54,71 @@ sap.ui.define(
 					sorter: oSorter,
 				});
 			},
+			onFilter: function () {
+				// Retrieve the filter values from SearchFields and ComboBox
+				var sType = this.byId("_IDGenSearchField1").getValue();
+				var sCompanyName = this.byId("_IDGenSearchField2").getValue();
+				var sProjectName = this.byId("_IDGenSearchField3").getValue();
+				var sStatus = this.byId("filterStatusComboBox").getValue();
 
-			onFilter: function (oEvent) {
-				debugger;
-				const oTable = this.byId("projectTable");
-				const sQuery = oEvent.getParameter("query");
-				const oBinding = oTable.getBinding("items");
-				oBinding.filter([
-					new sap.ui.model.Filter(
-						"Type",
-						sap.ui.model.FilterOperator.Contains,
-						sQuery
-					),
-				]);
+				// Filter the data based on the retrieved values
+				var aFilters = [];
+				if (sType) {
+					aFilters.push(
+						new sap.ui.model.Filter(
+							"Type",
+							sap.ui.model.FilterOperator.Contains,
+							sType
+						)
+					);
+				}
+				if (sCompanyName) {
+					aFilters.push(
+						new sap.ui.model.Filter(
+							"CompanyName",
+							sap.ui.model.FilterOperator.Contains,
+							sCompanyName
+						)
+					);
+				}
+				if (sProjectName) {
+					aFilters.push(
+						new sap.ui.model.Filter(
+							"ProjectName",
+							sap.ui.model.FilterOperator.Contains,
+							sProjectName
+						)
+					);
+				}
+				if (sStatus) {
+					aFilters.push(
+						new sap.ui.model.Filter(
+							"Status",
+							sap.ui.model.FilterOperator.EQ,
+							sStatus
+						)
+					);
+				}
+
+				// Apply the filters to your table or list
+				var oTable = this.byId("projectTable");
+				var oBinding = oTable.getBinding("items");
+				oBinding.filter(aFilters);
 			},
+
+			onClearFilter: function () {
+				// Clear the values of SearchFields and ComboBox
+				this.byId("_IDGenSearchField1").setValue("");
+				this.byId("_IDGenSearchField2").setValue("");
+				this.byId("_IDGenSearchField3").setValue("");
+				this.byId("filterStatusComboBox").setSelectedKey("");
+
+				// Reset the filters
+				var oTable = this.byId("projectTable");
+				var oBinding = oTable.getBinding("items");
+				oBinding.filter([]);
+			},
+
 			onOpenDialog() {
 				// debugger;
 				this.pDialog ??= this.loadFragment({

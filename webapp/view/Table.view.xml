@@ -1,4 +1,5 @@
 <mvc:View
+    xmlns:core="sap.ui.core"
     xmlns:unified="sap.ui.unified"
     xmlns:smarttable="sap.ui.comp.smarttable"
     xmlns="sap.m"
@@ -14,7 +15,51 @@
         autoPopinMode="true"
     >
         <headerToolbar>
-            <OverflowToolbar id="toolbar">
+            <OverflowToolbar
+                id="toolbar"
+                design="Solid"
+            >
+                <SearchField
+                    id="_IDGenSearchField1"
+                    placeholder="Filter by Type"
+                    search=".onFilter"
+                    width="15rem"
+                />
+                <SearchField
+                    id="_IDGenSearchField2"
+                    placeholder="Filter by Company Name"
+                    search=".onFilter"
+                    width="15rem"
+                />
+                <SearchField
+                    id="_IDGenSearchField3"
+                    placeholder="Filter by Project Name"
+                    search=".onFilter"
+                    width="15rem"
+                />
+                <ComboBox
+                    id="filterStatusComboBox"
+                    change=".onFilter"
+                    width="15rem"
+                >
+                    <items>
+                        <core:ListItem
+                            id="_IDGenListItem1"
+                            text="Active"
+                            key="Active"
+                        />
+                        <core:ListItem
+                            id="_IDGenListItem2"
+                            text="Inactive"
+                            key="Inactive"
+                        />
+                    </items>
+                </ComboBox>
+                <Button
+                    id="clearFilter"
+                    text="Clear Filter"
+                    press=".onClearFilter"
+                />
                 <ToolbarSpacer id="seprate" />
                 <unified:FileUploader
                     id="fileUpload"
@@ -48,12 +93,6 @@
                     type="Emphasized"
                     press=".onOpenDialog"
                     visible="{path:'userdetails>/role',formatter:'.formatter.checkEditor'}"
-                />
-                <SearchField
-                    id="_IDGenSearchField1"
-                    placeholder="Search via Type of Document"
-                    search=".onFilter"
-                    width="15rem"
                 />
             </OverflowToolbar>
         </headerToolbar>

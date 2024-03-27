@@ -22,16 +22,11 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	height: 100%;
 }
 .classFlexBoxDash {
-	background-image: linear-gradient(
-		to right top,
-		#051937,
-		#004d7a,
-		#008793,
-		#00bf72,
-		#a8eb12
-	);
-	background-repeat: no-repeat;
-	background-size: inherit;
+	background: linear-gradient(-45deg, #c252ee, #783ce7, #2370d5, #23a5d5);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+
 	background-position: center;
 }
 .classFelxBox::before,
@@ -47,16 +42,11 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 }
 
 .classFelxBox {
-	background-image: linear-gradient(
-		to right top,
-		#051937,
-		#004d7a,
-		#008793,
-		#00bf72,
-		#a8eb12
-	);
+	background: linear-gradient(-45deg, #c252ee, #783ce7, #2370d5, #23a5d5);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
 
-	background-size: 100%;
 	background-position: left;
 	rotate: 180;
 }
@@ -85,4 +75,16 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 .emailClass input::placeholder,
 .pwdClass input::placeholder {
 	color: #999;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

@@ -9,17 +9,12 @@ server:
     - name: fiori-tools-proxy
       afterMiddleware: compression
       configuration:
-        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        ignoreCertError: true # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
         ui5:
           path:
             - /resources
             - /test-resources
           url: https://ui5.sap.com
-        # backend:
-        #   - path: /sow_candent_api/
-        #     url: http://excavator:8000/sow_candent_api/
-        #     proxyTimeout: 3000
-        #     timeout: 3000
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
@@ -31,7 +26,3 @@ server:
       configuration:
         component: com.candentech.sowtracker
         ui5Theme: sap_horizon
-    # - name: ui5-middleware-simpleproxy
-    #   afterMiddleware: compression
-    #   mountPath: /sow_candent_api
-    #   configuration:

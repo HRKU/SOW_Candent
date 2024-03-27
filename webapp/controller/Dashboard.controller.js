@@ -13,12 +13,13 @@ sap.ui.define(
 				// , '#5B738B''#6C32A9', '#BA066C',
 			},
 			navAvatar() {},
-			routeToTable: function (oEvent) {
+			routeToTableViaChart: function (oEvent) {
 				debugger;
 				const oSelectedValue = oEvent
 					.getParameter("data")
 					.map((i) => i.data)
 					.pop();
+				var oVizFrame = oEvent.getSource();
 
 				var oParent = this.getView().getParent().getParent();
 				oParent.byId("dash").setVisible(false);
@@ -26,12 +27,81 @@ sap.ui.define(
 				var oTable = oParent.byId("table");
 				oTable.setVisible(true);
 				oParent.byId("dashboard").setText("Table Data");
-				var oSearchField = oTable.byId("_IDGenSearchField1");
+				var oSearchField1 = oTable.byId("_IDGenSearchField1");
+				var oSearchField2 = oTable.byId("_IDGenSearchField2");
+				var oSearchField3 = oTable.byId("_IDGenSearchField3");
+				var oComboBox = oTable.byId("filterStatusComboBox");
 				console.log(oSelectedValue, oEvent);
+				oComboBox.setValue("Active");
 
-				oSearchField.setValue(oSelectedValue["type"]);
-
-				oSearchField.fireSearch({ query: oSelectedValue["type"] });
+				oSearchField1.setValue(oSelectedValue["type"]);
+				oSearchField1.fireSearch({ query: oSelectedValue["type"] });
+				oSearchField2.setValue(oSelectedValue["Company Name"]);
+				oSearchField2.fireSearch({ query: oSelectedValue["Company Name"] });
+				oSearchField3.setValue(oSelectedValue["project name"]);
+				oSearchField3.fireSearch({ query: oSelectedValue["project name"] });
+				oComboBox.fireChange({ value: "Active" });
+				oVizFrame.vizSelection([], { clearSelection: true });
+			},
+			routeToTableViaCard(oEvent) {
+				debugger;
+				var oProjectName = oEvent
+					.getSource()
+					.getBindingContext("trial")
+					.getProperty("ProjectName");
+				const oSelctedItem = oEvent.getSource().mProperties;
+				var oParent = this.getView().getParent().getParent();
+				oParent.byId("dash").setVisible(false);
+				oParent.byId("admin").setVisible(false);
+				var oTable = oParent.byId("table");
+				oTable.setVisible(true);
+				oParent.byId("dashboard").setText("Table Data");
+				var oSearchField1 = oTable.byId("_IDGenSearchField1");
+				var oSearchField2 = oTable.byId("_IDGenSearchField2");
+				var oSearchField3 = oTable.byId("_IDGenSearchField3");
+				var oComboBox = oTable.byId("filterStatusComboBox");
+				oComboBox.setValue("Active");
+				oComboBox.fireChange({ value: "Active" });
+				oSearchField1.setValue(oSelctedItem["title"]);
+				oSearchField1.fireSearch({ query: oSelctedItem["title"] });
+				oSearchField2.setValue(oSelctedItem["intro"]);
+				oSearchField2.fireSearch({ query: oSelctedItem["intro"] });
+				oSearchField3.setValue(oProjectName);
+				oSearchField3.fireSearch({ query: oProjectName });
+			},
+			routeToTableViaTile(oEvent) {
+				debugger;
+				var oProjectName = oEvent
+					.getSource()
+					.getBindingContext("trial")
+					.getProperty("ProjectName");
+				var oCompanyName = oEvent
+					.getSource()
+					.getBindingContext("trial")
+					.getProperty("CompanyName");
+				var oType = oEvent
+					.getSource()
+					.getBindingContext("trial")
+					.getProperty("Type");
+				const oSelctedItem = oEvent.getSource().mProperties;
+				var oParent = this.getView().getParent().getParent();
+				oParent.byId("dash").setVisible(false);
+				oParent.byId("admin").setVisible(false);
+				var oTable = oParent.byId("table");
+				oTable.setVisible(true);
+				oParent.byId("dashboard").setText("Table Data");
+				var oSearchField1 = oTable.byId("_IDGenSearchField1");
+				var oSearchField2 = oTable.byId("_IDGenSearchField2");
+				var oSearchField3 = oTable.byId("_IDGenSearchField3");
+				var oComboBox = oTable.byId("filterStatusComboBox");
+				oComboBox.setValue("Active");
+				oComboBox.fireChange({ value: "Active" });
+				oSearchField1.setValue(oType);
+				oSearchField1.fireSearch({ query: oType });
+				oSearchField2.setValue(oCompanyName);
+				oSearchField2.fireSearch({ query: oCompanyName });
+				oSearchField3.setValue(oProjectName);
+				oSearchField3.fireSearch({ query: oProjectName });
 			},
 
 			formatter: {
@@ -70,6 +140,8 @@ sap.ui.define(
 					}
 					if (x <= 5) {
 						return "Error";
+					} else {
+						return "Success";
 					}
 
 					return;
