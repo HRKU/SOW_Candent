@@ -342,30 +342,37 @@
                 visiblePagesCount="3"
             />
         </customLayout>
-        <GenericTile
-            id="GenericTile1"
-            header="{docs>CompanyName}"
-            subheader="{docs>ProjectName}"
-            class="sapUiTinyMarginBottom"
-            frameType="TwoByHalf"
-            press=".routeToTableViaTile"
+        <FlexBox
+            id="_IDGenFlexBox1"
+            justifyContent="Center"
         >
-            <tileContent>
-                <TileContent id="asd">
-                    <GenericTag
-                        id="_IDGenGenericTag1"
-                        text="{docs>ProjectName}"
-                        status="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
-                        design="StatusIconHidden"
-                    >
-                        <ObjectNumber
-                            id="_IDGenObjectNumber1"
-                            unit="2 Days"
-                        />
-                    </GenericTag>
-                </TileContent>
-            </tileContent>
-        </GenericTile>
+            <!-- Add FlexBox -->
+            <GenericTile
+                id="GenericTile1"
+                header="{docs>CompanyName}"
+                subheader="{docs>ProjectName}"
+                class="sapUiTinyMarginBottom"
+                frameType="TwoByHalf"
+                press=".routeToTableViaTile"
+            >
+                <tileContent>
+                    <TileContent id="asd">
+                        <GenericTag
+                            id="_IDGenGenericTag1"
+                            text="{docs>ProjectName}"
+                            status="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
+                            design="StatusIconHidden"
+                        >
+                            <ObjectNumber
+                                id="_IDGenObjectNumber1"
+                                unit="2 Days"
+                            />
+                        </GenericTag>
+                    </TileContent>
+                </tileContent>
+            </GenericTile>
+        </FlexBox>
+        <!-- Close FlexBox -->
     </Carousel>
 
     <FlexBox
