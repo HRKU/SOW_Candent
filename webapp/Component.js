@@ -69,7 +69,7 @@ sap.ui.define(
 			},
 
 			initialize_data: function () {
-				if (!document.cookie) {
+				if (!document.cookie.includes('token')) {
 					return;
 				}
 				var oUserDetails = new JSONModel(this.getUser());
