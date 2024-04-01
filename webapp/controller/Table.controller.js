@@ -16,6 +16,7 @@ sap.ui.define(
 				this.byId("_IDGenSearchField1").getValue();
 				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
+					// "id",
 					"SrNo",
 					"CompanyName",
 					"Type",
@@ -387,6 +388,7 @@ sap.ui.define(
 						.then((data) => {
 							MessageToast.show("File Uploaded Successfully");
 							console.log("File uploaded successfully:", data);
+							this.refresh();
 						})
 						.catch((error) => {
 							console.error("Error uploading file:", error);

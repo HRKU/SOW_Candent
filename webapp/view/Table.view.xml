@@ -41,6 +41,7 @@
                     id="filterStatusComboBox"
                     change=".onFilter"
                     width="15rem"
+                    placeholder="Select Status"
                 >
                     <items>
                         <core:ListItem

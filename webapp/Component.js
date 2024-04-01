@@ -69,6 +69,7 @@ sap.ui.define(
 			},
 
 			initialize_data: function () {
+				// this is added part in the code
 				if (!document.cookie.includes('token')) {
 					return;
 				}

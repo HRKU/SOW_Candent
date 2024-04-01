@@ -20,7 +20,7 @@
 >
     <!-- this is my first desgin  -->
 
-    <!-- <HBox id="mainbox">
+    <HBox id="mainbox">
         <Panel
             id="panel"
             width="auto"
@@ -321,10 +321,11 @@
                 </TileContent>
             </GenericTile>
         </VBox>
-    </HBox> -->
+    </HBox>
 
     <!-- this is the Second Desgin  -->
-    <Carousel
+
+    <!-- <Carousel
         id="carouselSample"
         backgroundDesign="Transparent"
         pages="{path:'docs>/filtered/EXP',sorter:{
@@ -348,7 +349,7 @@
             id="_IDGenFlexBox1"
             justifyContent="Center"
         >
-            <!-- Add FlexBox -->
+            
             <GenericTile
                 id="GenericTile1"
                 header="{docs>CompanyName}"
@@ -374,7 +375,7 @@
                 </tileContent>
             </GenericTile>
         </FlexBox>
-        <!-- Close FlexBox -->
+        
     </Carousel>
 
     <FlexBox
@@ -594,7 +595,7 @@
                 </HeaderContainer>
             </headerContainer>
         </ObjectHeader>
-    </HBox>
+    </HBox> -->
 
     <!-- <viz:VizFrame
                     id="chartContainer"
