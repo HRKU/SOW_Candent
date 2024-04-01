@@ -103,7 +103,9 @@ sap.ui.define(
 				oSearchField3.setValue(oProjectName);
 				oSearchField3.fireSearch({ query: oProjectName });
 			},
-
+			onSelectData: function (oEvent) {
+				console.log(oEvent);
+			},
 			formatter: {
 				calculateDuration(date) {
 					if (date) {
@@ -184,6 +186,7 @@ sap.ui.define(
 						sap.ui.model.FilterOperator.EQ,
 						sSelectedKey
 					);
+<<<<<<< HEAD
 
 					// Apply the same filter to all bindings
 					oBinding1.filter(newFilter);
@@ -221,6 +224,9 @@ sap.ui.define(
 					// Apply the same filter to all bindings
 
 					oBinding3.filter(newFilter);
+=======
+					console.log("filter" + newFilter);
+>>>>>>> 02b216d23328db5355b11dca6816bc351d3cc976
 					oBinding.filter(newFilter);
 				}
 			},

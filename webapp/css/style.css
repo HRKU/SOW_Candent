@@ -66,6 +66,7 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	color: #999;
 }
 
+<<<<<<< HEAD
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -77,3 +78,8 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 		background-position: 0% 50%;
 	}
 }
+=======
+.classObjectHeader {
+	width: 800px;
+}
+>>>>>>> 02b216d23328db5355b11dca6816bc351d3cc976

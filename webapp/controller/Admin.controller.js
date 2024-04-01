@@ -213,7 +213,7 @@ sap.ui.define(
 			},
 
 			refresh() {
-				fetch("http://yw:8001/sow_candent_api/userapi/")
+				fetch(services.creatUser)
 					.then((res) => {
 						if (!res.ok) {
 							throw new Error("Network response was not ok");

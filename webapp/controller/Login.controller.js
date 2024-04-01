@@ -75,16 +75,16 @@ sap.ui.define(
 						console.log(data);
 						MessageToast.show("Login successful");
 						// debugger;
-						document.cookie = `token=${data.token}; maxAge=${
-							1000 * 60 * 60 * 24
-						};`;
+						// document.cookie = `token=${data.token}; maxAge=${
+						// 	1000 * 60 * 60 * 24
+						// };`;
 						var oUserDetails = new JSONModel(
 							JSON.parse(
-								atob(
-									Object.fromEntries([document.cookie.split("=")]).token.split(
-										"."
-									)[1]
-								)
+								// atob(
+								// 	Object.fromEntries([document.cookie.split("=")]).token.split(
+								// 		"."
+								// 	)[1]
+								// )
 							)
 						);
 						this.getOwnerComponent().setModel(oUserDetails, "userdetails");
@@ -95,8 +95,8 @@ sap.ui.define(
 						// debugger
 						MessageToast.show("Something Went Wrong " + error);
 						// document.cookie = `token=; maxAge=0;`;
-						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
-						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
+						// document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
+						// document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
 					});
 			},
 		});
