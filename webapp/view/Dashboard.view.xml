@@ -20,49 +20,149 @@
 >
     <!-- this is my first desgin  -->
 
-    <HBox id="mainbox">
+    <HBox id="mainbox" justifyContent="SpaceAround">
         <Panel
             id="panel"
-            width="auto"
-            height="650px"
-            class="sapUiSmallMargin"
+            width="100vh"
+            height="590px"
+            class="sapUiTinyMargin"
+            backgroundDesign="Transparent"
         >
-            <f:Card id="Experies">
-                <f:header>
-                    <cards:Header
-                        id="ipi"
-                        title="Urgent Expiries"
-                    />
-                </f:header>
-                <f:content>
-                    <List
-                        id="as"
-                        items="{docs>/filtered/EXP}"
-                    >
-                        <items>
-                            <ObjectListItem
-                                type="Navigation"
-                                id="list"
-                                title="{docs>Type}"
-                                intro="{docs>CompanyName}"
-                                number="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
-                                numberState="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
-                                press=".routeToTableViaCard"
-                            >
-                                <firstStatus>
-                                    <ObjectStatus
-                                        id="doctypes"
-                                        text="{docs>Type}"
-                                    />
-                                </firstStatus>
-                            </ObjectListItem>
-                        </items>
-                    </List>
-                </f:content>
-            </f:Card>
+           <!-- <f:GridList id="papaya"  items="{path:'docs>/goingToExpire',sorter: {
+                path : 'AgreementEndDate',descending:false
+                }}">
+            <f:GridListItem id="_IDGenGridListItem1">
+				<ObjectListItem
+                    type="Navigation"
+
+                    id="list"
+                    title="{docs>ProjectName}"
+                    intro="{docs>CompanyName}"
+                    number="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                    numberState="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
+                    press=".routeToTableViaCard"
+                >
+                    <firstStatus>
+                        <ObjectStatus
+                            id="doctypes"
+                            text="{docs>Type}"
+                        />
+                    </firstStatus>
+                </ObjectListItem>
+			</f:GridListItem>
+           </f:GridList> -->
+        <List
+            id="as"
+            items="{path:'docs>/goingToExpire',sorter: {
+                path : 'AgreementEndDate',descending:false
+                }}"
+                headerText="Urgent Expiries"
+                headerLevel="H3"
+        >
+            <items>
+                <ObjectListItem
+                    type="Navigation"
+                    id="list"
+                    title="{docs>ProjectName}"
+                    number="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                    numberState="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
+                    press=".routeToTableViaCard"
+                >
+                    <firstStatus>
+                        <ObjectStatus
+                            id="doctypes"
+                            text="{docs>Type}"
+                        />
+                    </firstStatus>
+                    <ObjectAttribute id="_IDGenObjectAttribute1" text="{docs>CompanyName}"></ObjectAttribute>
+                </ObjectListItem>
+            </items>
+        </List>
+            
         </Panel>
 
-        <Carousel
+        <VBox id="vbox" justifyContent="Center">
+        <viz:VizFrame
+    id="barchartContainer3"
+    vizType="pie"
+    
+    vizProperties='{
+        "title": { "text": "", "alignment" : "center", "style": {"color":"#222222"} },
+        "legend": { "visible": true },
+        "categoryAxis": { "label": { "linesOfWrap": 2, "angle": 0 } },
+        "plotArea": {
+            "gridline": { "visible": false },
+            "dataPointSize": { "max": true },
+            "background": { "visible": true, "color": "transparent" },
+            "dataLabel":{"type":"value", "visible":true} 
+        },"general": {
+            "background": {
+            "visible": true,
+            "color": "transparent"
+        } 
+        }
+    }'
+    uiConfig="{ applicationSet: 'fiori' }"
+    selectData=".routeToTableViaChart"
+    class="sapUiTinyMargin"
+>
+    <viz:dataset>
+        <viz.data:FlattenedDataset
+            id="bardata3"
+            data="{path:'docs>/filtered/len'}"
+        >
+            <viz.data:dimensions>
+                <viz.data:DimensionDefinition
+                    id="companydimension3"
+                    name="type"
+                    value="{docs>type}"
+                />
+            </viz.data:dimensions>
+            <viz.data:measures>
+                <viz.data:MeasureDefinition
+                    id="barmeasure3"
+                    name="Expiry In Days"
+                    value="{docs>len}"
+                />
+            </viz.data:measures>
+        </viz.data:FlattenedDataset>
+    </viz:dataset>
+
+    <viz:feeds>
+        <viz.feeds:FeedItem
+            id='valueAxisFeed3'
+            uid="size"
+            type="Measure"
+            values="Expiry In Days"
+        />
+        <viz.feeds:FeedItem
+            id='categoryAxisFeedC3'
+            uid="color"
+            type="Dimension"
+            values="type"
+        />
+    </viz:feeds>
+</viz:VizFrame>
+<FlexBox id="_IDGenFlexBox1" justifyContent="Center" > 
+<GenericTile
+                press=".filterDocs1"
+                id="_IDGenGenericTile1"
+                class="sapUiSmallMargin sapUiMarginDown "
+                frameType="OneByHalf"
+                header="Total Documents"
+            >
+
+                <TileContent id="_IDGenTileContent1" class="">
+                    <NumericContent id="allExpire" valueColor="Error" value="{docs>/ExpLen}"></NumericContent>
+                </TileContent>
+            </GenericTile></FlexBox>
+   
+
+</VBox>
+
+
+ </HBox>
+<!-- <Carousel
             width="950px"
             id="carouselSample1"
             backgroundDesign="Transparent"
@@ -241,8 +341,9 @@
                     />
                 </viz:feeds>
             </viz:VizFrame>
-        </Carousel>
-        <VBox id="tags">
+        </Carousel> -->
+        
+        <!-- <VBox id="tags">
             <GenericTile
                 press=".filterDocs1"
                 id="_IDGenGenericTile1"
@@ -320,11 +421,10 @@
                     />
                 </TileContent>
             </GenericTile>
-        </VBox>
-    </HBox>
+        </VBox> -->
+   
 
     <!-- this is the Second Desgin  -->
-
     <!-- <Carousel
         id="carouselSample"
         backgroundDesign="Transparent"
@@ -375,7 +475,7 @@
                 </tileContent>
             </GenericTile>
         </FlexBox>
-        
+       
     </Carousel>
 
     <FlexBox
@@ -544,7 +644,7 @@
                     values="type"
                 />
             </viz:feeds>
-        </viz:VizFrame>
+        </viz:VizFrame> 
     </FlexBox>
 
     <HBox
@@ -885,3 +985,4 @@
             </GenericTile> -->
     <!-- </VBox> -->
 </mvc:View>
+
