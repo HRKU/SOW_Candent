@@ -13,6 +13,7 @@
         width="auto"
         mode="SingleSelectMaster"
         autoPopinMode="true"
+        sticky="ColumnHeaders,HeaderToolbar"
     >
         <headerToolbar>
             <OverflowToolbar

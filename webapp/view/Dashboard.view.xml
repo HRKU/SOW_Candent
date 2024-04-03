@@ -27,7 +27,7 @@
         <Panel
             id="panel"
             width="100vh"
-            height="590px"
+            height="570px"
             class="sapUiTinyMargin"
             backgroundDesign="Transparent"
         >
@@ -61,6 +61,8 @@
                 }}"
                 headerText="Urgent Expiries"
                 headerLevel="H3"
+                backgroundDesign="Solid"
+                sticky="HeaderToolbar"
             >
                 <items>
                     <ObjectListItem
@@ -102,7 +104,7 @@
             "radius": "1.5",
             "dataPointSize": { "max": true },
             "background": { "visible": true, "color": "transparent" },
-            "dataLabel":{"type":"value", "visible":true}
+            "dataLabel":{"type":"color", "visible":true}
         },"general": {
             "background": {
             "visible": true,

@@ -450,7 +450,7 @@ sap.ui.define(
 					.then((res) => res.json())
 					.then((data) => {
 						console.log(data);
-						var oModel = {};
+						var oModel = this.getOwnerComponent().getModel("docs");
 						oModel.agreements = {};
 						oModel.agreements = data;
 						oModel.goingToExpire = {};

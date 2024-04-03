@@ -18,106 +18,111 @@
         justifyContent="Start"
         class="sapUiResponsiveMargin"
     >
-        <Table
-            id="myTable"
+        <Panel
+            id="tableHolder"
             class="sapUiSmallMarginBottom"
-            width="auto"
         >
-            <headerToolbar>
-                <OverflowToolbar
-                    id="_IDGenOverflowToolbar1"
-                    design="Solid"
-                >
-                    <content>
-                        <Title
-                            id="_IDGenTitle1"
-                            text="Roles and Permission"
-                        />
-                        <ToolbarSpacer id="_IDGenToolbarSpacer1" />
-                    </content>
-                </OverflowToolbar>
-            </headerToolbar>
-            <columns>
-                <Column id="_IDGenColumn1">
-                    <header>
-                        <Label
-                            id="_IDGenLabel3"
-                            text="Name"
-                        />
-                    </header>
-                </Column>
-                <Column id="_IDGenColumn2">
-                    <header>
-                        <Label
-                            id="_IDGenLabel4"
-                            text="Description"
-                        />
-                    </header>
-                </Column>
-                <Column id="_IDGenColumn3">
-                    <header>
-                        <Label
-                            id="_IDGenLabel5"
-                            text="Permission"
-                        />
-                    </header>
-                </Column>
-            </columns>
-            <items>
-                <ColumnListItem id="_IDGenColumnListItem1">
-                    <cells>
-                        <Text
-                            id="_IDGenObjectIdentifier1"
-                            text="Administrator"
-                        />
-                        <Text
-                            id="_IDGenObjectIdentifier2"
-                            text="Full Access to all feature and data"
-                        />
-                        <Text
-                            id="_IDGenObjectIdentifier3"
-                            text="read own data, create user, edit user, delete user, create roles, edit roles delete roles, manage permission"
-                        />
-                    </cells>
-                </ColumnListItem>
-            </items>
-            <items>
-                <ColumnListItem id="_IDGenColumnListItem2">
-                    <cells>
-                        <Text
-                            id="_IDGenObjectIdentifier4"
-                            text="Editor"
-                        />
-                        <Text
-                            id="_IDGenObjectIdentifier5"
-                            text="Can create,edit, and delete their own data"
-                        />
-                        <Text
-                            id="_IDGenObjectIdentifier6"
-                            text="read own data, creatte own dat, edit own data, delete own data, read all data"
-                        />
-                    </cells>
-                </ColumnListItem>
-            </items>
-            <items>
-                <ColumnListItem id="_IDGenColumnListItem3">
-                    <cells>
-                        <Text
-                            id="_IDGenObjectIdentifier7"
-                            text="Viewer"
-                        />
-                        <Text
-                            id="_IDGenObjectIdentifier8"
-                            text="Can only view data"
-                        />
-                        <Text
-                            id="_IDGenObjectIdentifier9"
-                            text="read all data"
-                        />
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
+            <Table
+                id="myTable"
+                width="auto"
+            >
+                <headerToolbar>
+                    <OverflowToolbar
+                        id="_IDGenOverflowToolbar1"
+                        design="Solid"
+                    >
+                        <content>
+                            <Title
+                                id="_IDGenTitle1"
+                                text="Roles and Permission"
+                            />
+                            <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column id="_IDGenColumn1">
+                        <header>
+                            <Label
+                                id="_IDGenLabel3"
+                                text="Name"
+                            />
+                        </header>
+                    </Column>
+                    <Column id="_IDGenColumn2">
+                        <header>
+                            <Label
+                                id="_IDGenLabel4"
+                                text="Description"
+                            />
+                        </header>
+                    </Column>
+                    <Column id="_IDGenColumn3">
+                        <header>
+                            <Label
+                                id="_IDGenLabel5"
+                                text="Permission"
+                            />
+                        </header>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem id="_IDGenColumnListItem1">
+                        <cells>
+                            <Text
+                                id="_IDGenObjectIdentifier1"
+                                text="Administrator"
+                            />
+                            <Text
+                                id="_IDGenObjectIdentifier2"
+                                text="Full Access to all feature and data"
+                            />
+                            <Text
+                                id="_IDGenObjectIdentifier3"
+                                text="read own data, create user, edit user, delete user, create roles, edit roles delete roles, manage permission"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+                <items>
+                    <ColumnListItem id="_IDGenColumnListItem2">
+                        <cells>
+                            <Text
+                                id="_IDGenObjectIdentifier4"
+                                text="Editor"
+                            />
+                            <Text
+                                id="_IDGenObjectIdentifier5"
+                                text="Can create,edit, and delete their own data"
+                            />
+                            <Text
+                                id="_IDGenObjectIdentifier6"
+                                text="read own data, creatte own dat, edit own data, delete own data, read all data"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+                <items>
+                    <ColumnListItem id="_IDGenColumnListItem3">
+                        <cells>
+                            <Text
+                                id="_IDGenObjectIdentifier7"
+                                text="Viewer"
+                            />
+                            <Text
+                                id="_IDGenObjectIdentifier8"
+                                text="Can only view data"
+                            />
+                            <Text
+                                id="_IDGenObjectIdentifier9"
+                                text="read all data"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </Panel>
+
         <Panel
             id="_IDGenPanel1"
             width="100%"
