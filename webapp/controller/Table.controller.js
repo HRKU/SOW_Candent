@@ -133,7 +133,7 @@ sap.ui.define(
 					oDialog.setTitle("Add New Entry");
 					this.byId("idEdtBtn").setVisible(false);
 					this.byId("idSbtBtn").setVisible(true);
-				}, 10);
+				}, 50);
 			},
 			onCloseDialog() {
 				var oIds = [
@@ -446,35 +446,49 @@ sap.ui.define(
 				});
 			},
 			refresh() {
-				fetch("http://yw:8001/sow_candent_api/agreements/list/")
+				fetch(services.agreementList)
 					.then((res) => res.json())
 					.then((data) => {
 						console.log(data);
 						var oModel = {};
 						oModel.agreements = {};
 						oModel.agreements = data;
-						oModel.filtered = {};
-						oModel.filtered.All = oModel.agreements;
-						oModel.filtered.MSA = oModel.agreements.filter(
-							(i) => i.Type == "MSA"
-						);
-						oModel.filtered.SOW = oModel.agreements.filter(
-							(i) => i.Type == "SOW"
-						);
-						oModel.filtered.NDA = oModel.agreements.filter(
-							(i) => i.Type == "NDA"
-						);
-						oModel.filtered.EXP = oModel.agreements
+						oModel.goingToExpire = {};
+						oModel.goingToExpire = oModel.agreements
 							.filter((i) => i.Status === "Active")
 							.filter((i) => {
 								const diff = new Date(i.AgreementEndDate) - new Date();
 								const remaining_days = Math.round(diff / (1000 * 60 * 60 * 24));
-								if (remaining_days < 30) {
+								if (remaining_days < 31 && remaining_days > 0) {
 									return remaining_days;
 								} else {
 									return null;
 								}
 							});
+
+						oModel.filtered = {};
+						oModel.filtered.types = {
+							1: "MSA",
+							2: "NDA",
+							3: "SOW",
+							4: "SLA",
+							5: "PO",
+						};
+						oModel.filtered.MSA = oModel.goingToExpire
+							.filter((i) => i.Status == "Active")
+							.filter((i) => i.Type == "MSA");
+						oModel.filtered.SOW = oModel.goingToExpire
+							.filter((i) => i.Status == "Active")
+							.filter((i) => i.Type == "SOW");
+						oModel.filtered.NDA = oModel.goingToExpire
+							.filter((i) => i.Status == "Active")
+							.filter((i) => i.Type == "NDA");
+						oModel.filtered.PO = oModel.goingToExpire
+							.filter((i) => i.Status == "Active")
+							.filter((i) => i.Type == "PO");
+						oModel.filtered.SLA = oModel.goingToExpire
+							.filter((i) => i.Status == "Active")
+							.filter((i) => i.Type == "SLA");
 
 						// oModel.status = {
 						// 	active: oModel.agreements.filter((i) => i.Status === "Active")
@@ -496,10 +510,20 @@ sap.ui.define(
 
 						// oModel.status = oModel.agreements.map()
 
-						oModel.length = {};
-						Object.keys(oModel.filtered).map(
-							(i) => (oModel.length[i] = oModel.filtered[i].length)
-						);
+						oModel.filtered.len = {};
+						oModel.ExpLen = {};
+						oModel.ExpLen = oModel.goingToExpire.length;
+						oModel.AllLen = {};
+						oModel.AllLen = oModel.agreements.length;
+
+						Object.keys(oModel.filtered.types).forEach((key) => {
+							const typeKey = oModel.filtered.types[key];
+							oModel.filtered.len[key] = {
+								type: typeKey,
+								len: oModel.filtered[typeKey].length,
+							};
+						});
+
 						oModel.start_date = {};
 						oModel.end_date = {};
 						oModel.start_date = new Date(
@@ -520,7 +544,6 @@ sap.ui.define(
 									.filter((date) => !isNaN(date))
 							)
 						);
-
 						this.getOwnerComponent().setModel(new JSONModel(oModel), "docs");
 
 						console.log(this.getModel("docs"));

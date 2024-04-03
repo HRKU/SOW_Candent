@@ -21,8 +21,13 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	width: 100%;
 	height: 100%;
 }
+
+.sapMNCValue.WithoutMargin {
+	justify-content: center;
+}
+
 .classFlexBoxDash {
-	background: linear-gradient(-45deg, #2370d5, #b2f2ff, #00879399, #a8eb12);
+	background: linear-gradient(-45deg, #2370d5, #b2f2ff, #00879399, #12ebaa);
 	background-size: 400% 400%;
 	animation: gradient 30s ease infinite;
 	height: 100vh;
@@ -31,13 +36,12 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 }
 
 .classFelxBox {
-	background: linear-gradient(-45deg,  #2370d5, #b2f2ff, #008793, #a8eb12);
+	background: linear-gradient(-45deg, #2370d5, #b2f2ff, #00879399, #12ebaa);
 	background-size: 400% 400%;
 	animation: gradient 30s ease infinite;
 	height: 100vh;
 
-	background-position: left;
-	rotate: 180;
+	background-position: center;
 }
 
 .classHBox {
@@ -79,6 +83,6 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 }
 
 .sapUiContentPadding {
-    padding: 1rem;
-    text-align: center;
+	padding: 1rem;
+	text-align: center;
 }

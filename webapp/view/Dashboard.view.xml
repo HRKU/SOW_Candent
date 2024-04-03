@@ -20,7 +20,10 @@
 >
     <!-- this is my first desgin  -->
 
-    <HBox id="mainbox" justifyContent="SpaceAround">
+    <HBox
+        id="mainbox"
+        justifyContent="SpaceAround"
+    >
         <Panel
             id="panel"
             width="100vh"
@@ -28,7 +31,7 @@
             class="sapUiTinyMargin"
             backgroundDesign="Transparent"
         >
-           <!-- <f:GridList id="papaya"  items="{path:'docs>/goingToExpire',sorter: {
+            <!-- <f:GridList id="papaya"  items="{path:'docs>/goingToExpire',sorter: {
                 path : 'AgreementEndDate',descending:false
                 }}">
             <f:GridListItem id="_IDGenGridListItem1">
@@ -50,119 +53,130 @@
                     </firstStatus>
                 </ObjectListItem>
 			</f:GridListItem>
-           </f:GridList> -->
-        <List
-            id="as"
-            items="{path:'docs>/goingToExpire',sorter: {
+            </f:GridList> -->
+            <List
+                id="as"
+                items="{path:'docs>/goingToExpire',sorter: {
                 path : 'AgreementEndDate',descending:false
                 }}"
                 headerText="Urgent Expiries"
                 headerLevel="H3"
-        >
-            <items>
-                <ObjectListItem
-                    type="Navigation"
-                    id="list"
-                    title="{docs>ProjectName}"
-                    number="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
-                    numberState="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
-                    press=".routeToTableViaCard"
-                >
-                    <firstStatus>
-                        <ObjectStatus
-                            id="doctypes"
-                            text="{docs>Type}"
+            >
+                <items>
+                    <ObjectListItem
+                        type="Navigation"
+                        id="list"
+                        title="{docs>ProjectName}"
+                        number="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
+                        numberState="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
+                        press=".routeToTableViaCard"
+                    >
+                        <firstStatus>
+                            <ObjectStatus
+                                id="doctypes"
+                                text="{docs>Type}"
+                            />
+                        </firstStatus>
+                        <ObjectAttribute
+                            id="_IDGenObjectAttribute1"
+                            text="{docs>CompanyName}"
                         />
-                    </firstStatus>
-                    <ObjectAttribute id="_IDGenObjectAttribute1" text="{docs>CompanyName}"></ObjectAttribute>
-                </ObjectListItem>
-            </items>
-        </List>
-            
+                    </ObjectListItem>
+                </items>
+            </List>
         </Panel>
 
-        <VBox id="vbox" justifyContent="Center">
-        <viz:VizFrame
-    id="barchartContainer3"
-    vizType="pie"
-    
-    vizProperties='{
+        <VBox
+            id="vbox"
+            justifyContent="Center"
+        >
+            <viz:VizFrame
+                id="barchartContainer3"
+                vizType="pie"
+                vizProperties='{
         "title": { "text": "", "alignment" : "center", "style": {"color":"#222222"} },
         "legend": { "visible": true },
         "categoryAxis": { "label": { "linesOfWrap": 2, "angle": 0 } },
         "plotArea": {
             "gridline": { "visible": false },
+            "radius": "1.5",
             "dataPointSize": { "max": true },
             "background": { "visible": true, "color": "transparent" },
-            "dataLabel":{"type":"value", "visible":true} 
+            "dataLabel":{"type":"value", "visible":true}
         },"general": {
             "background": {
             "visible": true,
             "color": "transparent"
-        } 
+        }
         }
     }'
-    uiConfig="{ applicationSet: 'fiori' }"
-    selectData=".routeToTableViaChart"
-    class="sapUiTinyMargin"
->
-    <viz:dataset>
-        <viz.data:FlattenedDataset
-            id="bardata3"
-            data="{path:'docs>/filtered/len'}"
-        >
-            <viz.data:dimensions>
-                <viz.data:DimensionDefinition
-                    id="companydimension3"
-                    name="type"
-                    value="{docs>type}"
-                />
-            </viz.data:dimensions>
-            <viz.data:measures>
-                <viz.data:MeasureDefinition
-                    id="barmeasure3"
-                    name="Expiry In Days"
-                    value="{docs>len}"
-                />
-            </viz.data:measures>
-        </viz.data:FlattenedDataset>
-    </viz:dataset>
-
-    <viz:feeds>
-        <viz.feeds:FeedItem
-            id='valueAxisFeed3'
-            uid="size"
-            type="Measure"
-            values="Expiry In Days"
-        />
-        <viz.feeds:FeedItem
-            id='categoryAxisFeedC3'
-            uid="color"
-            type="Dimension"
-            values="type"
-        />
-    </viz:feeds>
-</viz:VizFrame>
-<FlexBox id="_IDGenFlexBox1" justifyContent="Center" > 
-<GenericTile
-                press=".filterDocs1"
-                id="_IDGenGenericTile1"
-                class="sapUiSmallMargin sapUiMarginDown "
-                frameType="OneByHalf"
-                header="Total Documents"
+                uiConfig="{ applicationSet: 'fiori' }"
+                selectData=".routeToTableViaChart"
+                class="sapUiTinyMargin"
             >
+                <viz:dataset>
+                    <viz.data:FlattenedDataset
+                        id="bardata3"
+                        data="{path:'docs>/filtered/len'}"
+                    >
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition
+                                id="companydimension3"
+                                name="type"
+                                value="{docs>type}"
+                            />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition
+                                id="barmeasure3"
+                                name="Expiry In Days"
+                                value="{docs>len}"
+                            />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
 
-                <TileContent id="_IDGenTileContent1" class="">
-                    <NumericContent id="allExpire" valueColor="Error" value="{docs>/ExpLen}"></NumericContent>
-                </TileContent>
-            </GenericTile></FlexBox>
-   
-
-</VBox>
-
-
- </HBox>
-<!-- <Carousel
+                <viz:feeds>
+                    <viz.feeds:FeedItem
+                        id='valueAxisFeed3'
+                        uid="size"
+                        type="Measure"
+                        values="Expiry In Days"
+                    />
+                    <viz.feeds:FeedItem
+                        id='categoryAxisFeedC3'
+                        uid="color"
+                        type="Dimension"
+                        values="type"
+                    />
+                </viz:feeds>
+            </viz:VizFrame>
+            <FlexBox
+                id="_IDGenFlexBox1"
+                justifyContent="Center"
+            >
+                <GenericTile
+                    id="_IDGenGenericTile1"
+                    class="sapUiSmallMargin sapUiMarginDown "
+                    frameType="OneByHalf"
+                    header="Total Documents"
+                >
+                    <TileContent
+                        id="_IDGenTileContent1"
+                        class=""
+                    >
+                        <NumericContent
+                            id="allExpire"
+                            valueColor="Error"
+                            value="{docs>/ExpLen}"
+                            withMargin="false"
+                        />
+                    </TileContent>
+                </GenericTile>
+            </FlexBox>
+        </VBox>
+    </HBox>
+    <!-- <Carousel
             width="950px"
             id="carouselSample1"
             backgroundDesign="Transparent"
@@ -342,8 +356,8 @@
                 </viz:feeds>
             </viz:VizFrame>
         </Carousel> -->
-        
-        <!-- <VBox id="tags">
+
+    <!-- <VBox id="tags">
             <GenericTile
                 press=".filterDocs1"
                 id="_IDGenGenericTile1"
@@ -422,7 +436,6 @@
                 </TileContent>
             </GenericTile>
         </VBox> -->
-   
 
     <!-- this is the Second Desgin  -->
     <!-- <Carousel
@@ -449,7 +462,7 @@
             id="_IDGenFlexBox1"
             justifyContent="Center"
         >
-            
+
             <GenericTile
                 id="GenericTile1"
                 header="{docs>CompanyName}"
@@ -475,7 +488,7 @@
                 </tileContent>
             </GenericTile>
         </FlexBox>
-       
+
     </Carousel>
 
     <FlexBox
@@ -644,7 +657,7 @@
                     values="type"
                 />
             </viz:feeds>
-        </viz:VizFrame> 
+        </viz:VizFrame>
     </FlexBox>
 
     <HBox
@@ -985,4 +998,3 @@
             </GenericTile> -->
     <!-- </VBox> -->
 </mvc:View>
-
