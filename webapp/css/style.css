@@ -12,8 +12,18 @@
 .TwoByHalf .sapMGTHdrContent {
 	height: 1rem;
 }
+.sapUiSizeCompact .sapFGLI .sapFGLIWrapper .sapMLIBContent {
+    width: 70px;
+    height: 100%;
+}
 html.sap-desktop:not(.sapUiNativeScrollbars) {
 	scrollbar-color: initial;
+}
+.sapFGridListDefault {
+    display: flex;
+    justify-content: center;
+    /* grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); */
+    grid-gap: 0.5rem 0.5rem;
 }
 
 .classFelxBox {

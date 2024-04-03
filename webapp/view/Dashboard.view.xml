@@ -97,7 +97,7 @@
                 vizType="pie"
                 vizProperties='{
         "title": { "text": "", "alignment" : "center", "style": {"color":"#222222"} },
-        "legend": { "visible": true },
+        "legend": { "visible": false },
         "categoryAxis": { "label": { "linesOfWrap": 2, "angle": 0 } },
         "plotArea": {
             "gridline": { "visible": false },
@@ -153,29 +153,24 @@
                     />
                 </viz:feeds>
             </viz:VizFrame>
-            <FlexBox
-                id="_IDGenFlexBox1"
-                justifyContent="Center"
-            >
-                <GenericTile
-                    id="_IDGenGenericTile1"
-                    class="sapUiSmallMargin sapUiMarginDown "
-                    frameType="OneByHalf"
-                    header="Total Documents"
-                >
-                    <TileContent
-                        id="_IDGenTileContent1"
-                        class=""
-                    >
-                        <NumericContent
-                            id="allExpire"
-                            valueColor="Error"
-                            value="{docs>/ExpLen}"
-                            withMargin="false"
-                        />
-                    </TileContent>
-                </GenericTile>
-            </FlexBox>
+           
+           
+                <f:GridList
+			id="gridList"
+
+			items="{docs>/filtered/len}">
+			<f:GridListItem>
+				<VBox class="sapUiSmallMargin">
+					<layoutData>
+						<FlexItemData growFactor="1" shrinkFactor="0" /> <!-- Don't shrink below minimum size. Fill space if available. -->
+					</layoutData>
+
+					<Title text="{docs>type}" wrapping="true" />
+					<Label text="{docs>len}" wrapping="true" />
+				</VBox>
+			</f:GridListItem>
+		</f:GridList>
+            
         </VBox>
     </HBox>
     <!-- <Carousel

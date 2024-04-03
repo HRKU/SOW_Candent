@@ -80,7 +80,7 @@ sap.ui.define(
 				oModel.setProperty("/password", oPassword.getValue());
 				console.log(oModel);
 				// http://192.168.1.56:8007/sow_candent_api/login/
-				fetch(services.testing, {
+				fetch(services.login, {
 					method: "POST",
 					body: JSON.stringify(oModel.getData()),
 					credentials: "include", // Instead of 'withCredentials: true'
@@ -98,19 +98,19 @@ sap.ui.define(
 						console.log(data);
 						MessageToast.show("Login successful");
 						// debugger;
-						// document.cookie = `token=${data.token}; maxAge=${
-						// 	1000 * 60 * 60 * 24
-						// };`;
-						// var oUserDetails = new JSONModel(
-						// 	JSON.parse(
-						// 		atob(
-						// 			Object.fromEntries([document.cookie.split("=")]).token.split(
-						// 				"."
-						// 			)[1]
-						// 		)
-						// 	)
-						// );
-						// this.getOwnerComponent().setModel(oUserDetails, "userdetails");
+						document.cookie = `token=${data.token}; maxAge=${
+							1000 * 60 * 60 * 24
+						};`;
+						var oUserDetails = new JSONModel(
+							JSON.parse(
+								atob(
+									Object.fromEntries([document.cookie.split("=")]).token.split(
+										"."
+									)[1]
+								)
+							)
+						);
+						this.getOwnerComponent().setModel(oUserDetails, "userdetails");
 						this._oRouter.navTo("RouteDashboard");
 						location.reload();
 					})

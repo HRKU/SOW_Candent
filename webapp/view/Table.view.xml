@@ -6,10 +6,18 @@
     xmlns:mvc="sap.ui.core.mvc"
     controllerName="com.candentech.sowtracker.controller.Table"
 >
-    <Table
+<Panel
+    accessibleRole="Form"
+    backgroundDesign="Transparent"
+    class="sapUiResponsiveMargin sapUiSmallMargin"
+    height="590px"
+    width="auto"
+>
+    <content>
+        <Table
         id="projectTable"
         alternateRowColors="true"
-        class="sapUiResponsiveMargin sapUiSmallMargin"
+        
         width="auto"
         mode="SingleSelectMaster"
         autoPopinMode="true"
@@ -99,4 +107,8 @@
             </OverflowToolbar>
         </headerToolbar>
     </Table>
+    </content>
+
+</Panel>
+    
 </mvc:View>
