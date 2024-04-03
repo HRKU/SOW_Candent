@@ -15,7 +15,29 @@ sap.ui.define(
 				this._oRouter = this.getOwnerComponent().getRouter();
 				this.getView().byId("username").setValueState("None");
 				this.getView().byId("password").setValueState("None");
+				document.addEventListener("keydown", this.onKeyPress.bind(this), false);
 			},
+
+
+			//Enter Key event
+			onKeyPress: function (event) {
+				var loginButton = this.byId("idLoginButton");
+				if (event.key === "Enter" && loginButton) {
+					var oUsername = this.getView().byId("username");
+					var oPassword = this.getView().byId("password");
+	
+					if (!oUsername.getValue()) {
+						oUsername.focus();
+						return;
+					}
+					if (!oPassword.getValue()) {
+						oPassword.focus();
+						return;
+					}
+					loginButton.firePress();
+				}
+			},
+
 
 			// Show/Hide Password Function
 			onShowPasswordSelect: function () {
