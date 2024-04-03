@@ -9,11 +9,13 @@
         id="mainPage"
         showHeader="false"
         class="classFlexBoxDash"
+        
     >
         <content>
             <tnt:ToolHeader
                 id="MainHeader"
                 class="sapUiTinyMargin"
+                style="Standard"
             >
                 <!-- <Button
                     id="backButton"

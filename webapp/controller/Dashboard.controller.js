@@ -45,10 +45,14 @@ sap.ui.define(
 			},
 			routeToTableViaCard(oEvent) {
 				debugger;
-				var oProjectName = oEvent
+				var sProjectName = oEvent
 					.getSource()
 					.getBindingContext("docs")
 					.getProperty("ProjectName");
+					var sType = oEvent
+					.getSource()
+					.getBindingContext("docs")
+					.getProperty("Type");
 				const oSelctedItem = oEvent.getSource().mProperties;
 				var oParent = this.getView().getParent().getParent();
 				oParent.byId("dash").setVisible(false);
@@ -62,12 +66,12 @@ sap.ui.define(
 				var oComboBox = oTable.byId("filterStatusComboBox");
 				oComboBox.setValue("Active");
 				oComboBox.fireChange({ value: "Active" });
-				oSearchField1.setValue(oSelctedItem["title"]);
-				oSearchField1.fireSearch({ query: oSelctedItem["title"] });
+				oSearchField1.setValue(sType);
+				oSearchField1.fireSearch({ query: sType });
 				oSearchField2.setValue(oSelctedItem["intro"]);
 				oSearchField2.fireSearch({ query: oSelctedItem["intro"] });
-				oSearchField3.setValue(oProjectName);
-				oSearchField3.fireSearch({ query: oProjectName });
+				oSearchField3.setValue(sProjectName);
+				oSearchField3.fireSearch({ query: sProjectName });
 			},
 			routeToTableViaTile(oEvent) {
 				debugger;
@@ -115,7 +119,7 @@ sap.ui.define(
 					let x = Math.round(
 						Math.abs((new Date(date) - new Date()) / (1000 * 60 * 60 * 24))
 					);
-					if (x < 30 && x > 0) {
+					if (x <= 30 && x > 0) {
 						return `${x} Day${x > 1 ? "s" : ""}`;
 					}
 
