@@ -23,11 +23,18 @@
                             text="Company Name"
                             design="Bold"
                         />
-                        <Input
+                        <ComboBox
                             id="CompanyName"
-                            placeholder="Enter Company Name"
+                            placeholder="Eg. Candent"
                             width="auto"
-                        />
+                            items="{docs>/company}"
+                        >
+                            <core:Item
+                                id="_IDGenItem8"
+                                key="{docs>name}"
+                                text="{docs>name}"
+                            />
+                        </ComboBox>
                     </VBox>
                     <VBox id="_IDGenVBox2">
                         <Label
@@ -35,9 +42,9 @@
                             text="Project Name"
                             design="Bold"
                         />
-                        <Input
+                        <ComboBox
                             id="ProjectName"
-                            placeholder="Enter Project Name"
+                            placeholder="Eg. SAP Basis, ABAP"
                             width="auto"
                         />
                     </VBox>
@@ -47,12 +54,10 @@
                             text="Agreement Number"
                             design="Bold"
                         />
-                        <Input
+                        <ComboBox
                             id="AgreementNo"
-                            type="Number"
-                            placeholder="Enter Agreement No"
+                            placeholder="Eg. 18263"
                             width="auto"
-                            value=""
                         />
                     </VBox>
                 </HBox>
@@ -70,16 +75,12 @@
                             id="Status"
                             placeholder="Select Status"
                             width="auto"
+                            items="{docs>/status}"
                         >
                             <core:Item
-                                id="_IDGenItem1"
-                                key="Active"
-                                text="Active"
-                            />
-                            <core:Item
-                                id="_IDGenItem2"
-                                key="Inactive"
-                                text="Inactive"
+                                id="_IDGenItem7"
+                                key="{docs>name}"
+                                text="{docs>name}"
                             />
                         </ComboBox>
                     </VBox>
@@ -94,7 +95,7 @@
                         />
                         <ComboBox
                             id="ProjectType"
-                            placeholder="Select Status"
+                            placeholder="Select Type of Project"
                             width="auto"
                         >
                             <core:Item

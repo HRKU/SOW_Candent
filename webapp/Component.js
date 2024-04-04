@@ -192,6 +192,16 @@ sap.ui.define(
 										.length,
 									data: oModel.agreements.filter((i) => i.Type === name),
 								}));
+							oModel.projecttype = oModel.agreements
+								.map((i) => i.ProjectType)
+								.getUnique()
+								.map((name) => ({
+									name,
+									length: oModel.agreements.filter(
+										(i) => i.ProjectType === name
+									).length,
+									data: oModel.agreements.filter((i) => i.ProjectType === name),
+								}));
 							oModel.AllLen = {};
 							oModel.AllLen = oModel.agreements.length;
 
