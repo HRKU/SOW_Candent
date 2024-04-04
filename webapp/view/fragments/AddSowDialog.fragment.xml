@@ -127,26 +127,12 @@
                             id="Type"
                             placeholder="Select Document type"
                             width="auto"
+                            items="{docs>/type}"
                         >
                             <core:Item
                                 id="_IDGenItem6"
-                                key="MSA"
-                                text="MSA"
-                            />
-                            <core:Item
-                                id="_IDGenItem7"
-                                key="SOW"
-                                text="SOW"
-                            />
-                            <core:Item
-                                id="_IDGenItem8"
-                                key="NDA"
-                                text="NDA"
-                            />
-                            <core:Item
-                                id="_IDGenItem9"
-                                key="CR"
-                                text="CR"
+                                key="{docs>name}"
+                                text="{docs>name}"
                             />
                         </ComboBox>
                     </VBox>

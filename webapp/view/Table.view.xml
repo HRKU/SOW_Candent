@@ -28,43 +28,85 @@
                         id="toolbar"
                         design="Solid"
                     >
-                        <SearchField
+                        <!-- <SearchField
                             id="_IDGenSearchField1"
                             placeholder="Filter by Type"
                             search=".onFilter"
                             width="15rem"
-                        />
-                        <SearchField
+                        /> -->
+                        <ComboBox
+                            id="_IDGenSearchField1"
+                            change=".onFilter"
+                            width="15rem"
+                            placeholder="Select Type"
+                            items="{docs>/type}"
+                        >
+                            <items>
+                                <core:ListItem
+                                    id="_IDGenListItem2"
+                                    text="{docs>name}"
+                                    key="{docs>name}"
+                                />
+                            </items>
+                        </ComboBox>
+                        <ComboBox
+                            id="_IDGenSearchField2"
+                            change=".onFilter"
+                            width="15rem"
+                            placeholder="Select Company Name"
+                            items="{docs>/company}"
+                        >
+                            <items>
+                                <core:ListItem
+                                    id="_IDGenListItem3"
+                                    text="{docs>name}"
+                                    key="{docs>name}"
+                                />
+                            </items>
+                        </ComboBox>
+                        <!-- <SearchField
                             id="_IDGenSearchField2"
                             placeholder="Filter by Company Name"
                             search=".onFilter"
                             width="15rem"
-                        />
-                        <SearchField
+                        /> -->
+                        <!-- <SearchField
                             id="_IDGenSearchField3"
                             placeholder="Filter by Project Name"
                             search=".onFilter"
                             width="15rem"
-                        />
+                        /> -->
+                        <ComboBox
+                            id="_IDGenSearchField3"
+                            change=".onFilter"
+                            width="15rem"
+                            placeholder="Select Project Name"
+                            items="{docs>/project}"
+                        >
+                            <items>
+                                <core:ListItem
+                                    id="_IDGenListItem4"
+                                    text="{docs>name}"
+                                    key="{docs>name}"
+                                />
+                            </items>
+                        </ComboBox>
                         <ComboBox
                             id="filterStatusComboBox"
                             change=".onFilter"
                             width="15rem"
                             placeholder="Select Status"
+                            items="{docs>/status}"
                         >
                             <items>
                                 <core:ListItem
                                     id="_IDGenListItem1"
-                                    text="Active"
-                                    key="Active"
-                                />
-                                <core:ListItem
-                                    id="_IDGenListItem2"
-                                    text="Inactive"
-                                    key="Inactive"
+                                    text="{docs>name}"
+                                    key="{docs>name}"
                                 />
                             </items>
                         </ComboBox>
+
                         <Button
                             id="clearFilter"
                             text="Clear Filter"

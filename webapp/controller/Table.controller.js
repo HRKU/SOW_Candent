@@ -116,7 +116,10 @@ sap.ui.define(
 
 				// Reset the filters
 				var oTable = this.byId("projectTable");
+				debugger;
 				var oBinding = oTable.getBinding("items");
+				console.log(oBinding);
+
 				oBinding.filter([]);
 			},
 
@@ -304,10 +307,11 @@ sap.ui.define(
 								oSelectedItem.getBindingContextPath(),
 								valuesToBeSent
 							);
+							this.getView().getModel("docs").refresh(true);
+							this.refresh();
 						} else {
 							MessageToast.show("Failed to update fields");
 						}
-						return response.json();
 					})
 					.then((data) => {
 						console.log(data);
@@ -321,6 +325,7 @@ sap.ui.define(
 						oControls[key].setValue();
 					}
 				}
+				this.onClearFilter();
 
 				var oDialog = this.byId("idAddAndEditSowDialog");
 				if (oDialog) {
@@ -450,53 +455,77 @@ sap.ui.define(
 					.then((res) => res.json())
 					.then((data) => {
 						console.log(data);
-						var oModel = this.getOwnerComponent().getModel("docs");
+						var oModel = {};
+
 						oModel.agreements = {};
 						oModel.agreements = data;
 						oModel.goingToExpire = {};
 						oModel.goingToExpire = oModel.agreements
-							.filter((i) => i.Status === "Active")
+							.filter((i) => i.Status == "Active")
 							.filter((i) => {
 								const diff = new Date(i.AgreementEndDate) - new Date();
 								const remaining_days = Math.round(diff / (1000 * 60 * 60 * 24));
-								if (remaining_days < 31 && remaining_days > 0) {
+								if (remaining_days < 31 && remaining_days > -16) {
 									return remaining_days;
 								} else {
 									return null;
 								}
 							});
 
-						oModel.filtered = {};
-						oModel.filtered.types = {
-							1: "MSA",
-							2: "NDA",
-							3: "SOW",
-							4: "SLA",
-							5: "PO",
-						};
-						oModel.filtered.MSA = oModel.goingToExpire
-							.filter((i) => i.Status == "Active")
-							.filter((i) => i.Type == "MSA");
-						oModel.filtered.SOW = oModel.goingToExpire
-							.filter((i) => i.Status == "Active")
-							.filter((i) => i.Type == "SOW");
-						oModel.filtered.NDA = oModel.goingToExpire
-							.filter((i) => i.Status == "Active")
-							.filter((i) => i.Type == "NDA");
-						oModel.filtered.PO = oModel.goingToExpire
-							.filter((i) => i.Status == "Active")
-							.filter((i) => i.Type == "PO");
-						oModel.filtered.SLA = oModel.goingToExpire
-							.filter((i) => i.Status == "Active")
-							.filter((i) => i.Type == "SLA");
+						oModel.ExpLen = {};
+						oModel.ExpLen = oModel.goingToExpire.length;
 
-						// oModel.status = {
-						// 	active: oModel.agreements.filter((i) => i.Status === "Active")
-						// 		.length,
-						// 	inactive: oModel.agreements.filter(
-						// 		(i) => i.Status === "Inactive"
-						// 	).length,
-						// };
+						oModel.filtered = {};
+						oModel.filtered.types = oModel.agreements
+							.map((i) => i.Type)
+							.getUnique()
+							.map((name) => ({
+								name,
+							}))
+							.concat({ name: "EXPIRED" });
+
+						oModel.filtered.len = {};
+						oModel.filtered.types.forEach((type) => {
+							oModel.filtered[type.name] = oModel.goingToExpire
+								.filter((i) => i.Status == "Active")
+								.filter((i) => i.Type == type.name)
+								.filter((i) => {
+									if (i) {
+										const diff = new Date(i.AgreementEndDate) - new Date();
+										const remaining_days = Math.round(
+											diff / (1000 * 60 * 60 * 24)
+										);
+										return remaining_days > 0 && remaining_days < 31;
+									}
+								});
+						});
+						oModel.filtered.EXPIRED = oModel.goingToExpire.filter((i) => {
+							const diff = new Date(i.AgreementEndDate) - new Date();
+							const remaining_days = Math.round(diff / (1000 * 60 * 60 * 24));
+							if (remaining_days <= 0 && remaining_days > -16) {
+								return remaining_days;
+							} else {
+								return null;
+							}
+						});
+
+						// Object.keys(oModel.filtered.types).forEach((key) => {
+						// 	const typeKey = oModel.filtered.types[key];
+						// 	oModel.filtered.len[key] = {
+						// 		type: typeKey,
+						// 		len: oModel.filtered[typeKey].length,
+						// 	};
+						// });
+
+						Object.keys(oModel.filtered.types).forEach((key) => {
+							const typeKey = oModel.filtered.types[key].name;
+							if (oModel.filtered[typeKey].length) {
+								oModel.filtered.len[key] = {
+									type: typeKey,
+									len: oModel.filtered[typeKey].length,
+								};
+							}
+						});
 
 						oModel.status = oModel.agreements
 							.map((i) => i.Status)
@@ -507,46 +536,36 @@ sap.ui.define(
 									.length,
 								data: oModel.agreements.filter((i) => i.Status === name),
 							}));
-
-						// oModel.status = oModel.agreements.map()
-
-						oModel.filtered.len = {};
-						oModel.ExpLen = {};
-						oModel.ExpLen = oModel.goingToExpire.length;
+						oModel.company = oModel.agreements
+							.map((i) => i.CompanyName)
+							.getUnique()
+							.map((name) => ({
+								name,
+								length: oModel.agreements.filter((i) => i.CompanyName === name)
+									.length,
+								data: oModel.agreements.filter((i) => i.CompanyName === name),
+							}));
+						oModel.project = oModel.agreements
+							.map((i) => i.ProjectName)
+							.getUnique()
+							.map((name) => ({
+								name,
+								length: oModel.agreements.filter((i) => i.ProjectName === name)
+									.length,
+								data: oModel.agreements.filter((i) => i.ProjectName === name),
+							}));
+						oModel.type = oModel.agreements
+							.map((i) => i.Type)
+							.getUnique()
+							.map((name) => ({
+								name,
+								length: oModel.agreements.filter((i) => i.Type === name).length,
+								data: oModel.agreements.filter((i) => i.Type === name),
+							}));
 						oModel.AllLen = {};
 						oModel.AllLen = oModel.agreements.length;
 
-						Object.keys(oModel.filtered.types).forEach((key) => {
-							const typeKey = oModel.filtered.types[key];
-							oModel.filtered.len[key] = {
-								type: typeKey,
-								len: oModel.filtered[typeKey].length,
-							};
-						});
-
-						oModel.start_date = {};
-						oModel.end_date = {};
-						oModel.start_date = new Date(
-							Math.min(
-								...oModel.agreements
-									.map((agreement) =>
-										new Date(agreement.AgreementStartDate).getTime()
-									)
-									.filter((date) => !isNaN(date))
-							)
-						);
-						oModel.end_date = new Date(
-							Math.max(
-								...oModel.agreements
-									.map((agreement) =>
-										new Date(agreement.AgreementEndDate).getTime()
-									)
-									.filter((date) => !isNaN(date))
-							)
-						);
-						this.getOwnerComponent().setModel(new JSONModel(oModel), "docs");
-
-						console.log(this.getModel("docs"));
+						this.getView().getParent().setModel(new JSONModel(oModel), "docs");
 
 						console.log(
 							"the fetch is working just fine and here is the data from api, ",

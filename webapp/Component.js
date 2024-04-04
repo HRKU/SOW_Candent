@@ -103,85 +103,29 @@ sap.ui.define(
 							oModel.ExpLen = oModel.goingToExpire.length;
 
 							oModel.filtered = {};
-							oModel.filtered.types = {
-								1: "MSA",
-								2: "NDA",
-								3: "SOW",
-								4: "SLA",
-								5: "PO",
-								6: "EXPIRED",
-							};
+							oModel.filtered.types = oModel.agreements
+								.map((i) => i.Type)
+								.getUnique()
+								.map((name) => ({
+									name,
+								}))
+								.concat({ name: "EXPIRED" });
+
 							oModel.filtered.len = {};
-							oModel.filtered.MSA = oModel.goingToExpire
-								.filter((i) => i.Status == "Active")
-								.filter((i) => i.Type == "MSA")
-								.filter((i) => {
-									const diff = new Date(i.AgreementEndDate) - new Date();
-									const remaining_days = Math.round(
-										diff / (1000 * 60 * 60 * 24)
-									);
-									if (remaining_days > 0 && remaining_days < 31) {
-										return remaining_days;
-									} else {
-										return null;
-									}
-								});
-							oModel.filtered.SOW = oModel.goingToExpire
-								.filter((i) => i.Status == "Active")
-								.filter((i) => i.Type == "SOW")
-								.filter((i) => {
-									const diff = new Date(i.AgreementEndDate) - new Date();
-									const remaining_days = Math.round(
-										diff / (1000 * 60 * 60 * 24)
-									);
-									if (remaining_days > 0 && remaining_days < 31) {
-										return remaining_days;
-									} else {
-										return null;
-									}
-								});
-							oModel.filtered.NDA = oModel.goingToExpire
-								.filter((i) => i.Status == "Active")
-								.filter((i) => i.Type == "NDA")
-								.filter((i) => {
-									const diff = new Date(i.AgreementEndDate) - new Date();
-									const remaining_days = Math.round(
-										diff / (1000 * 60 * 60 * 24)
-									);
-									if (remaining_days > 0 && remaining_days < 31) {
-										return remaining_days;
-									} else {
-										return null;
-									}
-								});
-							oModel.filtered.PO = oModel.goingToExpire
-								.filter((i) => i.Status == "Active")
-								.filter((i) => i.Type == "PO")
-								.filter((i) => {
-									const diff = new Date(i.AgreementEndDate) - new Date();
-									const remaining_days = Math.round(
-										diff / (1000 * 60 * 60 * 24)
-									);
-									if (remaining_days > 0 && remaining_days < 31) {
-										return remaining_days;
-									} else {
-										return null;
-									}
-								});
-							oModel.filtered.SLA = oModel.goingToExpire
-								.filter((i) => i.Status == "Active")
-								.filter((i) => i.Type == "SLA")
-								.filter((i) => {
-									const diff = new Date(i.AgreementEndDate) - new Date();
-									const remaining_days = Math.round(
-										diff / (1000 * 60 * 60 * 24)
-									);
-									if (remaining_days > 0 && remaining_days < 31) {
-										return remaining_days;
-									} else {
-										return null;
-									}
-								});
+							oModel.filtered.types.forEach((type) => {
+								oModel.filtered[type.name] = oModel.goingToExpire
+									.filter((i) => i.Status == "Active")
+									.filter((i) => i.Type == type.name)
+									.filter((i) => {
+										if (i) {
+											const diff = new Date(i.AgreementEndDate) - new Date();
+											const remaining_days = Math.round(
+												diff / (1000 * 60 * 60 * 24)
+											);
+											return remaining_days > 0 && remaining_days < 31;
+										}
+									});
+							});
 							oModel.filtered.EXPIRED = oModel.goingToExpire.filter((i) => {
 								const diff = new Date(i.AgreementEndDate) - new Date();
 								const remaining_days = Math.round(diff / (1000 * 60 * 60 * 24));
@@ -192,21 +136,23 @@ sap.ui.define(
 								}
 							});
 
-							Object.keys(oModel.filtered.types).forEach((key) => {
-								const typeKey = oModel.filtered.types[key];
-								oModel.filtered.len[key] = {
-									type: typeKey,
-									len: oModel.filtered[typeKey].length,
-								};
-							});
+							// Object.keys(oModel.filtered.types).forEach((key) => {
+							// 	const typeKey = oModel.filtered.types[key];
+							// 	oModel.filtered.len[key] = {
+							// 		type: typeKey,
+							// 		len: oModel.filtered[typeKey].length,
+							// 	};
+							// });
 
-							// oModel.status = {
-							// 	active: oModel.agreements.filter((i) => i.Status === "Active")
-							// 		.length,
-							// 	inactive: oModel.agreements.filter(
-							// 		(i) => i.Status === "Inactive"
-							// 	).length,
-							// };
+							Object.keys(oModel.filtered.types).forEach((key) => {
+								const typeKey = oModel.filtered.types[key].name;
+								if (oModel.filtered[typeKey].length) {
+									oModel.filtered.len[key] = {
+										type: typeKey,
+										len: oModel.filtered[typeKey].length,
+									};
+								}
+							});
 
 							oModel.status = oModel.agreements
 								.map((i) => i.Status)
@@ -217,39 +163,44 @@ sap.ui.define(
 										.length,
 									data: oModel.agreements.filter((i) => i.Status === name),
 								}));
-
-							// oModel.status = oModel.agreements.map()
-
+							oModel.company = oModel.agreements
+								.map((i) => i.CompanyName)
+								.getUnique()
+								.map((name) => ({
+									name,
+									length: oModel.agreements.filter(
+										(i) => i.CompanyName === name
+									).length,
+									data: oModel.agreements.filter((i) => i.CompanyName === name),
+								}));
+							oModel.project = oModel.agreements
+								.map((i) => i.ProjectName)
+								.getUnique()
+								.map((name) => ({
+									name,
+									length: oModel.agreements.filter(
+										(i) => i.ProjectName === name
+									).length,
+									data: oModel.agreements.filter((i) => i.ProjectName === name),
+								}));
+							oModel.type = oModel.agreements
+								.map((i) => i.Type)
+								.getUnique()
+								.map((name) => ({
+									name,
+									length: oModel.agreements.filter((i) => i.Type === name)
+										.length,
+									data: oModel.agreements.filter((i) => i.Type === name),
+								}));
 							oModel.AllLen = {};
 							oModel.AllLen = oModel.agreements.length;
-
-							oModel.start_date = {};
-							oModel.end_date = {};
-							oModel.start_date = new Date(
-								Math.min(
-									...oModel.agreements
-										.map((agreement) =>
-											new Date(agreement.AgreementStartDate).getTime()
-										)
-										.filter((date) => !isNaN(date))
-								)
-							);
-							oModel.end_date = new Date(
-								Math.max(
-									...oModel.agreements
-										.map((agreement) =>
-											new Date(agreement.AgreementEndDate).getTime()
-										)
-										.filter((date) => !isNaN(date))
-								)
-							);
 
 							this.setModel(new JSONModel(oModel), "docs");
 
 							console.log(this.getModel("docs"));
 
 							console.log(
-								"the fetch is working just fine and here is the data from api, ",
+								"the fetch is working just fine and here is the data from api",
 								data
 							);
 

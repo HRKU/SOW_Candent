@@ -35,25 +35,29 @@ sap.ui.define(
 				oComboBox.setValue("Active");
 
 				oSearchField1.setValue(oSelectedValue["type"]);
-				oSearchField1.fireSearch({ query: oSelectedValue["type"] });
+				oSearchField1.fireChange({ query: oSelectedValue["type"] });
 				oSearchField2.setValue(oSelectedValue["Company Name"]);
-				oSearchField2.fireSearch({ query: oSelectedValue["Company Name"] });
+				oSearchField2.fireChange({ query: oSelectedValue["Company Name"] });
 				oSearchField3.setValue(oSelectedValue["project name"]);
-				oSearchField3.fireSearch({ query: oSelectedValue["project name"] });
+				oSearchField3.fireChange({ query: oSelectedValue["project name"] });
 				oComboBox.fireChange({ value: "Active" });
 				oVizFrame.vizSelection([], { clearSelection: true });
 			},
 			routeToTableViaCard(oEvent) {
 				debugger;
-				var sProjectName = oEvent
+				var oProjectName = oEvent
 					.getSource()
 					.getBindingContext("docs")
 					.getProperty("ProjectName");
-				var sType = oEvent
+				var oCompanyName = oEvent
+					.getSource()
+					.getBindingContext("docs")
+					.getProperty("CompanyName");
+				var oType = oEvent
 					.getSource()
 					.getBindingContext("docs")
 					.getProperty("Type");
-				const oSelctedItem = oEvent.getSource().mProperties;
+
 				var oParent = this.getView().getParent().getParent();
 				oParent.byId("dash").setVisible(false);
 				oParent.byId("admin").setVisible(false);
@@ -66,12 +70,12 @@ sap.ui.define(
 				var oComboBox = oTable.byId("filterStatusComboBox");
 				oComboBox.setValue("Active");
 				oComboBox.fireChange({ value: "Active" });
-				oSearchField1.setValue(sType);
-				oSearchField1.fireSearch({ query: sType });
-				oSearchField2.setValue(oSelctedItem["intro"]);
-				oSearchField2.fireSearch({ query: oSelctedItem["intro"] });
-				oSearchField3.setValue(sProjectName);
-				oSearchField3.fireSearch({ query: sProjectName });
+				oSearchField1.setValue(oType);
+				oSearchField1.fireChange({ query: oType });
+				oSearchField2.setValue(oCompanyName);
+				oSearchField2.fireChange({ query: oCompanyName });
+				oSearchField3.setValue(oProjectName);
+				oSearchField3.fireChange({ query: oProjectName });
 			},
 			routeToTableViaTile(oEvent) {
 				debugger;
@@ -101,11 +105,11 @@ sap.ui.define(
 				oComboBox.setValue("Active");
 				oComboBox.fireChange({ value: "Active" });
 				oSearchField1.setValue(oType);
-				oSearchField1.fireSearch({ query: oType });
+				oSearchField1.fireChange({ query: oType });
 				oSearchField2.setValue(oCompanyName);
-				oSearchField2.fireSearch({ query: oCompanyName });
+				oSearchField2.fireChange({ query: oCompanyName });
 				oSearchField3.setValue(oProjectName);
-				oSearchField3.fireSearch({ query: oProjectName });
+				oSearchField3.fireChange({ query: oProjectName });
 			},
 
 			formatter: {
