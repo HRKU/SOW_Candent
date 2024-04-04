@@ -49,7 +49,7 @@ sap.ui.define(
 					.getSource()
 					.getBindingContext("docs")
 					.getProperty("ProjectName");
-					var sType = oEvent
+				var sType = oEvent
 					.getSource()
 					.getBindingContext("docs")
 					.getProperty("Type");
@@ -117,9 +117,9 @@ sap.ui.define(
 				},
 				calculateExpiry(date) {
 					let x = Math.round(
-						Math.abs((new Date(date) - new Date()) / (1000 * 60 * 60 * 24))
+						(new Date(date) - new Date()) / (1000 * 60 * 60 * 24)
 					);
-					if (x <= 30 && x > 0) {
+					if (x <= 30 && x > -16) {
 						return `${x} Day${x > 1 ? "s" : ""}`;
 					}
 
@@ -134,7 +134,7 @@ sap.ui.define(
 				},
 				expiryColor(date) {
 					let x = Math.round(
-						Math.abs((new Date(date) - new Date()) / (1000 * 60 * 60 * 24))
+						(new Date(date) - new Date()) / (1000 * 60 * 60 * 24)
 					);
 					if (x > 15 && x < 30) {
 						return "Success";
@@ -142,10 +142,10 @@ sap.ui.define(
 					if (x > 5 && x <= 15) {
 						return "Warning";
 					}
-					if (x <= 5) {
+					if (x <= 5 && x > 0) {
 						return "Error";
 					} else {
-						return "Success";
+						return "None";
 					}
 
 					return;

@@ -96,25 +96,23 @@
                 id="barchartContainer3"
                 vizType="pie"
                 vizProperties='{
-        "title": { "text": "", "alignment" : "center", "style": {"color":"#222222"} },
+        "title": { "visible": false},
         "legend": { "visible": false },
-        "categoryAxis": { "label": { "linesOfWrap": 2, "angle": 0 } },
         "plotArea": {
             "gridline": { "visible": false },
-            "radius": "1.5",
+
             "dataPointSize": { "max": true },
-            "background": { "visible": true, "color": "transparent" },
+            "background": { "visible": false, "color": "transparent" },
             "dataLabel":{"type":"color", "visible":true}
         },"general": {
             "background": {
-            "visible": true,
+            "visible": false,
             "color": "transparent"
         }
         }
     }'
                 uiConfig="{ applicationSet: 'fiori' }"
                 selectData=".routeToTableViaChart"
-                class="sapUiTinyMargin"
             >
                 <viz:dataset>
                     <viz.data:FlattenedDataset
@@ -153,24 +151,52 @@
                     />
                 </viz:feeds>
             </viz:VizFrame>
-           
-           
-                <f:GridList
-			id="gridList"
 
-			items="{docs>/filtered/len}">
-			<f:GridListItem>
-				<VBox class="sapUiSmallMargin">
-					<layoutData>
-						<FlexItemData growFactor="1" shrinkFactor="0" /> <!-- Don't shrink below minimum size. Fill space if available. -->
-					</layoutData>
+            <f:GridList
+                id="gridList"
+                items="{docs>/filtered/len}"
+            >
+                <f:GridListItem id="_IDGenGridListItem1">
+                    <VBox
+                        id="_IDGenVBox1"
+                        class="sapUiSmallMargin"
+                        justifyContent="SpaceBetween"
+                    >
+                        <layoutData>
+                            <FlexItemData
+                                id="_IDGenFlexItemData1"
+                                growFactor="1"
+                                shrinkFactor="0"
+                            />
+                            <!-- Don't shrink below minimum size. Fill space if available. -->
+                        </layoutData>
 
-					<Title text="{docs>type}" wrapping="true" />
-					<Label text="{docs>len}" wrapping="true" />
-				</VBox>
-			</f:GridListItem>
-		</f:GridList>
-            
+                        <Title
+                            id="_IDGenTitle1"
+                            text="{docs>type}"
+                            wrapping="true"
+                        />
+                        <Label
+                            id="_IDGenLabel1"
+                            text="{docs>len}"
+                            wrapping="true"
+                        />
+                    </VBox>
+                </f:GridListItem>
+            </f:GridList>
+            <FlexBox
+                id="activeinactive"
+                justifyContent="Center"
+                width="100%"
+            >
+                <GenericTile
+                    id="active"
+                    header="Total documents"
+                    subheader="{docs>/ExpLen}"
+                    mode="LineMode"
+                    class="sapUiTinyMargin"
+                />
+            </FlexBox>
         </VBox>
     </HBox>
     <!-- <Carousel

@@ -6,109 +6,107 @@
     xmlns:mvc="sap.ui.core.mvc"
     controllerName="com.candentech.sowtracker.controller.Table"
 >
-<Panel
-    accessibleRole="Form"
-    backgroundDesign="Transparent"
-    class="sapUiResponsiveMargin sapUiSmallMargin"
-    height="590px"
-    width="auto"
->
-    <content>
-        <Table
-        id="projectTable"
-        alternateRowColors="true"
-        
+    <Panel
+        id="_IDGenPanel1"
+        accessibleRole="Form"
+        backgroundDesign="Transparent"
+        class="sapUiResponsiveMargin sapUiSmallMargin"
+        height="590px"
         width="auto"
-        mode="SingleSelectMaster"
-        autoPopinMode="true"
-        sticky="ColumnHeaders,HeaderToolbar"
     >
-        <headerToolbar>
-            <OverflowToolbar
-                id="toolbar"
-                design="Solid"
+        <content>
+            <Table
+                id="projectTable"
+                alternateRowColors="true"
+                width="auto"
+                mode="SingleSelectMaster"
+                autoPopinMode="true"
+                sticky="ColumnHeaders,HeaderToolbar"
             >
-                <SearchField
-                    id="_IDGenSearchField1"
-                    placeholder="Filter by Type"
-                    search=".onFilter"
-                    width="15rem"
-                />
-                <SearchField
-                    id="_IDGenSearchField2"
-                    placeholder="Filter by Company Name"
-                    search=".onFilter"
-                    width="15rem"
-                />
-                <SearchField
-                    id="_IDGenSearchField3"
-                    placeholder="Filter by Project Name"
-                    search=".onFilter"
-                    width="15rem"
-                />
-                <ComboBox
-                    id="filterStatusComboBox"
-                    change=".onFilter"
-                    width="15rem"
-                    placeholder="Select Status"
-                >
-                    <items>
-                        <core:ListItem
-                            id="_IDGenListItem1"
-                            text="Active"
-                            key="Active"
+                <headerToolbar>
+                    <OverflowToolbar
+                        id="toolbar"
+                        design="Solid"
+                    >
+                        <SearchField
+                            id="_IDGenSearchField1"
+                            placeholder="Filter by Type"
+                            search=".onFilter"
+                            width="15rem"
                         />
-                        <core:ListItem
-                            id="_IDGenListItem2"
-                            text="Inactive"
-                            key="Inactive"
+                        <SearchField
+                            id="_IDGenSearchField2"
+                            placeholder="Filter by Company Name"
+                            search=".onFilter"
+                            width="15rem"
                         />
-                    </items>
-                </ComboBox>
-                <Button
-                    id="clearFilter"
-                    text="Clear Filter"
-                    press=".onClearFilter"
-                />
-                <ToolbarSpacer id="seprate" />
-                <unified:FileUploader
-                    id="fileUpload"
-                    fileType="xlsx,csv,xls"
-                    style="Emphasized"
-                    placeholder="Upload"
-                    buttonOnly="true"
-                    iconOnly="true"
-                    icon="sap-icon://upload"
-                    multiple="false"
-                    change=".onFileUpload"
-                    visible="{path:'userdetails>/role',formatter:'.formatter.userChecker'}"
-                />
-                <Button
-                    id="Delete"
-                    icon="sap-icon://delete"
-                    type="Emphasized"
-                    press=".onDelete"
-                    visible="{path:'userdetails>/role',formatter:'.formatter.checkEditor'}"
-                />
-                <Button
-                    id="Edit"
-                    icon="sap-icon://edit"
-                    type="Emphasized"
-                    press=".onOpenEdit"
-                    visible="{path:'userdetails>/role',formatter:'.formatter.checkEditor'}"
-                />
-                <Button
-                    id="Create"
-                    icon="sap-icon://create-form"
-                    type="Emphasized"
-                    press=".onOpenDialog"
-                    visible="{path:'userdetails>/role',formatter:'.formatter.checkEditor'}"
-                />
-            </OverflowToolbar>
-        </headerToolbar>
-    </Table>
-    </content>
-
-</Panel>
-    
+                        <SearchField
+                            id="_IDGenSearchField3"
+                            placeholder="Filter by Project Name"
+                            search=".onFilter"
+                            width="15rem"
+                        />
+                        <ComboBox
+                            id="filterStatusComboBox"
+                            change=".onFilter"
+                            width="15rem"
+                            placeholder="Select Status"
+                        >
+                            <items>
+                                <core:ListItem
+                                    id="_IDGenListItem1"
+                                    text="Active"
+                                    key="Active"
+                                />
+                                <core:ListItem
+                                    id="_IDGenListItem2"
+                                    text="Inactive"
+                                    key="Inactive"
+                                />
+                            </items>
+                        </ComboBox>
+                        <Button
+                            id="clearFilter"
+                            text="Clear Filter"
+                            press=".onClearFilter"
+                        />
+                        <ToolbarSpacer id="seprate" />
+                        <unified:FileUploader
+                            id="fileUpload"
+                            fileType="xlsx,csv,xls"
+                            style="Emphasized"
+                            placeholder="Upload"
+                            buttonOnly="true"
+                            iconOnly="true"
+                            icon="sap-icon://upload"
+                            multiple="false"
+                            change=".onFileUpload"
+                            visible="{path:'userdetails>/role',formatter:'.formatter.userChecker'}"
+                        />
+                        <Button
+                            id="Delete"
+                            icon="sap-icon://delete"
+                            type="Emphasized"
+                            press=".onDelete"
+                            visible="{path:'userdetails>/role',formatter:'.formatter.checkEditor'}"
+                        />
+                        <Button
+                            id="Edit"
+                            icon="sap-icon://edit"
+                            type="Emphasized"
+                            press=".onOpenEdit"
+                            visible="{path:'userdetails>/role',formatter:'.formatter.checkEditor'}"
+                        />
+                        <Button
+                            id="Create"
+                            icon="sap-icon://create-form"
+                            type="Emphasized"
+                            press=".onOpenDialog"
+                            visible="{path:'userdetails>/role',formatter:'.formatter.checkEditor'}"
+                        />
+                    </OverflowToolbar>
+                </headerToolbar>
+            </Table>
+        </content>
+    </Panel>
 </mvc:View>
