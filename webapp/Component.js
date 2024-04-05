@@ -69,7 +69,8 @@ sap.ui.define(
 			},
 
 			initialize_data: function () {
-				if (!document.cookie) {
+				// this is added part in the code
+				if (!document.cookie.includes("token")) {
 					return;
 				}
 				var oUserDetails = new JSONModel(this.getUser());
@@ -83,41 +84,75 @@ sap.ui.define(
 							var oModel = {};
 							oModel.agreements = {};
 							oModel.agreements = data;
-							oModel.filtered = {};
-							oModel.filtered.All = oModel.agreements;
-							oModel.filtered.AllActive = oModel.agreements.filter(
-								(i) => i.Status == "Active"
-							);
-							oModel.filtered.MSA = oModel.agreements.filter(
-								(i) => i.Type == "MSA"
-							);
-							oModel.filtered.SOW = oModel.agreements.filter(
-								(i) => i.Type == "SOW"
-							);
-							oModel.filtered.NDA = oModel.agreements.filter(
-								(i) => i.Type == "NDA"
-							);
-							oModel.filtered.EXP = oModel.agreements
-								.filter((i) => i.Status === "Active")
+							oModel.goingToExpire = {};
+							oModel.goingToExpire = oModel.agreements
+								.filter((i) => i.Status == "Active")
 								.filter((i) => {
 									const diff = new Date(i.AgreementEndDate) - new Date();
 									const remaining_days = Math.round(
 										diff / (1000 * 60 * 60 * 24)
 									);
-									if (remaining_days < 30) {
+									if (remaining_days < 31 && remaining_days > -16) {
 										return remaining_days;
 									} else {
 										return null;
 									}
 								});
 
-							// oModel.status = {
-							// 	active: oModel.agreements.filter((i) => i.Status === "Active")
-							// 		.length,
-							// 	inactive: oModel.agreements.filter(
-							// 		(i) => i.Status === "Inactive"
-							// 	).length,
-							// };
+							oModel.ExpLen = {};
+							oModel.ExpLen = oModel.goingToExpire.length;
+
+							oModel.filtered = {};
+							oModel.filtered.types = oModel.agreements
+								.map((i) => i.Type)
+								.getUnique()
+								.map((name) => ({
+									name,
+								}))
+								.concat({ name: "EXPIRED" });
+
+							oModel.filtered.len = {};
+							oModel.filtered.types.forEach((type) => {
+								oModel.filtered[type.name] = oModel.goingToExpire
+									.filter((i) => i.Status == "Active")
+									.filter((i) => i.Type == type.name)
+									.filter((i) => {
+										if (i) {
+											const diff = new Date(i.AgreementEndDate) - new Date();
+											const remaining_days = Math.round(
+												diff / (1000 * 60 * 60 * 24)
+											);
+											return remaining_days > 0 && remaining_days < 31;
+										}
+									});
+							});
+							oModel.filtered.EXPIRED = oModel.goingToExpire.filter((i) => {
+								const diff = new Date(i.AgreementEndDate) - new Date();
+								const remaining_days = Math.round(diff / (1000 * 60 * 60 * 24));
+								if (remaining_days <= 0 && remaining_days > -16) {
+									return remaining_days;
+								} else {
+									return null;
+								}
+							});
+
+							// Object.keys(oModel.filtered.types).forEach((key) => {
+							// 	const typeKey = oModel.filtered.types[key];
+							// 	oModel.filtered.len[key] = {
+							// 		type: typeKey,
+							// 		len: oModel.filtered[typeKey].length,
+							// 	};
+							// });
+
+							Object.keys(oModel.filtered.types).forEach((key) => {
+								const typeKey = oModel.filtered.types[key].name;
+								if (oModel.filtered[typeKey].length) {
+									oModel.filtered.len[key] = {
+										type: typeKey,
+										len: oModel.filtered[typeKey].length,
+									};
+								}
+							});
 
 							oModel.status = oModel.agreements
 								.map((i) => i.Status)
@@ -128,40 +163,54 @@ sap.ui.define(
 										.length,
 									data: oModel.agreements.filter((i) => i.Status === name),
 								}));
-
-							// oModel.status = oModel.agreements.map()
-
-							oModel.length = {};
-							Object.keys(oModel.filtered).map(
-								(i) => (oModel.length[i] = oModel.filtered[i].length)
-							);
-							oModel.start_date = {};
-							oModel.end_date = {};
-							oModel.start_date = new Date(
-								Math.min(
-									...oModel.agreements
-										.map((agreement) =>
-											new Date(agreement.AgreementStartDate).getTime()
-										)
-										.filter((date) => !isNaN(date))
-								)
-							);
-							oModel.end_date = new Date(
-								Math.max(
-									...oModel.agreements
-										.map((agreement) =>
-											new Date(agreement.AgreementEndDate).getTime()
-										)
-										.filter((date) => !isNaN(date))
-								)
-							);
+							oModel.company = oModel.agreements
+								.map((i) => i.CompanyName)
+								.getUnique()
+								.map((name) => ({
+									name,
+									length: oModel.agreements.filter(
+										(i) => i.CompanyName === name
+									).length,
+									data: oModel.agreements.filter((i) => i.CompanyName === name),
+								}));
+							oModel.project = oModel.agreements
+								.map((i) => i.ProjectName)
+								.getUnique()
+								.map((name) => ({
+									name,
+									length: oModel.agreements.filter(
+										(i) => i.ProjectName === name
+									).length,
+									data: oModel.agreements.filter((i) => i.ProjectName === name),
+								}));
+							oModel.type = oModel.agreements
+								.map((i) => i.Type)
+								.getUnique()
+								.map((name) => ({
+									name,
+									length: oModel.agreements.filter((i) => i.Type === name)
+										.length,
+									data: oModel.agreements.filter((i) => i.Type === name),
+								}));
+							oModel.projecttype = oModel.agreements
+								.map((i) => i.ProjectType)
+								.getUnique()
+								.map((name) => ({
+									name,
+									length: oModel.agreements.filter(
+										(i) => i.ProjectType === name
+									).length,
+									data: oModel.agreements.filter((i) => i.ProjectType === name),
+								}));
+							oModel.AllLen = {};
+							oModel.AllLen = oModel.agreements.length;
 
 							this.setModel(new JSONModel(oModel), "docs");
 
 							console.log(this.getModel("docs"));
 
 							console.log(
-								"the fetch is working just fine and here is the data from api, ",
+								"the fetch is working just fine and here is the data from api",
 								data
 							);
 

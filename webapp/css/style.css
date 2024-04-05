@@ -12,8 +12,18 @@
 .TwoByHalf .sapMGTHdrContent {
 	height: 1rem;
 }
-html.sap-desktop:not(.sapUiNativeScrollbars) {
+.sapUiSizeCompact .sapFGLI .sapFGLIWrapper .sapMLIBContent {
+	width: auto;
+	height: 100%;
+}
+/* html.sap-desktop:not(.sapUiNativeScrollbars) {
 	scrollbar-color: initial;
+} */
+.sapFGridListDefault {
+	display: flex;
+	justify-content: center;
+	/* grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); */
+	grid-gap: 0.5rem 0.5rem;
 }
 
 .classFelxBox {
@@ -21,23 +31,35 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	width: 100%;
 	height: 100%;
 }
+
+.sapMNCValue.WithoutMargin {
+	justify-content: center;
+}
+
 .classFlexBoxDash {
-	background: linear-gradient(-45deg, #c252ee, #783ce7, #2370d5, #23a5d5);
+	background: linear-gradient(-45deg, #2370d5, #b2f2ff, #00879399, #12ebaa);
 	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
+	animation: gradient 30s ease infinite;
 	height: 100vh;
 
 	background-position: center;
 }
 
 .classFelxBox {
-	background: linear-gradient(-45deg, #c252ee, #783ce7, #2370d5, #23a5d5);
+	background: linear-gradient(-45deg, #2370d5, #b2f2ff, #00879399, #12ebaa);
 	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
+	animation: gradient 30s ease infinite;
 	height: 100vh;
 
-	background-position: left;
-	rotate: 180;
+	background-position: center;
+}
+
+.sapMPanelContent {
+	padding: 0;
+}
+.sapMGHLICell {
+	padding: 0 1rem;
+	background-color: rgb(212, 212, 212);
 }
 
 .classHBox {
@@ -66,20 +88,17 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	color: #999;
 }
 
-<<<<<<< HEAD
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-}
-=======
 .classObjectHeader {
 	width: 800px;
 }
->>>>>>> 02b216d23328db5355b11dca6816bc351d3cc976
+
+/* .sapMPanelContent {
+	width: 50vw;
+	margin: 0 auto;
+} */
+/*
+@media (max-width: 600px) {
+	.sapMPanelContent {
+		width: 400px;
+	}
+} */

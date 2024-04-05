@@ -12,7 +12,7 @@ sap.ui.define(
 			onInit: function () {
 				// , '#5B738B''#6C32A9', '#BA066C',
 			},
-			navAvatar() {},
+
 			routeToTableViaChart: function (oEvent) {
 				debugger;
 				const oSelectedValue = oEvent
@@ -35,11 +35,11 @@ sap.ui.define(
 				oComboBox.setValue("Active");
 
 				oSearchField1.setValue(oSelectedValue["type"]);
-				oSearchField1.fireSearch({ query: oSelectedValue["type"] });
+				oSearchField1.fireChange({ query: oSelectedValue["type"] });
 				oSearchField2.setValue(oSelectedValue["Company Name"]);
-				oSearchField2.fireSearch({ query: oSelectedValue["Company Name"] });
+				oSearchField2.fireChange({ query: oSelectedValue["Company Name"] });
 				oSearchField3.setValue(oSelectedValue["project name"]);
-				oSearchField3.fireSearch({ query: oSelectedValue["project name"] });
+				oSearchField3.fireChange({ query: oSelectedValue["project name"] });
 				oComboBox.fireChange({ value: "Active" });
 				oVizFrame.vizSelection([], { clearSelection: true });
 			},
@@ -49,7 +49,15 @@ sap.ui.define(
 					.getSource()
 					.getBindingContext("docs")
 					.getProperty("ProjectName");
-				const oSelctedItem = oEvent.getSource().mProperties;
+				var oCompanyName = oEvent
+					.getSource()
+					.getBindingContext("docs")
+					.getProperty("CompanyName");
+				var oType = oEvent
+					.getSource()
+					.getBindingContext("docs")
+					.getProperty("Type");
+
 				var oParent = this.getView().getParent().getParent();
 				oParent.byId("dash").setVisible(false);
 				oParent.byId("admin").setVisible(false);
@@ -62,12 +70,12 @@ sap.ui.define(
 				var oComboBox = oTable.byId("filterStatusComboBox");
 				oComboBox.setValue("Active");
 				oComboBox.fireChange({ value: "Active" });
-				oSearchField1.setValue(oSelctedItem["title"]);
-				oSearchField1.fireSearch({ query: oSelctedItem["title"] });
-				oSearchField2.setValue(oSelctedItem["intro"]);
-				oSearchField2.fireSearch({ query: oSelctedItem["intro"] });
+				oSearchField1.setValue(oType);
+				oSearchField1.fireChange({ query: oType });
+				oSearchField2.setValue(oCompanyName);
+				oSearchField2.fireChange({ query: oCompanyName });
 				oSearchField3.setValue(oProjectName);
-				oSearchField3.fireSearch({ query: oProjectName });
+				oSearchField3.fireChange({ query: oProjectName });
 			},
 			routeToTableViaTile(oEvent) {
 				debugger;
@@ -97,14 +105,11 @@ sap.ui.define(
 				oComboBox.setValue("Active");
 				oComboBox.fireChange({ value: "Active" });
 				oSearchField1.setValue(oType);
-				oSearchField1.fireSearch({ query: oType });
+				oSearchField1.fireChange({ query: oType });
 				oSearchField2.setValue(oCompanyName);
-				oSearchField2.fireSearch({ query: oCompanyName });
+				oSearchField2.fireChange({ query: oCompanyName });
 				oSearchField3.setValue(oProjectName);
-				oSearchField3.fireSearch({ query: oProjectName });
-			},
-			onSelectData: function (oEvent) {
-				console.log(oEvent);
+				oSearchField3.fireChange({ query: oProjectName });
 			},
 			formatter: {
 				calculateDuration(date) {
@@ -115,9 +120,9 @@ sap.ui.define(
 				},
 				calculateExpiry(date) {
 					let x = Math.round(
-						Math.abs((new Date(date) - new Date()) / (1000 * 60 * 60 * 24))
+						(new Date(date) - new Date()) / (1000 * 60 * 60 * 24)
 					);
-					if (x < 30 && x > 0) {
+					if (x <= 30 && x > -16) {
 						return `${x} Day${x > 1 ? "s" : ""}`;
 					}
 
@@ -132,7 +137,7 @@ sap.ui.define(
 				},
 				expiryColor(date) {
 					let x = Math.round(
-						Math.abs((new Date(date) - new Date()) / (1000 * 60 * 60 * 24))
+						(new Date(date) - new Date()) / (1000 * 60 * 60 * 24)
 					);
 					if (x > 15 && x < 30) {
 						return "Success";
@@ -140,95 +145,13 @@ sap.ui.define(
 					if (x > 5 && x <= 15) {
 						return "Warning";
 					}
-					if (x <= 5) {
+					if (x <= 5 && x > 0) {
 						return "Error";
 					} else {
-						return "Success";
+						return "None";
 					}
-
 					return;
 				},
-				getShapeColor(doctype) {
-					switch (doctype) {
-						case "MSA":
-							return "sapUiAccent3";
-						case "NDA":
-							return "sapUiAccent5";
-						case "SOW":
-							return "sapUiAccent9";
-						default:
-							return "sapUiAccent10";
-					}
-				},
-			},
-			filterDocs(oEvent) {
-				debugger;
-
-				var oBinding1 = this.byId("barchartContainer1")
-					.getDataset()
-					.getBinding("data");
-				var oBinding2 = this.byId("barchartContainer2")
-					.getDataset()
-					.getBinding("data");
-
-				var sSelectedKey = oEvent.getSource().getProperty("scale"); // Use getProperty instead of accessing directly via mProperties
-
-				// Clear previous filters before applying new ones
-				oBinding1.filter([]);
-				oBinding2.filter([]);
-
-				if (sSelectedKey === "ALL" || !sSelectedKey) {
-					// Handle null or undefined sSelectedKey
-					return;
-				} else {
-					var newFilter = new sap.ui.model.Filter(
-						"Type",
-						sap.ui.model.FilterOperator.EQ,
-						sSelectedKey
-					);
-<<<<<<< HEAD
-
-					// Apply the same filter to all bindings
-					oBinding1.filter(newFilter);
-					oBinding2.filter(newFilter);
-				}
-			},
-			filterDocs1(oEvent) {
-				debugger;
-				var oBinding = this.byId("barchartContainer")
-					.getDataset()
-					.getBinding("data");
-
-				var oBinding3 = this.byId("barchartContainer3")
-					.getDataset()
-					.getBinding("data");
-				var sSelectedKey = oEvent
-					.getSource()
-					.getCustomData()
-					.map((i) => i.getKey())
-					.pop();
-
-				oBinding3.filter([]);
-				oBinding.filter([]);
-
-				if (sSelectedKey === "All" || !sSelectedKey) {
-					// Handle null or undefined sSelectedKey
-					return;
-				} else {
-					var newFilter = new sap.ui.model.Filter(
-						"Type",
-						sap.ui.model.FilterOperator.EQ,
-						sSelectedKey
-					);
-
-					// Apply the same filter to all bindings
-
-					oBinding3.filter(newFilter);
-=======
-					console.log("filter" + newFilter);
->>>>>>> 02b216d23328db5355b11dca6816bc351d3cc976
-					oBinding.filter(newFilter);
-				}
 			},
 		});
 	}

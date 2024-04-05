@@ -15,6 +15,26 @@ sap.ui.define(
 				this._oRouter = this.getOwnerComponent().getRouter();
 				this.getView().byId("username").setValueState("None");
 				this.getView().byId("password").setValueState("None");
+				document.addEventListener("keydown", this.onKeyPress.bind(this), false);
+			},
+
+			//Enter Key event
+			onKeyPress: function (event) {
+				var loginButton = this.byId("idLoginButton");
+				if (event.key === "Enter" && loginButton) {
+					var oUsername = this.getView().byId("username");
+					var oPassword = this.getView().byId("password");
+
+					if (!oUsername.getValue()) {
+						oUsername.focus();
+						return;
+					}
+					if (!oPassword.getValue()) {
+						oPassword.focus();
+						return;
+					}
+					loginButton.firePress();
+				}
 			},
 
 			// Show/Hide Password Function
@@ -57,10 +77,11 @@ sap.ui.define(
 				oModel.setProperty("/username", oEmail.getValue());
 				oModel.setProperty("/password", oPassword.getValue());
 				console.log(oModel);
-
+				// http://192.168.1.56:8007/sow_candent_api/login/
 				fetch(services.login, {
 					method: "POST",
 					body: JSON.stringify(oModel.getData()),
+					credentials: "include", // Instead of 'withCredentials: true'
 				})
 					.then((response) => {
 						if (response.status == 200) {
@@ -75,16 +96,16 @@ sap.ui.define(
 						console.log(data);
 						MessageToast.show("Login successful");
 						// debugger;
-						// document.cookie = `token=${data.token}; maxAge=${
-						// 	1000 * 60 * 60 * 24
-						// };`;
+						document.cookie = `token=${data.token}; maxAge=${
+							1000 * 60 * 60 * 24
+						};`;
 						var oUserDetails = new JSONModel(
 							JSON.parse(
-								// atob(
-								// 	Object.fromEntries([document.cookie.split("=")]).token.split(
-								// 		"."
-								// 	)[1]
-								// )
+								atob(
+									Object.fromEntries([document.cookie.split("=")]).token.split(
+										"."
+									)[1]
+								)
 							)
 						);
 						this.getOwnerComponent().setModel(oUserDetails, "userdetails");
@@ -95,8 +116,9 @@ sap.ui.define(
 						// debugger
 						MessageToast.show("Something Went Wrong " + error);
 						// document.cookie = `token=; maxAge=0;`;
-						// document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
-						// document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
+						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
+						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
+						localStorage.removeItem("token");
 					});
 			},
 		});

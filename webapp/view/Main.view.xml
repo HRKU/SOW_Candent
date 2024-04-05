@@ -8,19 +8,15 @@
     <Page
         id="mainPage"
         showHeader="false"
+        enableScrolling="false"
         class="classFlexBoxDash"
     >
         <content>
             <tnt:ToolHeader
                 id="MainHeader"
                 class="sapUiTinyMargin"
+                style="Standard"
             >
-                <!-- <Button
-                    id="backButton"
-                    icon="sap-icon://nav-back"
-                    visible="false"
-                    press=".onNavBack"
-                /> -->
                 <Title
                     id="dashboard"
                     text="Dashboard"
