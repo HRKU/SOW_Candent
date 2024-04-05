@@ -8,11 +8,11 @@
     <Page
         id="mainPage"
         showHeader="false"
-        class="classFlexBoxDash"
+        class="boxPanel"
         
     >
         <content>
-            <tnt:ToolHeader
+        <FlexBox class="boxInner" direction="Column"><tnt:ToolHeader
                 id="MainHeader"
                 class="sapUiTinyMargin"
                 style="Standard"
@@ -70,7 +70,8 @@
                 id="admin"
                 visible="false"
                 viewName="com.candentech.sowtracker.view.Admin"
-            />
+            /></FlexBox>
+            
         </content>
     </Page>
 </mvc:View>
