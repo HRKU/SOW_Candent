@@ -11,7 +11,7 @@
         accessibleRole="Form"
         backgroundDesign="Transparent"
         class="sapUiResponsiveMargin sapUiSmallMargin"
-        height="590px"
+        height="85vh"
         width="auto"
     >
         <content>
@@ -19,6 +19,7 @@
                 id="projectTable"
                 alternateRowColors="true"
                 width="auto"
+                backgroundDesign="Translucent"
                 mode="SingleSelectMaster"
                 autoPopinMode="true"
                 sticky="ColumnHeaders,HeaderToolbar"

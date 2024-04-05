@@ -26,34 +26,11 @@
     >
         <Panel
             id="panel"
-            width="100vh"
-            height="570px"
+            
+            height="85vh"
             class="sapUiTinyMargin"
-            backgroundDesign="Transparent"
+            backgroundDesign="Solid"
         >
-            <!-- <f:GridList id="papaya"  items="{path:'docs>/goingToExpire',sorter: {
-                path : 'AgreementEndDate',descending:false
-                }}">
-            <f:GridListItem id="_IDGenGridListItem1">
-				<ObjectListItem
-                    type="Navigation"
-
-                    id="list"
-                    title="{docs>ProjectName}"
-                    intro="{docs>CompanyName}"
-                    number="{path:'docs>AgreementEndDate', formatter:'.formatter.calculateExpiry'}"
-                    numberState="{path:'docs>AgreementEndDate', formatter:'.formatter.expiryColor'}"
-                    press=".routeToTableViaCard"
-                >
-                    <firstStatus>
-                        <ObjectStatus
-                            id="doctypes"
-                            text="{docs>Type}"
-                        />
-                    </firstStatus>
-                </ObjectListItem>
-			</f:GridListItem>
-            </f:GridList> -->
             <List
                 id="as"
                 items="{path:'docs>/goingToExpire',sorter: {
@@ -91,6 +68,8 @@
         <VBox
             id="vbox"
             justifyContent="Center"
+            height="85vh"
+            class="sapUiVisibleOnlyOnDesktop"
         >
             <viz:VizFrame
                 id="barchartContainer3"

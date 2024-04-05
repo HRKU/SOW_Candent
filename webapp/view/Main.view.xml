@@ -9,7 +9,6 @@
         id="mainPage"
         showHeader="false"
         class="classFlexBoxDash"
-        
     >
         <content>
             <tnt:ToolHeader

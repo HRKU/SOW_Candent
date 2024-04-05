@@ -104,3 +104,20 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	padding: 1rem;
 	text-align: center;
 }
+
+.sapMPanelContent {
+	padding: 0;
+	width: 40vw;
+}
+
+@media (max-width: 1000px) {
+	.sapMPanelContent {
+		width: 70vw;
+	}
+}
+
+@media (max-width: 600px) {
+	.sapMPanelContent {
+		width: 100%;
+	}
+}
