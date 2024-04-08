@@ -98,16 +98,16 @@ sap.ui.define(
 						console.log(data);
 						MessageToast.show("Login successful");
 						// debugger;
-						document.cookie = `token=${data.token}; maxAge=${
-							1000 * 60 * 60 * 24
-						};`;
+						// document.cookie = `token=${data.token}; maxAge=${
+						// 	1000 * 60 * 60 * 24
+						// };`;
 						var oUserDetails = new JSONModel(
 							JSON.parse(
-								atob(
-									Object.fromEntries([document.cookie.split("=")]).token.split(
-										"."
-									)[1]
-								)
+								// atob(
+								// 	Object.fromEntries([document.cookie.split("=")]).token.split(
+								// 		"."
+								// 	)[1]
+								// )
 							)
 						);
 						this.getOwnerComponent().setModel(oUserDetails, "userdetails");
