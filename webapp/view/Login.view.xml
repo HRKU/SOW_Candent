@@ -13,7 +13,6 @@
         showHeader="false"
         class="boxPanel"
     >
-     
         <content>
             <FlexBox
                 id="idFlexBox"
@@ -89,10 +88,8 @@
                             />
                         </HBox>
                     </form:SimpleForm>
-                    
                 </VBox>
             </FlexBox>
-            
         </content>
         <!-- <Panel
                         id="idPanel"
@@ -100,8 +97,7 @@
                         backgroundDesign="Transparent"
                     >
                     </Panel>     -->
-           
-                <!-- Inner content goes here -->
 
+        <!-- Inner content goes here -->
     </Page>
 </mvc:View>

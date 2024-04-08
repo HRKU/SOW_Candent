@@ -36,8 +36,8 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	justify-content: center;
 }
 
-/* .classFlexBoxDash {
-	background: linear-gradient(-45deg, #2370d5, #b2f2ff, #00879399, #12ebaa);
+.classFlexBoxDash {
+	background-color: #b2f2ff;
 	background-size: 400% 400%;
 	animation: gradient 30s ease infinite;
 	height: 100vh;
@@ -45,7 +45,7 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	background-position: center;
 }
 
-.classFelxBox {
+/*  .classFelxBox {
 	background: linear-gradient(-45deg, #2370d5, #b2f2ff, #00879399, #12ebaa);
 	background-size: 400% 400%;
 	animation: gradient 30s ease infinite;
@@ -105,43 +105,13 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	text-align: center;
 }
 
-/* .waveAnimation {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 100px;
-	z-index: -1;
-	background: linear-gradient(to right, #69c, #246);
-	animation: waveAnimation 5s linear infinite;
-  }
-  
-  @keyframes waveAnimation {
-	0% {
-	  transform: translate3d(-100%, 0, 0);
-	}
-	100% {
-	  transform: translate3d(100%, 0, 0);
-	}
-  } */
-
-  /* @keyframes waveAnimation {
-    0% { transform: translateX(-50%) translateY(0px); }
-    50% { transform: translateX(-50%) translateY(-10px); }
-    100% { transform: translateX(-50%) translateY(0px); }
-} */
-
-
-
 .boxPanel {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	
+}
 
-	background-position: center;  }
-  
-  .boxInner {
+.boxInner {
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -156,12 +126,12 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	background-repeat: repeat-x;
 	background-size: 1600px 50%;
 	background-position: 0 130%, -50px 130%, 500px 130%;
-	animation: 20s waves linear infinite forwards;
-  }
-  
-  @keyframes waves {
+	animation: 50s waves linear infinite forwards;
+}
+
+@keyframes waves {
 	to {
-	  background-position: 1600px 130%, 3150px 130%, 5300px 130%;
+		background-position: 1600px 130%, 3150px 130%, 5300px 130%;
 	}
   }
 

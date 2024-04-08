@@ -1,4 +1,5 @@
 <mvc:View
+    xmlns:filterbar="sap.ui.comp.filterbar"
     xmlns:core="sap.ui.core"
     xmlns:unified="sap.ui.unified"
     xmlns:smarttable="sap.ui.comp.smarttable"
@@ -11,9 +12,21 @@
         accessibleRole="Form"
         backgroundDesign="Transparent"
         class="sapUiResponsiveMargin sapUiSmallMargin"
-        height="590px"
+        height="85vh"
         width="auto"
+        stickyHeader="true"
     >
+        <!-- <filterbar:FilterBar
+            id="filterbar"
+            persistencyKey="myPersKey"
+            useToolbar="false"
+            search=".onSearch"
+            filterChange=".onFilterChange"
+            afterVariantLoad=".onAfterVariantLoad"
+        >
+            <filterbar:filterGroupItems />
+        </filterbar:FilterBar> -->
+
         <content>
             <Table
                 id="projectTable"
@@ -28,18 +41,25 @@
                         id="toolbar"
                         design="Solid"
                     >
+                        <Button
+                            id="_IDGenButton1"
+                            icon="sap-icon://download"
+                            text="Template"
+                            press="onDownloadTemplate"
+                        />
                         <!-- <SearchField
-                            id="_IDGenSearchField1"
+                            id="Type"
                             placeholder="Filter by Type"
                             search=".onFilter"
                             width="15rem"
                         /> -->
                         <ComboBox
-                            id="_IDGenSearchField1"
+                            id="Type"
                             change=".onFilter"
                             width="15rem"
                             placeholder="Select Type"
-                            items="{docs>/type}"
+                            items="{docs>/Type}"
+                            visible="false"
                         >
                             <items>
                                 <core:ListItem
@@ -50,11 +70,12 @@
                             </items>
                         </ComboBox>
                         <ComboBox
-                            id="_IDGenSearchField2"
+                            id="CompanyName"
                             change=".onFilter"
                             width="15rem"
                             placeholder="Select Company Name"
-                            items="{docs>/company}"
+                            items="{docs>/CompanyName}"
+                            visible="false"
                         >
                             <items>
                                 <core:ListItem
@@ -65,23 +86,24 @@
                             </items>
                         </ComboBox>
                         <!-- <SearchField
-                            id="_IDGenSearchField2"
+                            id="CompanyName"
                             placeholder="Filter by Company Name"
                             search=".onFilter"
                             width="15rem"
                         /> -->
                         <!-- <SearchField
-                            id="_IDGenSearchField3"
+                            id="ProjectName"
                             placeholder="Filter by Project Name"
                             search=".onFilter"
                             width="15rem"
                         /> -->
                         <ComboBox
-                            id="_IDGenSearchField3"
+                            id="ProjectName"
                             change=".onFilter"
                             width="15rem"
                             placeholder="Select Project Name"
-                            items="{docs>/project}"
+                            items="{docs>/ProjectName}"
+                            visible="false"
                         >
                             <items>
                                 <core:ListItem
@@ -92,17 +114,22 @@
                             </items>
                         </ComboBox>
                         <ComboBox
-                            id="filterStatusComboBox"
+                            id="Status"
                             change=".onFilter"
                             width="15rem"
                             placeholder="Select Status"
-                            items="{docs>/status}"
+                            visible="false"
                         >
                             <items>
                                 <core:ListItem
-                                    id="_IDGenListItem1"
-                                    text="{docs>name}"
-                                    key="{docs>name}"
+                                    id="active"
+                                    text="active"
+                                    key="active"
+                                />
+                                <core:ListItem
+                                    id="inactive"
+                                    text="inactive"
+                                    key="inactive"
                                 />
                             </items>
                         </ComboBox>
@@ -113,6 +140,12 @@
                             press=".onClearFilter"
                         />
                         <ToolbarSpacer id="seprate" />
+                        <Button
+                            id="_IDGenButton6"
+                            icon="sap-icon://sort"
+                            text="Sorter"
+                            press="handleOpenDialog"
+                        />
                         <unified:FileUploader
                             id="fileUpload"
                             fileType="xlsx,csv,xls"
