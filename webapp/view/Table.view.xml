@@ -19,7 +19,7 @@
                 id="projectTable"
                 alternateRowColors="true"
                 width="auto"
-                mode="SingleSelectMaster"
+                mode="MultiSelect"
                 autoPopinMode="true"
                 sticky="ColumnHeaders,HeaderToolbar"
             >

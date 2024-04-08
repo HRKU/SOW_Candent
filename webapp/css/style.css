@@ -137,10 +137,7 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(-45deg, #81b6b4, #b2f2ff, #a8edf3, #d5f1e8);
-	background-size: 400% 400%;
-	animation: gradient 30s ease infinite;
-	height: 100vh;
+	
 
 	background-position: center;  }
   
@@ -155,6 +152,7 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	  url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg"),
 	  url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg"),
 	  url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg");
+	  background-color: #8BC1F7,#519DE9;
 	background-repeat: repeat-x;
 	background-size: 1600px 50%;
 	background-position: 0 130%, -50px 130%, 500px 130%;
@@ -166,4 +164,33 @@ html.sap-desktop:not(.sapUiNativeScrollbars) {
 	  background-position: 1600px 130%, 3150px 130%, 5300px 130%;
 	}
   }
-  
+
+
+
+  /* .classSwitch {
+	width: 500px;
+  } */
+  /* .sapUiSizeCompact .sapMSwtCont .sapMSwt {
+    width: 4.75rem;
+    height: 1.25rem;
+} */
+.sapUiSizeCompact .sapMSwtCont .sapMSwt {
+    width: 4.85rem;
+    height: 1.25rem;
+}
+
+.sapUiSizeCompact .sapMSwtCont .sapMSwt .sapMSwtText .sapMSwtLabel {
+    width: 3.5rem;
+    line-height: 1.125rem;
+}
+
+.sapUiSizeCompact .sapMSwtCont .sapMSwt .sapMSwtHandle {
+    height: 1rem;
+    width: 3.8rem;
+}
+.sapUiSizeCompact .sapMSwtCont .sapMSwt .sapMSwtText.sapMSwtTextOff {
+    left: 4.0rem;
+}
+.sapUiSizeCompact .sapMSwtCont .sapMSwt .sapMSwtText.sapMSwtTextOn {
+    left: 2.2rem;
+}
