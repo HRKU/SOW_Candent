@@ -154,7 +154,7 @@ sap.ui.define(
 								}
 							});
 
-							oModel.status = oModel.agreements
+							oModel.Status = oModel.agreements
 								.map((i) => i.Status)
 								.getUnique()
 								.map((name) => ({
@@ -163,7 +163,7 @@ sap.ui.define(
 										.length,
 									data: oModel.agreements.filter((i) => i.Status === name),
 								}));
-							oModel.company = oModel.agreements
+							oModel.CompanyName = oModel.agreements
 								.map((i) => i.CompanyName)
 								.getUnique()
 								.map((name) => ({
@@ -173,7 +173,7 @@ sap.ui.define(
 									).length,
 									data: oModel.agreements.filter((i) => i.CompanyName === name),
 								}));
-							oModel.project = oModel.agreements
+							oModel.ProjectName = oModel.agreements
 								.map((i) => i.ProjectName)
 								.getUnique()
 								.map((name) => ({
@@ -183,7 +183,7 @@ sap.ui.define(
 									).length,
 									data: oModel.agreements.filter((i) => i.ProjectName === name),
 								}));
-							oModel.type = oModel.agreements
+							oModel.Type = oModel.agreements
 								.map((i) => i.Type)
 								.getUnique()
 								.map((name) => ({
@@ -192,7 +192,7 @@ sap.ui.define(
 										.length,
 									data: oModel.agreements.filter((i) => i.Type === name),
 								}));
-							oModel.projecttype = oModel.agreements
+							oModel.ProjectType = oModel.agreements
 								.map((i) => i.ProjectType)
 								.getUnique()
 								.map((name) => ({

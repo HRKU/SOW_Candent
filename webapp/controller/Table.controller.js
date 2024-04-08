@@ -13,10 +13,10 @@ sap.ui.define(
 		return Controller.extend("com.candentech.sowtracker.controller.Table", {
 			formatter: formatter,
 			onInit: function () {
-				this.byId("_IDGenSearchField1").getValue();
+				this.byId("Type").getValue();
+
 				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
-					// "id",
 					"SrNo",
 					"CompanyName",
 					"Type",
@@ -28,25 +28,61 @@ sap.ui.define(
 					"ProjectType",
 					"Status",
 				];
+				//Filterbar dynamically generated code starts from here ppls
+				// var oFilterBar = this.byId("filterbar");
+				// oLabels.forEach((label) => {
+				// 	const oFilterGroupItem = new sap.ui.comp.filterbar.FilterGroupItem({
+				// 		name: label,
+				// 		label: label,
+				// 		groupName: "Group1",
+				// 		visibleInFilterBar: true,
+				// 	});
+				// 	const oComboBox = new sap.m.ComboBox({
+				// 		name: label,
+				// 		selectionChange: function (oEvent) {
+				// 			this.oFilterBar.fireFilterChange(oEvent);
+				// 		},
+				// 		placeholder: label,
+				// 	});
+				// 	const oItemTemplate = new sap.ui.core.Item({
+				// 		key: `docs>SrNo`,
+				// 		text: `{docs>${label}}`,
+				// 	});
+				// 	oComboBox.bindItems({
+				// 		path: "docs>/agreements",
+				// 		template: oItemTemplate,
+				// 		templateShareable: true, // Set templateShareable here
+				// 	});
 
+				// 	oFilterGroupItem.setControl(oComboBox);
+				// 	oFilterBar.addFilterGroupItem(oFilterGroupItem);
+				// });
 				var oTable = this.byId("projectTable");
 				var oCell = [];
+				var excludedProperties = [
+					"AgreementDate",
+					"AgreementStartDate",
+					"AgreementEndDate",
+				];
 
-				oLabels.map((i) => {
-					var oColumn = new sap.m.Column("col" + i, {
+				oLabels.forEach((label) => {
+					var oColumn = new sap.m.Column("col" + label, {
 						header: new sap.m.Label({
-							text: i,
+							text: label,
 						}),
 					});
-					var cell1 = new sap.m.Text({
-						text: "{docs>" + i + "}",
+					var cell = new sap.m.Text({
+						text: "{docs>" + label + "}",
 					});
-					oCell.push(cell1);
+
+					oCell.push(cell);
 					oTable.addColumn(oColumn);
 				});
+
 				var aColList = new sap.m.ColumnListItem("aColList", {
 					cells: oCell,
 				});
+				this.collist = aColList;
 				oTable.setModel(oModel);
 				var oSorter = new sap.ui.model.Sorter("CompanyName", false, true);
 				oTable.bindItems({
@@ -55,12 +91,20 @@ sap.ui.define(
 					sorter: oSorter,
 				});
 			},
+
+			handleOpenDialog: async function () {
+				this.oDialog ??= await this.loadFragment({
+					name: "com.candentech.sowtracker.view.fragments.Sorter",
+				});
+
+				this.oDialog.open();
+			},
 			onFilter: function () {
 				// Retrieve the filter values from SearchFields and ComboBox
-				var sType = this.byId("_IDGenSearchField1").getValue();
-				var sCompanyName = this.byId("_IDGenSearchField2").getValue();
-				var sProjectName = this.byId("_IDGenSearchField3").getValue();
-				var sStatus = this.byId("filterStatusComboBox").getValue();
+				var sType = this.byId("Type").getValue();
+				var sCompanyName = this.byId("CompanyName").getValue();
+				var sProjectName = this.byId("ProjectName").getValue();
+				var sStatus = this.byId("Status").getValue();
 
 				// Filter the data based on the retrieved values
 				var aFilters = [];
@@ -106,13 +150,73 @@ sap.ui.define(
 				var oBinding = oTable.getBinding("items");
 				oBinding.filter(aFilters);
 			},
+			onDownloadTemplate: function () {
+				var filename = "template	.xlsx"; // Name of your file
+				var fileUrl = "Assets/" + filename; // Adjust the path as per your project structure
 
+				fetch(fileUrl)
+					.then((response) => response.blob())
+					.then((blob) => {
+						var a = document.createElement("a");
+						var url = window.URL.createObjectURL(blob);
+						a.href = url;
+						a.download = filename;
+						document.body.appendChild(a);
+						a.click();
+						window.URL.revokeObjectURL(url);
+						document.body.removeChild(a);
+					})
+					.catch((error) => {
+						console.error("Error downloading file:", error);
+					});
+			},
+			handleConfirm(oEvent) {
+				debugger;
+				console.log(oEvent);
+				var sGroupName = "";
+				var sFilter = "";
+				const oParameters = oEvent.getParameters();
+				const sSortName = oParameters.sortItem.getText();
+				const bSort = oParameters.sortDescending;
+				if (oParameters.presetFilterItem) {
+					sFilter = oParameters.presetFilterItem.getText();
+					this.byId(sFilter).setVisible(true);
+				}
+
+				if (oParameters.groupItem) {
+					sGroupName = oParameters.groupItem.getText();
+					const bGroup = oParameters.groupDescending;
+					var oSorter = [
+						new sap.ui.model.Sorter(sGroupName, bGroup, Boolean(sGroupName)),
+						new sap.ui.model.Sorter(sSortName, bSort, null),
+					];
+				} else {
+					sGroupName = null;
+					var oSorter = new sap.ui.model.Sorter(sSortName, bSort, null);
+				}
+
+				var oTable = this.byId("projectTable");
+
+				oTable.bindItems({
+					path: "docs>/agreements",
+					template: this.collist,
+					sorter: oSorter,
+				});
+			},
 			onClearFilter: function () {
 				// Clear the values of SearchFields and ComboBox
-				this.byId("_IDGenSearchField1").setValue("");
-				this.byId("_IDGenSearchField2").setValue("");
-				this.byId("_IDGenSearchField3").setValue("");
-				this.byId("filterStatusComboBox").setSelectedKey("");
+				var oType = this.byId("Type");
+				var oCompanyName = this.byId("CompanyName");
+				var oProjectName = this.byId("ProjectName");
+				var oStatus = this.byId("Status");
+				oType.setValue("");
+				oCompanyName.setValue("");
+				oProjectName.setValue("");
+				oStatus.setSelectedKey("");
+				oType.setVisible(false);
+				oCompanyName.setVisible(false);
+				oProjectName.setVisible(false);
+				oStatus.setVisible(false);
 
 				// Reset the filters
 				var oTable = this.byId("projectTable");

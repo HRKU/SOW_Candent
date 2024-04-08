@@ -8,74 +8,62 @@
     <Page
         id="mainPage"
         showHeader="false"
-        class="boxPanel"
+        class="classFlexBoxDash"
     >
         <content>
-            <FlexBox
-                id="_IDGenFlexBox1"
-                class="boxInner"
-                direction="Column"
+            <tnt:ToolHeader
+                id="MainHeader"
+                class="sapUiTinyMargin"
+                style="Standard"
             >
-                <tnt:ToolHeader
-                    id="MainHeader"
-                    class="sapUiTinyMargin"
-                    style="Standard"
-                >
-                    <!-- <Button
-                    id="backButton"
-                    icon="sap-icon://nav-back"
-                    visible="false"
-                    press=".onNavBack"
-                /> -->
-                    <Title
-                        id="dashboard"
-                        text="Dashboard"
-                    />
-                    <ToolbarSpacer id="spacer" />
+                <Title
+                    id="dashboard"
+                    text="Dashboard"
+                />
+                <ToolbarSpacer id="spacer" />
 
-                    <Button
-                        type="Neutral"
-                        press=".setVisibleDash"
-                        id="dashbutton"
-                        icon="sap-icon://home"
-                        class="sapUiSmallMargin"
-                    />
-                    <Button
-                        type="Neutral"
-                        press=".setVisibleTable"
-                        id="tablebutton"
-                        icon="sap-icon://filter-fields"
-                        class="sapUiSmallMargin"
-                    />
-                    <Avatar
-                        id="avatar"
-                        displaySize="XS"
-                        press=".onAvatarPress"
-                        class="sapUiSmallMargin"
-                    />
-                    <Button
-                        type="Emphasized"
-                        press=".onLogout"
-                        id="logoutbutton"
-                        text="logout"
-                        class="sapUiSmallMargin"
-                    />
-                </tnt:ToolHeader>
-                <mvc:XMLView
-                    id="dash"
-                    viewName="com.candentech.sowtracker.view.Dashboard"
+                <Button
+                    type="Neutral"
+                    press=".setVisibleDash"
+                    id="dashbutton"
+                    icon="sap-icon://home"
+                    class="sapUiSmallMargin"
                 />
-                <mvc:XMLView
-                    id="table"
-                    visible="false"
-                    viewName="com.candentech.sowtracker.view.Table"
+                <Button
+                    type="Neutral"
+                    press=".setVisibleTable"
+                    id="tablebutton"
+                    icon="sap-icon://filter-fields"
+                    class="sapUiSmallMargin"
                 />
-                <mvc:XMLView
-                    id="admin"
-                    visible="false"
-                    viewName="com.candentech.sowtracker.view.Admin"
+                <Avatar
+                    id="avatar"
+                    displaySize="XS"
+                    press=".onAvatarPress"
+                    class="sapUiSmallMargin"
                 />
-            </FlexBox>
+                <Button
+                    type="Emphasized"
+                    press=".onLogout"
+                    id="logoutbutton"
+                    text="logout"
+                    class="sapUiSmallMargin"
+                />
+            </tnt:ToolHeader>
+            <mvc:XMLView
+                id="dash"
+                viewName="com.candentech.sowtracker.view.Dashboard"
+            />
+            <mvc:XMLView
+                id="table"
+                visible="false"
+                viewName="com.candentech.sowtracker.view.Table"
+            />
+            <mvc:XMLView
+                id="admin"
+                visible="false"
+                viewName="com.candentech.sowtracker.view.Admin"
+            />
         </content>
     </Page>
 </mvc:View>
