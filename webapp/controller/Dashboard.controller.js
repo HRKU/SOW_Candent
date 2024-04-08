@@ -110,7 +110,9 @@ sap.ui.define(
 				oSearchField3.setValue(oProjectName);
 				oSearchField3.fireChange({ query: oProjectName });
 			},
-
+			onSelectData: function (oEvent) {
+				console.log(oEvent);
+			},
 			formatter: {
 				calculateDuration(date) {
 					if (date) {

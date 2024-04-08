@@ -314,7 +314,6 @@ sap.ui.define(
 					oControls["AgreementStartDate"].setValueState();
 				}
 
-				// fetch("http://excavator:8000/sow_candent_api/agreements/create/", {
 				fetch(services.agreementCreate, {
 					method: "POST",
 					body: JSON.stringify(valuesToBeSent),
