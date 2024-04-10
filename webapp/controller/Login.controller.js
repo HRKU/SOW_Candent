@@ -18,14 +18,13 @@ sap.ui.define(
 				document.addEventListener("keydown", this.onKeyPress.bind(this), false);
 			},
 
-
 			//Enter Key event
 			onKeyPress: function (event) {
 				var loginButton = this.byId("idLoginButton");
 				if (event.key === "Enter" && loginButton) {
 					var oUsername = this.getView().byId("username");
 					var oPassword = this.getView().byId("password");
-	
+
 					if (!oUsername.getValue()) {
 						oUsername.focus();
 						return;
@@ -37,7 +36,6 @@ sap.ui.define(
 					loginButton.firePress();
 				}
 			},
-
 
 			// Show/Hide Password Function
 			onShowPasswordSelect: function () {
@@ -98,16 +96,16 @@ sap.ui.define(
 						console.log(data);
 						MessageToast.show("Login successful");
 						// debugger;
-						// document.cookie = `token=${data.token}; maxAge=${
-						// 	1000 * 60 * 60 * 24
-						// };`;
+						document.cookie = `token=${data.token}; maxAge=${
+							1000 * 60 * 60 * 24
+						};`;
 						var oUserDetails = new JSONModel(
 							JSON.parse(
-								// atob(
-								// 	Object.fromEntries([document.cookie.split("=")]).token.split(
-								// 		"."
-								// 	)[1]
-								// )
+								atob(
+									Object.fromEntries([document.cookie.split("=")]).token.split(
+										"."
+									)[1]
+								)
 							)
 						);
 						this.getOwnerComponent().setModel(oUserDetails, "userdetails");

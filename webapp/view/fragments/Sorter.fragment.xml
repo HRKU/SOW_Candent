@@ -34,7 +34,6 @@
                 id="companyGroup"
                 text="CompanyName"
                 key="CompanyName"
-                selected="true"
             />
             <ViewSettingsItem
                 id="dateGroup"

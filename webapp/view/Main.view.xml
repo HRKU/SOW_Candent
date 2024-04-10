@@ -8,7 +8,6 @@
     <Page
         id="mainPage"
         showHeader="false"
-        class="classFlexBoxDash"
     >
         <content>
             <tnt:ToolHeader
@@ -64,7 +63,6 @@
                 visible="false"
                 viewName="com.candentech.sowtracker.view.Admin"
             />
-            
         </content>
     </Page>
 </mvc:View>
