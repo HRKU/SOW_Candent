@@ -205,8 +205,8 @@ sap.ui.define(
 				oBinding.filter(aFilters);
 			},
 			onDownloadTemplate: function () {
-				var filename = "template	.xlsx"; // Name of your file
-				var fileUrl = "Assets/" + filename; // Adjust the path as per your project structure
+				var filename = "template.xlsx";
+				var fileUrl = "Assets/" + filename;
 
 				fetch(fileUrl)
 					.then((response) => response.blob())
