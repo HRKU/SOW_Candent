@@ -274,7 +274,7 @@ sap.ui.define(
 
 				// Reset the filters
 				var oTable = this.byId("projectTable");
-				debugger;
+				
 				var oBinding = oTable.getBinding("items");
 				console.log(oBinding);
 
@@ -453,12 +453,15 @@ sap.ui.define(
 				console.log(oControls, valuesToBeSent, "this is srNo", iSrNo);
 
 				fetch(services.update, {
-					method: "PUT",
+					method: "PATCH",
 					body: JSON.stringify(valuesToBeSent),
-				})
-					.then((response) => {
-						if (response.ok) {
-							MessageToast.show("Updated Successfully");
+				}).then(res=>res.json())
+					.then((data) => {
+						debugger;
+						console.log(data)
+						if (data.message) {
+							console.log(data)
+							MessageToast.show(data.message);
 
 							oModel.setProperty(
 								oSelectedItem.getBindingContextPath(),
@@ -470,9 +473,6 @@ sap.ui.define(
 							MessageToast.show("Failed to update fields");
 						}
 					})
-					.then((data) => {
-						console.log(data);
-					})
 					.catch((error) => {
 						MessageToast.show("Something went wrong: " + error);
 					});
@@ -482,6 +482,7 @@ sap.ui.define(
 						oControls[key].setValue();
 					}
 				}
+				this.refresh();
 				this.onClearFilter();
 
 				var oDialog = this.byId("idAddAndEditSowDialog");
@@ -551,13 +552,13 @@ sap.ui.define(
 					})
 						.then((response) => {
 							if (!response.ok) {
-								MessageToast.show("File Failed to upload");
+								MessageToast.show(data.error);
 								throw new Error("Error uploading file");
 							}
 							return response.json();
 						})
 						.then((data) => {
-							MessageToast.show("File Uploaded Successfully");
+							MessageToast.show(data.message);
 							console.log("File uploaded successfully:", data);
 							this.refresh();
 						})
@@ -596,10 +597,10 @@ sap.ui.define(
 										body: JSON.stringify({
 											SrNo: iSrNo,
 										}),
-									})
-										.then((res) => {
-											if (res.ok) {
-												sap.m.MessageToast.show("Record deleted successfully.");
+									}).then(res=>res.json())
+										.then((data) => {
+											if (data) {
+												sap.m.MessageToast.show(data.message);
 												oTable.removeItem(aSelectedItem);
 											} else {
 												sap.m.MessageToast.show("Failed to delete the record.");

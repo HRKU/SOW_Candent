@@ -27,10 +27,10 @@ sap.ui.define(
 				var oTable = oParent.byId("table");
 				oTable.setVisible(true);
 				oParent.byId("dashboard").setText("Table Data");
-				var oSearchField1 = oTable.byId("Type");
-				var oSearchField2 = oTable.byId("CompanyName");
-				var oSearchField3 = oTable.byId("ProjectName");
-				var oComboBox = oTable.byId("Status");
+				var oSearchField1 = oTable.byId("type");
+				var oSearchField2 = oTable.byId("companyName");
+				var oSearchField3 = oTable.byId("projectName");
+				var oComboBox = oTable.byId("status");
 				console.log(oSelectedValue, oEvent);
 				oComboBox.setValue("Active");
 

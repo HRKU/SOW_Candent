@@ -53,6 +53,7 @@ sap.ui.define(
 
 			// OnLogin press Function
 			onLoginPress: function () {
+				// debugger;
 				var oView = this.getView();
 				var oEmail = oView.byId("username");
 				var oPassword = oView.byId("password");
@@ -88,13 +89,13 @@ sap.ui.define(
 							return response.json();
 						} else {
 							throw new Error(
-								"Login failed. Please check your email and password."
+								response.error
 							);
 						}
 					})
 					.then((data) => {
-						console.log(data);
-						MessageToast.show("Login successful");
+						console.log(data);	
+						MessageToast.show(data.message);
 						// debugger;
 						document.cookie = `token=${data.token}; maxAge=${
 							1000 * 60 * 60 * 24
