@@ -24,10 +24,10 @@
     >
         <Panel
             id="panel"
+            height="75vh"
             width="40vw"
-            height="85vh"
-            backgroundDesign="Solid"
-            class="sapUiResponsiveMargin"
+            class="sapUiLargeMarginTop"
+            backgroundDesign="Transparent"
         >
             <List
                 id="as"
@@ -35,6 +35,8 @@
                 path : 'AgreementEndDate',descending:false
                 }}"
                 headerText="Urgent Expiries"
+                growing="true"
+                growingThreshold="5"
                 headerLevel="H3"
                 backgroundDesign="Solid"
                 sticky="HeaderToolbar"
@@ -66,25 +68,26 @@
         <VBox
             id="vbox"
             height="85vh"
-            justifyContent="Center"
-            class="sapUiResponsiveMargin"
+            class="sapUiVisibleOnlyOnDesktop"
         >
             <viz:VizFrame
                 id="barchartContainer3"
                 vizType="pie"
                 vizProperties='{
-        "title": { "visible": false},
+        "title": { "visible": false },
         "legend": { "visible": false },
         "plotArea": {
             "gridline": { "visible": false },
             "dataPointSize": { "max": true },
             "background": { "visible": false, "color": "transparent" },
-            "dataLabel":{"type":"color", "visible":true}
-        },"general": {
+            "dataLabel": { "type": "color", "visible": true },
+            "colorPalette": ["#002F5D", "#004B95", "#06C", "#519DE9", "#8BC1F7", "#B9D9FA"]
+        },
+        "general": {
             "background": {
-            "visible": false,
-            "color": "transparent"
-        }
+                "visible": false,
+                "color": "transparent"
+            }
         }
     }'
                 selectData=".routeToTableViaChart"
@@ -126,6 +129,20 @@
                     />
                 </viz:feeds>
             </viz:VizFrame>
+            <FlexBox
+                id="activeinactive"
+                justifyContent="Center"
+                width="100%"
+            >
+                <GenericTile
+                    id="active"
+                    header="Total documents"
+                    subheader="{docs>/ExpLen}"
+                    mode="LineMode"
+                    width="500px"
+                    class="sapUiTinyMargin"
+                />
+            </FlexBox>
 
             <f:GridList
                 id="gridList"
@@ -150,27 +167,15 @@
                             text="{docs>type}"
                             wrapping="true"
                         />
-                        <Label
+                        <Title
                             id="_IDGenLabel1"
                             text="{docs>len}"
+                            titleStyle="H4"
                             wrapping="true"
                         />
                     </VBox>
                 </f:GridListItem>
             </f:GridList>
-            <FlexBox
-                id="activeinactive"
-                justifyContent="Center"
-                width="100%"
-            >
-                <GenericTile
-                    id="active"
-                    header="Total documents"
-                    subheader="{docs>/ExpLen}"
-                    mode="LineMode"
-                    class="sapUiTinyMargin"
-                />
-            </FlexBox>
         </VBox>
     </HBox>
 </mvc:View>

@@ -27,10 +27,10 @@ sap.ui.define(
 				var oTable = oParent.byId("table");
 				oTable.setVisible(true);
 				oParent.byId("dashboard").setText("Table Data");
-				var oSearchField1 = oTable.byId("_IDGenSearchField1");
-				var oSearchField2 = oTable.byId("_IDGenSearchField2");
-				var oSearchField3 = oTable.byId("_IDGenSearchField3");
-				var oComboBox = oTable.byId("filterStatusComboBox");
+				var oSearchField1 = oTable.byId("Type");
+				var oSearchField2 = oTable.byId("CompanyName");
+				var oSearchField3 = oTable.byId("ProjectName");
+				var oComboBox = oTable.byId("Status");
 				console.log(oSelectedValue, oEvent);
 				oComboBox.setValue("Active");
 
@@ -57,17 +57,16 @@ sap.ui.define(
 					.getSource()
 					.getBindingContext("docs")
 					.getProperty("Type");
-
 				var oParent = this.getView().getParent().getParent();
 				oParent.byId("dash").setVisible(false);
 				oParent.byId("admin").setVisible(false);
 				var oTable = oParent.byId("table");
 				oTable.setVisible(true);
 				oParent.byId("dashboard").setText("Table Data");
-				var oSearchField1 = oTable.byId("_IDGenSearchField1");
-				var oSearchField2 = oTable.byId("_IDGenSearchField2");
-				var oSearchField3 = oTable.byId("_IDGenSearchField3");
-				var oComboBox = oTable.byId("filterStatusComboBox");
+				var oSearchField1 = oTable.byId("Type");
+				var oSearchField2 = oTable.byId("CompanyName");
+				var oSearchField3 = oTable.byId("ProjectName");
+				var oComboBox = oTable.byId("Status");
 				oComboBox.setValue("Active");
 				oComboBox.fireChange({ value: "Active" });
 				oSearchField1.setValue(oType);
@@ -98,10 +97,10 @@ sap.ui.define(
 				var oTable = oParent.byId("table");
 				oTable.setVisible(true);
 				oParent.byId("dashboard").setText("Table Data");
-				var oSearchField1 = oTable.byId("_IDGenSearchField1");
-				var oSearchField2 = oTable.byId("_IDGenSearchField2");
-				var oSearchField3 = oTable.byId("_IDGenSearchField3");
-				var oComboBox = oTable.byId("filterStatusComboBox");
+				var oSearchField1 = oTable.byId("Type");
+				var oSearchField2 = oTable.byId("CompanyName");
+				var oSearchField3 = oTable.byId("ProjectName");
+				var oComboBox = oTable.byId("Status");
 				oComboBox.setValue("Active");
 				oComboBox.fireChange({ value: "Active" });
 				oSearchField1.setValue(oType);

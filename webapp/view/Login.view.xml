@@ -11,7 +11,7 @@
     <Page
         id="idPage"
         showHeader="false"
-        class="classFelxBox"
+        class="boxPanel"
     >
         <content>
             <FlexBox
@@ -19,6 +19,7 @@
                 justifyContent="Center"
                 height="100%"
                 alignItems="Center"
+                class="boxInner"
             >
                 <VBox
                     id="idVBox"
@@ -90,5 +91,13 @@
                 </VBox>
             </FlexBox>
         </content>
+        <!-- <Panel
+                        id="idPanel"
+                        class="waveAnimation"
+                        backgroundDesign="Transparent"
+                    >
+                    </Panel>     -->
+
+        <!-- Inner content goes here -->
     </Page>
 </mvc:View>

@@ -37,7 +37,7 @@
 }
 
 .classFlexBoxDash {
-	background: linear-gradient(-45deg, #2370d5, #b2f2ff, #00879399, #12ebaa);
+	background-color: rgb(234, 233, 233);
 	background-size: 400% 400%;
 	animation: gradient 30s ease infinite;
 	height: 100vh;
@@ -45,14 +45,14 @@
 	background-position: center;
 }
 
-.classFelxBox {
+/*  .classFelxBox {
 	background: linear-gradient(-45deg, #2370d5, #b2f2ff, #00879399, #12ebaa);
 	background-size: 400% 400%;
 	animation: gradient 30s ease infinite;
 	height: 100vh;
 
 	background-position: center;
-}
+} */
 
 .sapMPanelContent {
 	padding: 0;
@@ -88,17 +88,76 @@
 	color: #999;
 }
 
-.classObjectHeader {
-	width: 800px;
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
-/* .sapMPanelContent {
-	width: 50vw;
-	margin: 0 auto;
-} */
-/*
-@media (max-width: 600px) {
-	.sapMPanelContent {
-		width: 400px;
+.sapUiContentPadding {
+	padding: 1rem;
+	text-align: center;
+}
+
+.boxPanel {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.boxInner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+
+	box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.58);
+
+	background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg"),
+		url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg"),
+		url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg");
+	background-color: #8bc1f7, #519de9;
+	background-repeat: repeat-x;
+	background-size: 1600px 50%;
+	background-position: 0 130%, -50px 130%, 500px 130%;
+	animation: 50s waves linear infinite forwards;
+}
+
+@keyframes waves {
+	to {
+		background-position: 1600px 130%, 3150px 130%, 5300px 130%;
 	}
+}
+
+/* .classSwitch {
+	width: 500px;
+  } */
+/* .sapUiSizeCompact .sapMSwtCont .sapMSwt {
+    width: 4.75rem;
+    height: 1.25rem;
 } */
+.sapUiSizeCompact .sapMSwtCont .sapMSwt {
+	width: 4.85rem;
+	height: 1.25rem;
+}
+
+.sapUiSizeCompact .sapMSwtCont .sapMSwt .sapMSwtText .sapMSwtLabel {
+	width: 3.5rem;
+	line-height: 1.125rem;
+}
+
+.sapUiSizeCompact .sapMSwtCont .sapMSwt .sapMSwtHandle {
+	height: 1rem;
+	width: 3.8rem;
+}
+.sapUiSizeCompact .sapMSwtCont .sapMSwt .sapMSwtText.sapMSwtTextOff {
+	left: 4rem;
+}
+.sapUiSizeCompact .sapMSwtCont .sapMSwt .sapMSwtText.sapMSwtTextOn {
+	left: 2.2rem;
+}
