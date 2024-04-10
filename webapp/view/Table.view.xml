@@ -54,7 +54,7 @@
                             width="15rem"
                         /> -->
                         <ComboBox
-                            id="Type"
+                            id="type"
                             change=".onFilter"
                             width="15rem"
                             placeholder="Select Type"
@@ -70,7 +70,7 @@
                             </items>
                         </ComboBox>
                         <ComboBox
-                            id="CompanyName"
+                            id="companyName"
                             change=".onFilter"
                             width="15rem"
                             placeholder="Select Company Name"
@@ -98,7 +98,7 @@
                             width="15rem"
                         /> -->
                         <ComboBox
-                            id="ProjectName"
+                            id="projectName"
                             change=".onFilter"
                             width="15rem"
                             placeholder="Select Project Name"
@@ -114,7 +114,7 @@
                             </items>
                         </ComboBox>
                         <ComboBox
-                            id="Status"
+                            id="status"
                             change=".onFilter"
                             width="15rem"
                             placeholder="Select Status"

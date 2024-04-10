@@ -13,7 +13,7 @@ sap.ui.define(
 		return Controller.extend("com.candentech.sowtracker.controller.Table", {
 			formatter: formatter,
 			onInit: function () {
-				this.byId("Type").getValue();
+				// this.byId("type").getValue();
 
 				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
@@ -81,9 +81,8 @@ sap.ui.define(
 							state: {
 								path: "docs>" + i,
 								formatter: function (status) {
-
 									return status === "Active";
-								}
+								},
 							},
 							enabled: true,
 							change: this.onStatusChange.bind(this),
@@ -128,33 +127,31 @@ sap.ui.define(
 
 				this.oDialog.open();
 			},
-			
-			onStatusChange: function (oEvent) {
 
+			onStatusChange: function (oEvent) {
 				var bState = oEvent.getParameter("state");
 
 				var oContext = oEvent.getSource().getBindingContext("docs");
 				var oData = oContext.getObject();
 
-				oData.Status = bState? "Active" : "Inactive";
+				oData.Status = bState ? "Active" : "Inactive";
 
 				fetch(services.update, {
-				  method: "PUT",
-				  body: JSON.stringify(oData),
+					method: "PUT",
+					body: JSON.stringify(oData),
 				})
-				 .then((response) => {
-					if (response.ok) {
-					  MessageToast.show("Status updated successfully");
-					} else {
-					  MessageToast.show("Failed to update status");
-					}
-				  })
-				 .catch((error) => {
-					MessageToast.show("Something went wrong: " + error);
-				  });
+					.then((response) => {
+						if (response.ok) {
+							MessageToast.show("Status updated successfully");
+						} else {
+							MessageToast.show("Failed to update status");
+						}
+					})
+					.catch((error) => {
+						MessageToast.show("Something went wrong: " + error);
+					});
 			},
-	
-			
+
 			onFilter: function () {
 				// Retrieve the filter values from SearchFields and ComboBox
 				var sType = this.byId("Type").getValue();
@@ -521,7 +518,16 @@ sap.ui.define(
 					var oDialog = this.byId("idAddAndEditSowDialog");
 
 					if (oSelectedRow) {
-						var items = oSelectedRow.getCells().map((i) => i.getText());
+						debugger;
+						var items = oSelectedRow
+							.getCells()
+							.map((i) =>
+								!i.aCustomStyleClasses
+									? i.getText()
+									: i.getState()
+									? "Active"
+									: "Inactive"
+							);
 						items.shift();
 						oIds.map((id, index) => this.byId(id).setValue(items[index]));
 					}
@@ -564,44 +570,51 @@ sap.ui.define(
 			onDelete() {
 				const oTable = this.byId("projectTable");
 				const oSelectedItems = oTable.getSelectedItems();
-			  
+
 				if (oSelectedItems.length === 0) {
-				  MessageToast.show("Please select the Record(s) to delete");
-				  return;
+					MessageToast.show("Please select the Record(s) to delete");
+					return;
 				}
-			  
-				MessageBox.confirm(`Are you sure to delete ${oSelectedItems.length} record(s)?`, {
-				  title: "Confirm",
-				  onClose: function (sAction) {
-					if (sAction === "OK") {
-					  oSelectedItems.forEach((aSelectedItem) => {
-						const sPath = aSelectedItem.getBindingContext("docs").getPath();
-						const { SrNo: iSrNo } = aSelectedItem.getModel("docs").getProperty(sPath);
-			  
-						fetch(services.delete, {
-						  method: "DELETE",
-						  body: JSON.stringify({
-							SrNo: iSrNo,
-						  }),
-						})
-						 .then((res) => {
-							if (res.ok) {
-							  sap.m.MessageToast.show("Record deleted successfully.");
-							  oTable.removeItem(aSelectedItem);
-							} else {
-							  sap.m.MessageToast.show("Failed to delete the record.");
+
+				MessageBox.confirm(
+					`Are you sure to delete ${oSelectedItems.length} record(s)?`,
+					{
+						title: "Confirm",
+						onClose: function (sAction) {
+							if (sAction === "OK") {
+								oSelectedItems.forEach((aSelectedItem) => {
+									const sPath = aSelectedItem
+										.getBindingContext("docs")
+										.getPath();
+									const { SrNo: iSrNo } = aSelectedItem
+										.getModel("docs")
+										.getProperty(sPath);
+
+									fetch(services.delete, {
+										method: "DELETE",
+										body: JSON.stringify({
+											SrNo: iSrNo,
+										}),
+									})
+										.then((res) => {
+											if (res.ok) {
+												sap.m.MessageToast.show("Record deleted successfully.");
+												oTable.removeItem(aSelectedItem);
+											} else {
+												sap.m.MessageToast.show("Failed to delete the record.");
+											}
+										})
+										.catch((error) => {
+											sap.m.MessageToast.show(
+												"An error occurred: " + error.message
+											);
+										});
+								});
 							}
-						  })
-						 .catch((error) => {
-							sap.m.MessageToast.show(
-							  "An error occurred: " + error.message
-							);
-						  });
-					  });
+						},
 					}
-				  },
-				});
-			  },
+				);
+			},
 
 			// onDelete() {
 			// 	// debugger;

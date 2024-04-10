@@ -27,7 +27,7 @@
                             id="CompanyName"
                             placeholder="Eg. Candent"
                             width="auto"
-                            items="{docs>/company}"
+                            items="{docs>/CompanyName}"
                         >
                             <core:Item
                                 id="_IDGenItem8"
@@ -75,12 +75,16 @@
                             id="Status"
                             placeholder="Select Status"
                             width="auto"
-                            items="{docs>/status}"
                         >
                             <core:Item
-                                id="_IDGenItem7"
-                                key="{docs>name}"
-                                text="{docs>name}"
+                                id="_IDGenItem"
+                                key="Active"
+                                text="Active"
+                            />
+                            <core:Item
+                                id="_IDGenItem9"
+                                key="Inactive"
+                                text="Inactive"
                             />
                         </ComboBox>
                     </VBox>
@@ -128,7 +132,7 @@
                             id="Type"
                             placeholder="Select Document type"
                             width="auto"
-                            items="{docs>/type}"
+                            items="{docs>/Type}"
                         >
                             <core:Item
                                 id="_IDGenItem6"
