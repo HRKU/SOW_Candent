@@ -155,10 +155,10 @@ sap.ui.define(
 
 			onFilter: function () {
 				// Retrieve the filter values from SearchFields and ComboBox
-				var sType = this.byId("Type").getValue();
-				var sCompanyName = this.byId("CompanyName").getValue();
-				var sProjectName = this.byId("ProjectName").getValue();
-				var sStatus = this.byId("Status").getValue();
+				var sType = this.byId("type").getValue();
+				var sCompanyName = this.byId("companyName").getValue();
+				var sProjectName = this.byId("projectName").getValue();
+				var sStatus = this.byId("status").getValue();
 
 				// Filter the data based on the retrieved values
 				var aFilters = [];
@@ -259,10 +259,10 @@ sap.ui.define(
 			},
 			onClearFilter: function () {
 				// Clear the values of SearchFields and ComboBox
-				var oType = this.byId("Type");
-				var oCompanyName = this.byId("CompanyName");
-				var oProjectName = this.byId("ProjectName");
-				var oStatus = this.byId("Status");
+				var oType = this.byId("type");
+				var oCompanyName = this.byId("companyName");
+				var oProjectName = this.byId("projectName");
+				var oStatus = this.byId("status");
 				oType.setValue("");
 				oCompanyName.setValue("");
 				oProjectName.setValue("");
