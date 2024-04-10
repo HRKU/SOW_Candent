@@ -143,6 +143,7 @@ sap.ui.define(
 					.then((response) => {
 						if (response.ok) {
 							MessageToast.show("Status updated successfully");
+							this.refresh();
 						} else {
 							MessageToast.show("Failed to update status");
 						}
