@@ -12,7 +12,7 @@ sap.ui.define(
 			onInit: function () {
 				// , '#5B738B''#6C32A9', '#BA066C',
 			},
-			navAvatar() {},
+
 			routeToTableViaChart: function (oEvent) {
 				debugger;
 				const oSelectedValue = oEvent
@@ -110,9 +110,6 @@ sap.ui.define(
 				oSearchField3.setValue(oProjectName);
 				oSearchField3.fireChange({ query: oProjectName });
 			},
-			onSelectData: function (oEvent) {
-				console.log(oEvent);
-			},
 			formatter: {
 				calculateDuration(date) {
 					if (date) {
@@ -152,86 +149,8 @@ sap.ui.define(
 					} else {
 						return "None";
 					}
-
 					return;
 				},
-				getShapeColor(doctype) {
-					switch (doctype) {
-						case "MSA":
-							return "sapUiAccent3";
-						case "NDA":
-							return "sapUiAccent5";
-						case "SOW":
-							return "sapUiAccent9";
-						default:
-							return "sapUiAccent10";
-					}
-				},
-			},
-			filterDocs(oEvent) {
-				debugger;
-
-				var oBinding1 = this.byId("barchartContainer1")
-					.getDataset()
-					.getBinding("data");
-				var oBinding2 = this.byId("barchartContainer2")
-					.getDataset()
-					.getBinding("data");
-
-				var sSelectedKey = oEvent.getSource().getProperty("scale"); // Use getProperty instead of accessing directly via mProperties
-
-				// Clear previous filters before applying new ones
-				oBinding1.filter([]);
-				oBinding2.filter([]);
-
-				if (sSelectedKey === "ALL" || !sSelectedKey) {
-					// Handle null or undefined sSelectedKey
-					return;
-				} else {
-					var newFilter = new sap.ui.model.Filter(
-						"Type",
-						sap.ui.model.FilterOperator.EQ,
-						sSelectedKey
-					);
-
-					// Apply the same filter to all bindings
-					oBinding1.filter(newFilter);
-					oBinding2.filter(newFilter);
-				}
-			},
-			filterDocs1(oEvent) {
-				debugger;
-				var oBinding = this.byId("barchartContainer")
-					.getDataset()
-					.getBinding("data");
-
-				var oBinding3 = this.byId("barchartContainer3")
-					.getDataset()
-					.getBinding("data");
-				var sSelectedKey = oEvent
-					.getSource()
-					.getCustomData()
-					.map((i) => i.getKey())
-					.pop();
-
-				oBinding3.filter([]);
-				oBinding.filter([]);
-
-				if (sSelectedKey === "All" || !sSelectedKey) {
-					// Handle null or undefined sSelectedKey
-					return;
-				} else {
-					var newFilter = new sap.ui.model.Filter(
-						"Type",
-						sap.ui.model.FilterOperator.EQ,
-						sSelectedKey
-					);
-
-					// Apply the same filter to all bindings
-
-					oBinding3.filter(newFilter);
-					oBinding.filter(newFilter);
-				}
 			},
 		});
 	}

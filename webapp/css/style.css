@@ -16,9 +16,9 @@
 	width: auto;
 	height: 100%;
 }
-html.sap-desktop:not(.sapUiNativeScrollbars) {
+/* html.sap-desktop:not(.sapUiNativeScrollbars) {
 	scrollbar-color: initial;
-}
+} */
 .sapFGridListDefault {
 	display: flex;
 	justify-content: center;

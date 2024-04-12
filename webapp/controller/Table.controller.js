@@ -83,6 +83,7 @@ sap.ui.define(
 								formatter: function (status) {
 									return status === "Active";
 								},
+								},
 							},
 							enabled: true,
 							change: this.onStatusChange.bind(this),
@@ -166,7 +167,7 @@ sap.ui.define(
 					aFilters.push(
 						new sap.ui.model.Filter(
 							"Type",
-							sap.ui.model.FilterOperator.Contains,
+							sap.ui.model.FilterOperator.EQ,
 							sType
 						)
 					);
@@ -175,7 +176,7 @@ sap.ui.define(
 					aFilters.push(
 						new sap.ui.model.Filter(
 							"CompanyName",
-							sap.ui.model.FilterOperator.Contains,
+							sap.ui.model.FilterOperator.EQ,
 							sCompanyName
 						)
 					);
@@ -184,7 +185,7 @@ sap.ui.define(
 					aFilters.push(
 						new sap.ui.model.Filter(
 							"ProjectName",
-							sap.ui.model.FilterOperator.Contains,
+							sap.ui.model.FilterOperator.EQ,
 							sProjectName
 						)
 					);
@@ -274,7 +275,7 @@ sap.ui.define(
 
 				// Reset the filters
 				var oTable = this.byId("projectTable");
-				
+
 				var oBinding = oTable.getBinding("items");
 				console.log(oBinding);
 
@@ -676,14 +677,6 @@ sap.ui.define(
 								return null;
 							}
 						});
-
-						// Object.keys(oModel.filtered.types).forEach((key) => {
-						// 	const typeKey = oModel.filtered.types[key];
-						// 	oModel.filtered.len[key] = {
-						// 		type: typeKey,
-						// 		len: oModel.filtered[typeKey].length,
-						// 	};
-						// });
 
 						Object.keys(oModel.filtered.types).forEach((key) => {
 							const typeKey = oModel.filtered.types[key].name;
