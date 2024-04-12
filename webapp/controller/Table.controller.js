@@ -83,7 +83,6 @@ sap.ui.define(
 								formatter: function (status) {
 									return status === "Active";
 								},
-								},
 							},
 							enabled: true,
 							change: this.onStatusChange.bind(this),
@@ -167,7 +166,7 @@ sap.ui.define(
 					aFilters.push(
 						new sap.ui.model.Filter(
 							"Type",
-							sap.ui.model.FilterOperator.EQ,
+							sap.ui.model.FilterOperator.Contains,
 							sType
 						)
 					);
@@ -176,7 +175,7 @@ sap.ui.define(
 					aFilters.push(
 						new sap.ui.model.Filter(
 							"CompanyName",
-							sap.ui.model.FilterOperator.EQ,
+							sap.ui.model.FilterOperator.Contains,
 							sCompanyName
 						)
 					);
@@ -185,7 +184,7 @@ sap.ui.define(
 					aFilters.push(
 						new sap.ui.model.Filter(
 							"ProjectName",
-							sap.ui.model.FilterOperator.EQ,
+							sap.ui.model.FilterOperator.Contains,
 							sProjectName
 						)
 					);
@@ -456,12 +455,13 @@ sap.ui.define(
 				fetch(services.update, {
 					method: "PATCH",
 					body: JSON.stringify(valuesToBeSent),
-				}).then(res=>res.json())
+				})
+					.then((res) => res.json())
 					.then((data) => {
 						debugger;
-						console.log(data)
+						console.log(data);
 						if (data.message) {
-							console.log(data)
+							console.log(data);
 							MessageToast.show(data.message);
 
 							oModel.setProperty(
@@ -598,7 +598,8 @@ sap.ui.define(
 										body: JSON.stringify({
 											SrNo: iSrNo,
 										}),
-									}).then(res=>res.json())
+									})
+										.then((res) => res.json())
 										.then((data) => {
 											if (data) {
 												sap.m.MessageToast.show(data.message);
@@ -677,6 +678,14 @@ sap.ui.define(
 								return null;
 							}
 						});
+
+						// Object.keys(oModel.filtered.types).forEach((key) => {
+						// 	const typeKey = oModel.filtered.types[key];
+						// 	oModel.filtered.len[key] = {
+						// 		type: typeKey,
+						// 		len: oModel.filtered[typeKey].length,
+						// 	};
+						// });
 
 						Object.keys(oModel.filtered.types).forEach((key) => {
 							const typeKey = oModel.filtered.types[key].name;
