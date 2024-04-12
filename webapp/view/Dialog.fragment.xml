@@ -33,6 +33,18 @@
                 type="Password"
                 placeholder="Enter Password"
             />
+            <Input
+                id="newpassword"
+                type="Password"
+                placeholder="Enter New Password"
+                visible="false"
+            />
+            <Input
+                id="confirmpassword"
+                type="Password"
+                placeholder="Confirm Password"
+                visible="false"
+            />
             <VBox id="_IDGenVBox3" />
             <VBox id="_IDGenVBox4">
                 <Label
