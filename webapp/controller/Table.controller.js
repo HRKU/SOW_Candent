@@ -274,7 +274,7 @@ sap.ui.define(
 
 				// Reset the filters
 				var oTable = this.byId("projectTable");
-
+				
 				var oBinding = oTable.getBinding("items");
 				console.log(oBinding);
 
@@ -455,13 +455,12 @@ sap.ui.define(
 				fetch(services.update, {
 					method: "PATCH",
 					body: JSON.stringify(valuesToBeSent),
-				})
-					.then((res) => res.json())
+				}).then(res=>res.json())
 					.then((data) => {
 						debugger;
-						console.log(data);
+						console.log(data)
 						if (data.message) {
-							console.log(data);
+							console.log(data)
 							MessageToast.show(data.message);
 
 							oModel.setProperty(
@@ -570,55 +569,55 @@ sap.ui.define(
 					sap.m.MessageToast.show("No file selected");
 				}
 			},
-
 			onDelete() {
-				// debugger;
 				const oTable = this.byId("projectTable");
-				const oSelectedItem = oTable.getSelectedItem();
-				console.log("it is an oSelectedItem", oSelectedItem);
+				const oSelectedItems = oTable.getSelectedItems();
 
-				// Check whether the data are selected or not
-
-				if (!oSelectedItem) {
-					MessageToast.show("Please select the Record to delete");
+				if (oSelectedItems.length === 0) {
+					MessageToast.show("Please select the Record(s) to delete");
 					return;
 				}
-				console.log(oSelectedItem);
-				const sPath = oSelectedItem.getBindingContext("docs").getPath();
-				const { SrNo: iSrNo } = oSelectedItem
-					.getModel("docs")
-					.getProperty(sPath);
-				console.log(sPath);
-				window.oTable = oTable;
-				// debugger;
 
-				MessageBox.confirm("Are you sure to delete the record?", {
-					title: "Confirm",
-					onClose: function (sAction) {
-						if (sAction === "OK" && iSrNo) {
-							fetch(services.delete, {
-								method: "DELETE",
-								body: JSON.stringify({
-									SrNo: iSrNo,
-								}),
-							})
-								.then((res) => {
-									if (res.ok) {
-										sap.m.MessageToast.show("Record deleted successfully.");
-										oTable.removeItem(oSelectedItem);
-									} else {
-										sap.m.MessageToast.show("Failed to delete the record.");
-									}
-								})
-								.catch((error) => {
-									sap.m.MessageToast.show(
-										"An error occurred: " + error.message
-									);
+				MessageBox.confirm(
+					`Are you sure to delete ${oSelectedItems.length} record(s)?`,
+					{
+						title: "Confirm",
+						onClose: function (sAction) {
+							if (sAction === "OK") {
+								oSelectedItems.forEach((aSelectedItem) => {
+									const sPath = aSelectedItem
+										.getBindingContext("docs")
+										.getPath();
+									const { SrNo: iSrNo } = aSelectedItem
+										.getModel("docs")
+										.getProperty(sPath);
+
+									fetch(services.delete, {
+										method: "DELETE",
+										body: JSON.stringify({
+											SrNo: iSrNo,
+										}),
+									}).then(res=>res.json())
+										.then((data) => {
+											if (data) {
+												sap.m.MessageToast.show(data.message);
+												oTable.removeItem(aSelectedItem);
+											} else {
+												sap.m.MessageToast.show("Failed to delete the record.");
+											}
+										})
+										.catch((error) => {
+											sap.m.MessageToast.show(
+												"An error occurred: " + error.message
+											);
+										});
 								});
-						}
-					},
-				});
+							}
+						},
+					}
+				);
 			},
+
 			refresh() {
 				fetch(services.agreementList)
 					.then((res) => res.json())
@@ -696,7 +695,7 @@ sap.ui.define(
 							}
 						});
 
-						oModel.Status = oModel.agreements
+						oModel.status = oModel.agreements
 							.map((i) => i.Status)
 							.getUnique()
 							.map((name) => ({
@@ -705,7 +704,7 @@ sap.ui.define(
 									.length,
 								data: oModel.agreements.filter((i) => i.Status === name),
 							}));
-						oModel.CompanyName = oModel.agreements
+						oModel.company = oModel.agreements
 							.map((i) => i.CompanyName)
 							.getUnique()
 							.map((name) => ({
@@ -714,7 +713,7 @@ sap.ui.define(
 									.length,
 								data: oModel.agreements.filter((i) => i.CompanyName === name),
 							}));
-						oModel.ProjectName = oModel.agreements
+						oModel.project = oModel.agreements
 							.map((i) => i.ProjectName)
 							.getUnique()
 							.map((name) => ({
@@ -723,7 +722,7 @@ sap.ui.define(
 									.length,
 								data: oModel.agreements.filter((i) => i.ProjectName === name),
 							}));
-						oModel.Type = oModel.agreements
+						oModel.type = oModel.agreements
 							.map((i) => i.Type)
 							.getUnique()
 							.map((name) => ({
@@ -731,7 +730,7 @@ sap.ui.define(
 								length: oModel.agreements.filter((i) => i.Type === name).length,
 								data: oModel.agreements.filter((i) => i.Type === name),
 							}));
-						oModel.ProjectType = oModel.agreements
+						oModel.projecttype = oModel.agreements
 							.map((i) => i.ProjectType)
 							.getUnique()
 							.map((name) => ({
