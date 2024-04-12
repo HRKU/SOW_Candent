@@ -45,7 +45,8 @@
                         <ComboBox
                             id="ProjectName"
                             placeholder="Eg. SAP Basis, ABAP"
-                            width="auto"
+                            width="200px"
+                            showButton="none"
                         />
                     </VBox>
                     <VBox id="_IDGenVBox10">
@@ -57,7 +58,8 @@
                         <ComboBox
                             id="AgreementNo"
                             placeholder="Eg. 18263"
-                            width="auto"
+                            width="200px"
+                            showButton="none"
                         />
                     </VBox>
                 </HBox>
