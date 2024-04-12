@@ -15,7 +15,7 @@
 		"ui5-middleware-simpleproxy": "^3.2.14"
 	},
 	"scripts": {
-		"start": "fiori run  --port 3001 --accept-remote-connections",
+		"start": "fiori run  --port 3001 --accept-remote-connections ",
 		"start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#comcandentechsowtracker-display\"",
 		"build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
 		"deploy": "fiori verify",
