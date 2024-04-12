@@ -54,18 +54,18 @@
         <presetFilterItems>
             <ViewSettingsItem
                 id="companyFilter"
-                text="CompanyName"
-                key="CompanyName"
+                text="companyname"
+                key="companyname"
             />
             <ViewSettingsItem
                 id="statusFilter"
-                text="Status"
-                key="Status"
+                text="status"
+                key="status"
             />
             <ViewSettingsItem
                 id="typeFilter"
-                text="Type"
-                key="Type"
+                text="type"
+                key="type"
             />
         </presetFilterItems>
     </ViewSettingsDialog>
