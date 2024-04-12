@@ -1,6 +1,6 @@
-const hostname = "http://192.168.1.55:8007/sow_candent_api";
+// const hostname = "http://192.168.1.55:8007/sow_candent_api";
 // const hostname = "http://192.168.1.56:8008";
-// const hostname = "http://localhost:8010/sow_candent_api"
+const hostname = "http://192.168.1.251:8010/sow_candent_api"
 //"localhost" instead of ip address for yash laptop
 
 sap.ui.define(
