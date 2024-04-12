@@ -29,6 +29,19 @@ sap.ui.define(
 				var oModel = this.getOwnerComponent().getModel("userdetails");
 				// console.log("this is oModel -- ", oModel);
 			},
+			onShowPasswordSelect: function (oEvent) {
+				
+				var oPasswordInput = oEvent.getSource();
+				var temp = oPasswordInput.getValueHelpIconSrc().split("://");
+
+				var state = temp.pop();
+
+				temp.push(ePassword.opposite_state[state]);
+
+				oPasswordInput.setType(ePassword.input_type[state]);
+				oPasswordInput.setValueHelpIconSrc(temp.join("://"));
+			},
+
 			handleOpen: function () {
 				this.qDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.Dialog",
