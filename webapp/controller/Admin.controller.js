@@ -29,12 +29,28 @@ sap.ui.define(
 				var oModel = this.getOwnerComponent().getModel("userdetails");
 				// console.log("this is oModel -- ", oModel);
 			},
+			onShowPasswordSelect: function (oEvent) {
+				
+				var oPasswordInput = oEvent.getSource();
+				var temp = oPasswordInput.getValueHelpIconSrc().split("://");
+
+				var state = temp.pop();
+
+				temp.push(ePassword.opposite_state[state]);
+
+				oPasswordInput.setType(ePassword.input_type[state]);
+				oPasswordInput.setValueHelpIconSrc(temp.join("://"));
+			},
+
 			handleOpen: function () {
 				this.qDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.Dialog",
 				});
 
 				this.qDialog.then((oDialog) => oDialog.open());
+				this.byId("password").setVisible(true);
+				this.byId("newpassword").setVisible(false);
+				this.byId("confirmpassword").setVisible(false);
 			},
 			handleClose: function () {
 				var oDialog = this.getView().byId("idDialog");
@@ -123,6 +139,9 @@ sap.ui.define(
 					.finally(() => {
 						var oDialog = this.byId("idDialog");
 						oDialog.setTitle("Edit User");
+						this.byId("password").setVisible(false);
+						this.byId("newpassword").setVisible(true);
+						this.byId("confirmpassword").setVisible(true);
 						var oUsername = this.byId("username");
 						var oRole = this.byId("role");
 						this.byId("submit").setVisible(false);
@@ -134,8 +153,28 @@ sap.ui.define(
 					});
 			},
 			onSave: function (oEvent) {
+				debugger;
 				var oRole, oPassword;
-				oPassword = this.byId("password").getValue();
+				if (!this.byId("newpassword").getValue()) {
+					this.byId("newpassword").setValueState("Error");
+					this.byId("newpassword").setValueStateText("Please Input Value");
+					return;
+				}
+				if (!this.byId("confirmpassword").getValue()) {
+					this.byId("confirmpassword").setValueState("Error");
+					this.byId("confirmpassword").setValueStateText("Please Input Value");
+					return;
+				}
+				if (
+					this.byId("confirmpassword").getValue() !=
+					this.byId("newpassword").getValue()
+				) {
+					this.byId("confirmpassword").setValueState("Error");
+					this.byId("confirmpassword").setValueStateText("Invalid Password");
+					return;
+				}
+				oPassword = this.byId("newpassword").getValue();
+
 				oRole = this.byId("role").getValue();
 
 				const oData = this.getView().getModel("user").getData();
@@ -160,11 +199,11 @@ sap.ui.define(
 						return response.json();
 					})
 					.then((data) => {
-						console.log("User updated successfully", data);
+						MessageToast.show("User updated successfully");
 						this.refresh();
 					})
 					.catch((error) => {
-						console.error("Error updating user:", error);
+						MessageToast.show("Error updating user:", error);
 						return;
 					});
 

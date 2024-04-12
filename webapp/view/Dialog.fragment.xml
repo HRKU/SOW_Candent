@@ -32,6 +32,27 @@
                 id="password"
                 type="Password"
                 placeholder="Enter Password"
+                showValueHelp="true"
+                valueHelpIconSrc="sap-icon://show"
+                valueHelpRequest=".onShowPasswordSelect"
+            />
+            <Input
+                id="newpassword"
+                type="Password"
+                placeholder="Enter New Password"
+                visible="false"
+                showValueHelp="true"
+                valueHelpIconSrc="sap-icon://show"
+                valueHelpRequest=".onShowPasswordSelect"
+            />
+            <Input
+                id="confirmpassword"
+                type="Password"
+                placeholder="Confirm Password"
+                visible="false"
+                showValueHelp="true"
+                valueHelpIconSrc="sap-icon://show"
+                valueHelpRequest=".onShowPasswordSelect"
             />
             <VBox id="_IDGenVBox3" />
             <VBox id="_IDGenVBox4">
