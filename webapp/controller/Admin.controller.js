@@ -91,7 +91,7 @@ sap.ui.define(
 					});
 
 				this.qDialog ??= this.loadFragment({
-					name: "com.candenxtech.sowtracker.view.fragments.AddSowDialog",
+					name: "com.candentech.sowtracker.view.fragments.AddSowDialog",
 					addToDependents: true,
 				});
 
