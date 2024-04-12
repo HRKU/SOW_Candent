@@ -226,6 +226,7 @@ sap.ui.define(
 			},
 			// Clear the values of SearchFields and ComboBox
 			onClearFilter: function () {
+				this.refresh();
 				var oType = this.byId("type");
 				var oCompanyName = this.byId("companyName");
 				var oProjectName = this.byId("projectName");
@@ -580,6 +581,7 @@ sap.ui.define(
 										});
 								});
 							}
+							this.refresh();
 						},
 					}
 				);
