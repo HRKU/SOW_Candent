@@ -27,7 +27,7 @@ sap.ui.define(
 			formatter: formatter,
 			onInit: function () {
 				var oModel = this.getOwnerComponent().getModel("userdetails");
-				console.log("this is oModel -- ", oModel);
+				// console.log("this is oModel -- ", oModel);
 			},
 			handleOpen: function () {
 				this.qDialog ??= this.loadFragment({

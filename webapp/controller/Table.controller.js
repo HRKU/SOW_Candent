@@ -226,7 +226,6 @@ sap.ui.define(
 			},
 			// Clear the values of SearchFields and ComboBox
 			onClearFilter: function () {
-				this.refresh();
 				var oType = this.byId("type");
 				var oCompanyName = this.byId("companyName");
 				var oProjectName = this.byId("projectName");
@@ -549,7 +548,7 @@ sap.ui.define(
 					`Are you sure to delete ${oSelectedItems.length} record(s)?`,
 					{
 						title: "Confirm",
-						onClose: function (sAction) {
+						onClose: (sAction) => {
 							if (sAction === "OK") {
 								oSelectedItems.forEach((aSelectedItem) => {
 									const sPath = aSelectedItem
