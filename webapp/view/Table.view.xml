@@ -33,6 +33,8 @@
                 alternateRowColors="true"
                 width="auto"
                 mode="MultiSelect"
+                growing="true"
+                growingThreshold="50"
                 autoPopinMode="true"
                 sticky="ColumnHeaders,HeaderToolbar"
             >
