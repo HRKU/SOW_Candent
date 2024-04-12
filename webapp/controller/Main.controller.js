@@ -1,10 +1,6 @@
 sap.ui.define(
-	[
-		"sap/ui/core/mvc/Controller",
-		"sap/ui/model/json/JSONModel",
-		"sap/m/MessageToast",
-	],
-	function (Controller, JSONModel, MessageToast) {
+	["sap/ui/core/mvc/Controller", "sap/m/MessageToast"],
+	function (Controller, MessageToast) {
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Main", {
@@ -14,12 +10,12 @@ sap.ui.define(
 				// 	location.reload();
 				// }
 			},
+			// following functions control common toolbar navigation
 			setVisibleDash() {
 				this.byId("dash").setVisible(true);
 				this.byId("table").setVisible(false);
 				this.byId("admin").setVisible(false);
 				this.byId("dashboard").setText("Dashboard");
-				// this.byId("backButton").setVisible(false);
 			},
 			setVisibleTable() {
 				this.byId("dash").setVisible(false);

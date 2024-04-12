@@ -13,7 +13,7 @@ sap.ui.define(
 	function (
 		Controller,
 		JSONModel,
-		MessageToast, 
+		MessageToast,
 		ePassword,
 		Card,
 		Text,
@@ -27,7 +27,7 @@ sap.ui.define(
 			formatter: formatter,
 			onInit: function () {
 				var oModel = this.getOwnerComponent().getModel("userdetails");
-				console.log("this is oModel -- ", oModel);
+				// console.log("this is oModel -- ", oModel);
 			},
 			handleOpen: function () {
 				this.qDialog ??= this.loadFragment({
@@ -72,7 +72,7 @@ sap.ui.define(
 					}
 				}
 
-				fetch(services.creatUser, {
+				fetch(services.createUser, {
 					method: "POST",
 					body: JSON.stringify(valuesToBeSent),
 				})
@@ -146,7 +146,7 @@ sap.ui.define(
 					valuesTobeSent["password"] = oPassword;
 				}
 
-				fetch(services.creatUser, {
+				fetch(services.createUser, {
 					method: "PATCH",
 					headers: {
 						"Content-Type": "application/json",
@@ -184,7 +184,7 @@ sap.ui.define(
 					title: "Confirm",
 					onClose: function (sAction) {
 						if (sAction === "OK" && id) {
-							fetch(services.creatUser, {
+							fetch(services.createUser, {
 								method: "DELETE",
 								body: JSON.stringify({
 									id: id,
@@ -213,7 +213,7 @@ sap.ui.define(
 			},
 
 			refresh() {
-				fetch(services.creatUser)
+				fetch(services.createUser)
 					.then((res) => {
 						if (!res.ok) {
 							throw new Error("Network response was not ok");

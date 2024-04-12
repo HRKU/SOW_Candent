@@ -17,7 +17,7 @@ sap.ui.define(
 			metadata: {
 				manifest: "json",
 			},
-
+			//setup of custom functions
 			setup_customization: function () {
 				window.Array.prototype.getUnique = function () {
 					var o = {},
@@ -33,33 +33,18 @@ sap.ui.define(
 					return a;
 				};
 			},
-
 			/**
 			 * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
 			 * @public
 			 * @override
 			 */
 			init: function () {
-				// sap.ui.core.BusyIndicator.show();
-				// call the base component's init function
 				UIComponent.prototype.init.apply(this, arguments);
-
-				// js array customization
 				this.setup_customization();
-
-				// enable routing
 				this.getRouter().initialize();
-
-				// set the device model
 				this.setModel(models.createDeviceModel(), "device");
-				// this.getRouter().attachBeforeRouteMatched(
-				// 	this.onBeforeRouteMatched,
-				// 	this
-				// );
-
 				this.initialize_data();
 			},
-
 			getUser: function () {
 				return JSON.parse(
 					atob(
@@ -67,9 +52,7 @@ sap.ui.define(
 					)
 				);
 			},
-
 			initialize_data: function () {
-				// this is added part in the code
 				if (!document.cookie.includes("token")) {
 					return;
 				}
@@ -80,7 +63,7 @@ sap.ui.define(
 					fetch(services.agreementList)
 						.then((res) => res.json())
 						.then((data) => {
-							console.log(data);
+							// console.log(data);
 							var oModel = {};
 							oModel.agreements = {};
 							oModel.agreements = data;
@@ -98,10 +81,8 @@ sap.ui.define(
 										return null;
 									}
 								});
-
 							oModel.ExpLen = {};
 							oModel.ExpLen = oModel.goingToExpire.length;
-
 							oModel.filtered = {};
 							oModel.filtered.types = oModel.agreements
 								.map((i) => i.Type)
@@ -110,7 +91,6 @@ sap.ui.define(
 									name,
 								}))
 								.concat({ name: "EXPIRED" });
-
 							oModel.filtered.len = {};
 							oModel.filtered.types.forEach((type) => {
 								oModel.filtered[type.name] = oModel.goingToExpire
@@ -135,15 +115,6 @@ sap.ui.define(
 									return null;
 								}
 							});
-
-							// Object.keys(oModel.filtered.types).forEach((key) => {
-							// 	const typeKey = oModel.filtered.types[key];
-							// 	oModel.filtered.len[key] = {
-							// 		type: typeKey,
-							// 		len: oModel.filtered[typeKey].length,
-							// 	};
-							// });
-
 							Object.keys(oModel.filtered.types).forEach((key) => {
 								const typeKey = oModel.filtered.types[key].name;
 								if (oModel.filtered[typeKey].length) {
@@ -153,7 +124,6 @@ sap.ui.define(
 									};
 								}
 							});
-
 							oModel.Status = oModel.agreements
 								.map((i) => i.Status)
 								.getUnique()
@@ -204,44 +174,27 @@ sap.ui.define(
 								}));
 							oModel.AllLen = {};
 							oModel.AllLen = oModel.agreements.length;
-
 							this.setModel(new JSONModel(oModel), "docs");
-
-							console.log(this.getModel("docs"));
-
-							console.log(
-								"the fetch is working just fine and here is the data from api",
-								data
-							);
-
-							fetch(services.creatUser)
+							// console.log(this.getModel("docs"));
+							// console.log(
+							// 	"the fetch is working just fine and here is the data from api",
+							// 	data
+							// );
+							fetch(services.createUser)
 								.then((res) => res.json())
 								.then((data) => {
 									this.setModel(new JSONModel(data), "users");
-									console.log("Login fetch is working poperly", data);
+									// console.log("Login fetch is working poperly", data);
 								})
 								.catch((error) => {
-									console.error;
+									// console.error;
 									sap.ui.core.BusyIndicator.hide();
 								});
-
 							sap.ui.core.BusyIndicator.hide();
 						})
 						.catch(console.error);
 				}
 			},
-			// onBeforeRouteMatched: function (oEvent) {
-			// 	// Access isAuthenticated from a model or service (replace with your logic)
-			// 	;
-			// 	const isAuthenticated = false; // Replace with actual logic
-			// 	const allowedRoutes = ["RouteLogin"];
-			// 	const oArgs = oEvent.getParameters().name; // Assuming the route name is stored in "name" parameter
-			// 	console.log("viewName - ", oArgs);
-			// 	if (!isAuthenticated && !allowedRoutes.includes(oArgs)) {
-			// 		oEvent.preventDefault();
-			// 		this.getRouter().navTo(allowedRoutes[0]); // Navigate to "RouteLogin" if not authenticated
-			// 	}
-			// },
 		});
 	}
 );
