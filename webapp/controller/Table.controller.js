@@ -137,7 +137,7 @@ sap.ui.define(
 				oData.Status = bState ? "Active" : "Inactive";
 
 				fetch(services.update, {
-					method: "PUT",
+					method: "PATCH",
 					body: JSON.stringify(oData),
 				})
 					.then((response) => {
