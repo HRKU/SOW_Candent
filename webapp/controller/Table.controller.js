@@ -12,9 +12,8 @@ sap.ui.define(
 
 		return Controller.extend("com.candentech.sowtracker.controller.Table", {
 			formatter: formatter,
+			//in the init function we  dynamically generate the  table and  its various fields columns
 			onInit: function () {
-				// this.byId("type").getValue();
-
 				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
 					"SrNo",
@@ -28,42 +27,9 @@ sap.ui.define(
 					"ProjectType",
 					"Status",
 				];
-				//Filterbar dynamically generated code starts from here ppls
-				// var oFilterBar = this.byId("filterbar");
-				// oLabels.forEach((label) => {
-				// 	const oFilterGroupItem = new sap.ui.comp.filterbar.FilterGroupItem({
-				// 		name: label,
-				// 		label: label,
-				// 		groupName: "Group1",
-				// 		visibleInFilterBar: true,
-				// 	});
-				// 	const oComboBox = new sap.m.ComboBox({
-				// 		name: label,
-				// 		selectionChange: function (oEvent) {
-				// 			this.oFilterBar.fireFilterChange(oEvent);
-				// 		},
-				// 		placeholder: label,
-				// 	});
-				// 	const oItemTemplate = new sap.ui.core.Item({
-				// 		key: `docs>SrNo`,
-				// 		text: `{docs>${label}}`,
-				// 	});
-				// 	oComboBox.bindItems({
-				// 		path: "docs>/agreements",
-				// 		template: oItemTemplate,
-				// 		templateShareable: true, // Set templateShareable here
-				// 	});
 
-				// 	oFilterGroupItem.setControl(oComboBox);
-				// 	oFilterBar.addFilterGroupItem(oFilterGroupItem);
-				// });
 				var oTable = this.byId("projectTable");
 				var oCell = [];
-				var excludedProperties = [
-					"AgreementDate",
-					"AgreementStartDate",
-					"AgreementEndDate",
-				];
 
 				oLabels.map((i) => {
 					var oColumn;
@@ -84,11 +50,15 @@ sap.ui.define(
 									return status === "Active";
 								},
 							},
-							enabled: true,
+							enabled: {
+								path: "userdetails>/role",
+								formatter: function (role) {
+									return role === "editor" || role === "admin";
+								},
+							},
 							change: this.onStatusChange.bind(this),
 							customTextOn: "Active",
 							customTextOff: "Inactive",
-							// type: "AcceptReject"
 						});
 						cell1.addStyleClass("classSwitch");
 					} else {
@@ -110,7 +80,7 @@ sap.ui.define(
 				var aColList = new sap.m.ColumnListItem("aColList", {
 					cells: oCell,
 				});
-				this.collist = aColList;
+				this.ColumnList = aColList;
 				oTable.setModel(oModel);
 				var oSorter = new sap.ui.model.Sorter("CompanyName", false, true);
 				oTable.bindItems({
@@ -119,7 +89,7 @@ sap.ui.define(
 					sorter: oSorter,
 				});
 			},
-
+			// opens Sorter PopUp
 			handleOpenDialog: async function () {
 				this.oDialog ??= await this.loadFragment({
 					name: "com.candentech.sowtracker.view.fragments.Sorter",
@@ -127,7 +97,7 @@ sap.ui.define(
 
 				this.oDialog.open();
 			},
-
+			// deals with single Status Changes
 			onStatusChange: function (oEvent) {
 				var bState = oEvent.getParameter("state");
 
@@ -152,7 +122,7 @@ sap.ui.define(
 						MessageToast.show("Something went wrong: " + error);
 					});
 			},
-
+			// Filters when filter is enabled
 			onFilter: function () {
 				// Retrieve the filter values from SearchFields and ComboBox
 				var sType = this.byId("type").getValue();
@@ -198,12 +168,11 @@ sap.ui.define(
 						)
 					);
 				}
-
-				// Apply the filters to your table or list
 				var oTable = this.byId("projectTable");
 				var oBinding = oTable.getBinding("items");
 				oBinding.filter(aFilters);
 			},
+			//allows download of template
 			onDownloadTemplate: function () {
 				var filename = "template.xlsx";
 				var fileUrl = "Assets/" + filename;
@@ -224,9 +193,10 @@ sap.ui.define(
 						console.error("Error downloading file:", error);
 					});
 			},
+			//this handles sorter "OK" Button to sort,group,Filter
 			handleConfirm(oEvent) {
 				debugger;
-				console.log(oEvent);
+				// console.log(oEvent);
 				var sGroupName = "";
 				var sFilter = "";
 				const oParameters = oEvent.getParameters();
@@ -236,7 +206,6 @@ sap.ui.define(
 					sFilter = oParameters.presetFilterItem.getText();
 					this.byId(sFilter).setVisible(true);
 				}
-
 				if (oParameters.groupItem) {
 					sGroupName = oParameters.groupItem.getText();
 					const bGroup = oParameters.groupDescending;
@@ -248,17 +217,15 @@ sap.ui.define(
 					sGroupName = null;
 					var oSorter = new sap.ui.model.Sorter(sSortName, bSort, null);
 				}
-
 				var oTable = this.byId("projectTable");
-
 				oTable.bindItems({
 					path: "docs>/agreements",
-					template: this.collist,
+					template: this.ColumnList,
 					sorter: oSorter,
 				});
 			},
+			// Clear the values of SearchFields and ComboBox
 			onClearFilter: function () {
-				// Clear the values of SearchFields and ComboBox
 				var oType = this.byId("type");
 				var oCompanyName = this.byId("companyName");
 				var oProjectName = this.byId("projectName");
@@ -271,18 +238,13 @@ sap.ui.define(
 				oCompanyName.setVisible(false);
 				oProjectName.setVisible(false);
 				oStatus.setVisible(false);
-
-				// Reset the filters
 				var oTable = this.byId("projectTable");
-				
 				var oBinding = oTable.getBinding("items");
-				console.log(oBinding);
-
+				// console.log(oBinding);
 				oBinding.filter([]);
 			},
-
+			//Opens Create  dialog
 			onOpenDialog() {
-				// debugger;
 				this.pDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.fragments.AddSowDialog",
 				});
@@ -290,12 +252,13 @@ sap.ui.define(
 				this.pDialog.then((oDialog) => oDialog.open());
 				setTimeout(() => {
 					var oDialog = this.byId("idAddAndEditSowDialog");
-					console.log(oDialog);
+					// console.log(oDialog);
 					oDialog.setTitle("Add New Entry");
 					this.byId("idEdtBtn").setVisible(false);
 					this.byId("idSbtBtn").setVisible(true);
 				}, 50);
 			},
+			//CLoses Create User/Edit user dialog
 			onCloseDialog() {
 				var oIds = [
 					"CompanyName",
@@ -324,8 +287,8 @@ sap.ui.define(
 
 				this.pDialog.then((oDialog) => oDialog.close());
 			},
+			//Submits the Create Dialog
 			onSubmit() {
-				// debugger;
 				var oIds = [
 					"CompanyName",
 					"ProjectName",
@@ -396,6 +359,7 @@ sap.ui.define(
 
 				this.pDialog.then((oDialog) => oDialog.close());
 			},
+			//submits Edit dialog box
 			onSubmitEdit() {
 				var oIds = [
 					"CompanyName",
@@ -450,17 +414,18 @@ sap.ui.define(
 				}
 
 				valuesToBeSent["SrNo"] = parseInt(iSrNo);
-				console.log(oControls, valuesToBeSent, "this is srNo", iSrNo);
+				// console.log(oControls, valuesToBeSent, "this is srNo", iSrNo);
 
 				fetch(services.update, {
 					method: "PATCH",
 					body: JSON.stringify(valuesToBeSent),
-				}).then(res=>res.json())
+				})
+					.then((res) => res.json())
 					.then((data) => {
 						debugger;
-						console.log(data)
+						// console.log(data);
 						if (data.message) {
-							console.log(data)
+							// console.log(data);
 							MessageToast.show(data.message);
 
 							oModel.setProperty(
@@ -490,7 +455,7 @@ sap.ui.define(
 					oDialog.close();
 				}
 			},
-
+			// opens Edit Dialog box
 			onOpenEdit() {
 				this.pDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.fragments.AddSowDialog",
@@ -539,7 +504,7 @@ sap.ui.define(
 					this.byId("idEdtBtn").setVisible(true);
 				}, 50);
 			},
-
+			//Deals with File Upload
 			onFileUpload(oEvent) {
 				var oFile = oEvent.getParameter("files")[0];
 
@@ -559,7 +524,7 @@ sap.ui.define(
 						})
 						.then((data) => {
 							MessageToast.show(data.message);
-							console.log("File uploaded successfully:", data);
+							// console.log("File uploaded successfully:", data);
 							this.refresh();
 						})
 						.catch((error) => {
@@ -569,6 +534,7 @@ sap.ui.define(
 					sap.m.MessageToast.show("No file selected");
 				}
 			},
+			//Deals with Deletion of fields in table
 			onDelete() {
 				const oTable = this.byId("projectTable");
 				const oSelectedItems = oTable.getSelectedItems();
@@ -597,7 +563,8 @@ sap.ui.define(
 										body: JSON.stringify({
 											SrNo: iSrNo,
 										}),
-									}).then(res=>res.json())
+									})
+										.then((res) => res.json())
 										.then((data) => {
 											if (data) {
 												sap.m.MessageToast.show(data.message);
@@ -617,14 +584,13 @@ sap.ui.define(
 					}
 				);
 			},
-
+			// live refresh of page
 			refresh() {
 				fetch(services.agreementList)
 					.then((res) => res.json())
 					.then((data) => {
-						console.log(data);
+						// console.log(data);
 						var oModel = {};
-
 						oModel.agreements = {};
 						oModel.agreements = data;
 						oModel.goingToExpire = {};
@@ -639,10 +605,8 @@ sap.ui.define(
 									return null;
 								}
 							});
-
 						oModel.ExpLen = {};
 						oModel.ExpLen = oModel.goingToExpire.length;
-
 						oModel.filtered = {};
 						oModel.filtered.types = oModel.agreements
 							.map((i) => i.Type)
@@ -651,7 +615,6 @@ sap.ui.define(
 								name,
 							}))
 							.concat({ name: "EXPIRED" });
-
 						oModel.filtered.len = {};
 						oModel.filtered.types.forEach((type) => {
 							oModel.filtered[type.name] = oModel.goingToExpire
@@ -676,15 +639,6 @@ sap.ui.define(
 								return null;
 							}
 						});
-
-						// Object.keys(oModel.filtered.types).forEach((key) => {
-						// 	const typeKey = oModel.filtered.types[key];
-						// 	oModel.filtered.len[key] = {
-						// 		type: typeKey,
-						// 		len: oModel.filtered[typeKey].length,
-						// 	};
-						// });
-
 						Object.keys(oModel.filtered.types).forEach((key) => {
 							const typeKey = oModel.filtered.types[key].name;
 							if (oModel.filtered[typeKey].length) {
@@ -694,7 +648,6 @@ sap.ui.define(
 								};
 							}
 						});
-
 						oModel.Status = oModel.agreements
 							.map((i) => i.Status)
 							.getUnique()
@@ -741,14 +694,11 @@ sap.ui.define(
 							}));
 						oModel.AllLen = {};
 						oModel.AllLen = oModel.agreements.length;
-
 						this.getView().getParent().setModel(new JSONModel(oModel), "docs");
-
-						console.log(
-							"the fetch is working just fine and here is the data from api, ",
-							data
-						);
-
+						// console.log(
+						// 	"the fetch is working just fine and here is the data from api, ",
+						// 	data
+						// );
 						sap.ui.core.BusyIndicator.hide();
 					})
 					.catch(console.error);

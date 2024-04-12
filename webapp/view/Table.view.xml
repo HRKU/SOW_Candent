@@ -48,7 +48,6 @@
                             icon="sap-icon://download"
                             text="Template"
                             press="onDownloadTemplate"
-                            
                             visible="{path:'userdetails>/role',formatter:'.formatter.userChecker'}"
                         />
                         <!-- <SearchField

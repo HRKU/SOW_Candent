@@ -46,7 +46,7 @@
                             id="ProjectName"
                             placeholder="Eg. SAP Basis, ABAP"
                             width="200px"
-                            showButton="none"
+                            showButton="false"
                         />
                     </VBox>
                     <VBox id="_IDGenVBox10">
@@ -59,7 +59,7 @@
                             id="AgreementNo"
                             placeholder="Eg. 18263"
                             width="200px"
-                            showButton="none"
+                            showButton="false"
                         />
                     </VBox>
                 </HBox>
