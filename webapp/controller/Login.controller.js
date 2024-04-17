@@ -73,7 +73,10 @@ sap.ui.define(
 						}
 					})
 					.then((data) => {
-						MessageToast.show(data.message);
+						MessageToast.show(data.message, {
+							duration: 5000,
+							animationDuration: 10000,
+						});
 						document.cookie = `token=${data.token}; maxAge=${
 							1000 * 60 * 60 * 24
 						};`;
@@ -91,7 +94,10 @@ sap.ui.define(
 						location.reload();
 					})
 					.catch((error) => {
-						MessageToast.show("Something Went Wrong " + error);
+						MessageToast.show("Something Went Wrong " + error, {
+							duration: 5000,
+							animationDuration: 10000,
+						});
 						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
 						localStorage.removeItem("token");
 					});

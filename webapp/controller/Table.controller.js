@@ -88,6 +88,14 @@ sap.ui.define(
 					template: aColList,
 					sorter: oSorter,
 				});
+				var sRole = this.getOwnerComponent()
+					.getModel("userdetails")
+					.getProperty("/role");
+				if (sRole === "viewer") {
+					oTable.setMode("None");
+				} else {
+					oTable.setMode("MultiSelect");
+				}
 			},
 			// opens Sorter PopUp
 			handleOpenDialog: async function () {

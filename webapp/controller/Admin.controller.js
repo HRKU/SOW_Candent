@@ -30,7 +30,6 @@ sap.ui.define(
 				// console.log("this is oModel -- ", oModel);
 			},
 			onShowPasswordSelect: function (oEvent) {
-				
 				var oPasswordInput = oEvent.getSource();
 				var temp = oPasswordInput.getValueHelpIconSrc().split("://");
 
@@ -46,7 +45,7 @@ sap.ui.define(
 				this.qDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.Dialog",
 				});
-
+				this.byId("password").setValue("");
 				this.qDialog.then((oDialog) => oDialog.open());
 				this.byId("password").setVisible(true);
 				this.byId("newpassword").setVisible(false);
@@ -137,6 +136,9 @@ sap.ui.define(
 				this.qDialog
 					.then((oDialog) => oDialog.open())
 					.finally(() => {
+						this.byId("password").setValue("");
+						this.byId("newpassword").setValue("");
+						this.byId("confirmpassword").setValue("");
 						var oDialog = this.byId("idDialog");
 						oDialog.setTitle("Edit User");
 						this.byId("password").setVisible(false);
@@ -153,26 +155,24 @@ sap.ui.define(
 					});
 			},
 			onSave: function (oEvent) {
-				debugger;
 				var oRole, oPassword;
-				if (!this.byId("newpassword").getValue()) {
-					this.byId("newpassword").setValueState("Error");
-					this.byId("newpassword").setValueStateText("Please Input Value");
-					return;
-				}
-				if (!this.byId("confirmpassword").getValue()) {
-					this.byId("confirmpassword").setValueState("Error");
-					this.byId("confirmpassword").setValueStateText("Please Input Value");
-					return;
-				}
 				if (
-					this.byId("confirmpassword").getValue() !=
-					this.byId("newpassword").getValue()
+					this.byId("newpassword").getValue() || // Check if new password field has a value
+					this.byId("confirmpassword").getValue() // Check if confirm password field has a value
 				) {
-					this.byId("confirmpassword").setValueState("Error");
-					this.byId("confirmpassword").setValueStateText("Invalid Password");
-					return;
+					if (
+						this.byId("newpassword").getValue() !==
+						this.byId("confirmpassword").getValue() // If passwords don't match
+					) {
+						this.byId("confirmpassword").setValueState("Error");
+						this.byId("confirmpassword").setValueStateText(
+							"Passwords do not match"
+						);
+						return; // Exit function
+					}
 				}
+				this.byId("confirmpassword").setValueState("None");
+				this.byId("confirmpassword").setValueStateText();
 				oPassword = this.byId("newpassword").getValue();
 
 				oRole = this.byId("role").getValue();
@@ -180,6 +180,7 @@ sap.ui.define(
 				const oData = this.getView().getModel("user").getData();
 				var valuesTobeSent = {};
 				valuesTobeSent["role"] = oRole;
+				valuesTobeSent["username"] = oData.username;
 				valuesTobeSent["id"] = oData.id;
 				if (oPassword) {
 					valuesTobeSent["password"] = oPassword;
