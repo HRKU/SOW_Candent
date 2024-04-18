@@ -16,6 +16,10 @@ sap.ui.define(
 				this.getView().byId("username").setValueState("None");
 				this.getView().byId("password").setValueState("None");
 				document.addEventListener("keydown", this.onKeyPress.bind(this), false);
+				if (document.cookie.includes("token")) {
+					this._oRouter.navTo("RouteDashboard");
+					location.reload();
+				}
 			},
 
 			//can login when pressing enter on the keyboard
@@ -86,7 +90,7 @@ sap.ui.define(
 						);
 						this.getOwnerComponent().setModel(oUserDetails, "userdetails");
 						this._oRouter.navTo("RouteDashboard");
-						location.reload();
+						// location.reload();
 					});
 				// .catch((error) => {
 				// 	console.log({
