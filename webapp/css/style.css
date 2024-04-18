@@ -44,6 +44,9 @@
 
 	background-position: center;
 }
+.buttonMarginBotton {
+	margin-bottom: 3px;
+}
 
 /*  .classFelxBox {
 	background: linear-gradient(-45deg, #2370d5, #b2f2ff, #00879399, #12ebaa);

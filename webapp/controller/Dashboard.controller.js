@@ -10,6 +10,7 @@ sap.ui.define(
 		return Controller.extend("com.candentech.sowtracker.controller.Dashboard", {
 			formatter: formatter,
 			onInit: function () {},
+			//Routes each chart component to the required  value it is associated with
 			routeToTableViaChart: function (oEvent) {
 				debugger;
 				const oSelectedValue = oEvent
@@ -40,6 +41,7 @@ sap.ui.define(
 				oComboBox.fireChange({ value: "Active" });
 				oVizFrame.vizSelection([], { clearSelection: true });
 			},
+			//Routes the Urgent expiry list items to the table view by filtering out the document
 			routeToTableViaCard(oEvent) {
 				debugger;
 				var oProjectName = oEvent

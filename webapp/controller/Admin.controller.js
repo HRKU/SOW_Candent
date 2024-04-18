@@ -25,22 +25,17 @@ sap.ui.define(
 
 		return Controller.extend("com.candentech.sowtracker.controller.Admin", {
 			formatter: formatter,
-			onInit: function () {
-				var oModel = this.getOwnerComponent().getModel("userdetails");
-				// console.log("this is oModel -- ", oModel);
-			},
+			onInit: function () {},
+			//show and hides password when creating or editing passwords
 			onShowPasswordSelect: function (oEvent) {
 				var oPasswordInput = oEvent.getSource();
 				var temp = oPasswordInput.getValueHelpIconSrc().split("://");
-
 				var state = temp.pop();
-
 				temp.push(ePassword.opposite_state[state]);
-
 				oPasswordInput.setType(ePassword.input_type[state]);
 				oPasswordInput.setValueHelpIconSrc(temp.join("://"));
 			},
-
+			// Opens the create dialog box
 			handleOpen: function () {
 				this.qDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.Dialog",
@@ -51,6 +46,7 @@ sap.ui.define(
 				this.byId("newpassword").setVisible(false);
 				this.byId("confirmpassword").setVisible(false);
 			},
+			//closes create, edit dialog box
 			handleClose: function () {
 				var oDialog = this.getView().byId("idDialog");
 
@@ -66,7 +62,7 @@ sap.ui.define(
 				oRole.setValue();
 				oDialog.close();
 			},
-
+			//submits create User dialog values and performs a POST api request to do so
 			onSubmit: function () {
 				var oIds = ["username", "password", "role"];
 				var oControls = {};
@@ -118,6 +114,7 @@ sap.ui.define(
 
 				this.qDialog.then((oDialog) => oDialog.close());
 			},
+			//This opens the Edit dialog box when editing users
 			onEdit(oEvent) {
 				const oBindingContext = oEvent.getSource().getBindingContext("users");
 				const sPath = oBindingContext.getPath();
@@ -154,6 +151,7 @@ sap.ui.define(
 						oRole.setValue(selectedUser.role);
 					});
 			},
+			//Submits the edit user dialog box via a PATCH api Request
 			onSave: function (oEvent) {
 				var oRole, oPassword;
 				if (
@@ -213,6 +211,7 @@ sap.ui.define(
 				});
 				this.qDialog.then((oDialog) => oDialog.close());
 			},
+			//Deletes the  particular user from the database this is a permanent delete
 			onDeleteButtonPress: function (oEvent) {
 				var oModel = this.byId("gridList");
 				const sPath = oEvent.getSource().getBindingContext("users").getPath();
@@ -247,11 +246,7 @@ sap.ui.define(
 					},
 				});
 			},
-
-			onEditButtonPress(oEvent) {
-				var sPath = oEvent.getSource().getBindingContext("users").getPath();
-			},
-
+			//does the live reloading of data
 			refresh() {
 				fetch(services.createUser)
 					.then((res) => {

@@ -15,12 +15,13 @@
                 class="sapUiTinyMargin"
                 style="Standard"
             >
-                <!-- <Button
+                <Button
+                    class="buttonMarginBotton "
                     id="backButton"
                     icon="sap-icon://nav-back"
                     visible="false"
                     press=".onNavBack"
-                /> -->
+                />
                 <Title
                     id="dashboard"
                     text="Dashboard"
