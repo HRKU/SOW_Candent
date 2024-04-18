@@ -90,15 +90,15 @@ sap.ui.define(
 						);
 						this.getOwnerComponent().setModel(oUserDetails, "userdetails");
 						this._oRouter.navTo("RouteDashboard");
-						// location.reload();
+						location.reload();
+					})
+					.catch((error) => {
+						console.log({
+							...error,
+						});
+						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
+						localStorage.removeItem("token");
 					});
-				// .catch((error) => {
-				// 	console.log({
-				// 		...error
-				// 	})
-				// 	document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
-				// 	localStorage.removeItem("token");
-				// });
 			},
 		});
 	}
