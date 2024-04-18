@@ -61,18 +61,16 @@ sap.ui.define(
 				oModel.setProperty("/password", oPassword.getValue());
 
 				fetch(services.login, {
-					method: "POST",
-					body: JSON.stringify(oModel.getData()),
-					credentials: "include",
-				})
-					.then((response) => {
-						if (response.status == 200) {
-							return response.json();
-						} else {
-							throw new Error(response.error);
-						}
+						method: "POST",
+						body: JSON.stringify(oModel.getData()),
+						credentials: "include",
 					})
+					.then(res => res.json())
 					.then((data) => {
+						if (data.error) {
+							MessageToast.show(data.error);
+							throw new Error("LOGIN ERROR")
+						}
 						MessageToast.show(data.message);
 						document.cookie = `token=${data.token}; maxAge=${
 							1000 * 60 * 60 * 24
@@ -90,11 +88,13 @@ sap.ui.define(
 						this._oRouter.navTo("RouteDashboard");
 						location.reload();
 					})
-					.catch((error) => {
-						MessageToast.show("Something Went Wrong " + error);
-						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
-						localStorage.removeItem("token");
-					});
+					// .catch((error) => {
+					// 	console.log({
+					// 		...error
+					// 	})
+					// 	document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
+					// 	localStorage.removeItem("token");
+					// });
 			},
 		});
 	}
