@@ -47,6 +47,7 @@
                             id="_IDGenButton1"
                             icon="sap-icon://download"
                             text="Template"
+                            type="Emphasized"
                             press="onDownloadTemplate"
                             visible="{path:'userdetails>/role',formatter:'.formatter.userChecker'}"
                         />
@@ -136,16 +137,24 @@
                                 />
                             </items>
                         </ComboBox>
-
                         <Button
-                            id="clearFilter"
-                            text="Clear Filter"
+                            id="clearFilter1"
+                            icon="sap-icon://clear-filter"
+                            type="Emphasized"
                             press=".onClearFilter"
                         />
+
                         <ToolbarSpacer id="seprate" />
+                        <Button
+                            id="clearFilter"
+                            icon="sap-icon://refresh"
+                            type="Emphasized"
+                            press=".onClearFilter"
+                        />
                         <Button
                             id="_IDGenButton6"
                             icon="sap-icon://sort"
+                            type="Emphasized"
                             text="Sorter"
                             press="handleOpenDialog"
                         />

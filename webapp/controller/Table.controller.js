@@ -16,15 +16,15 @@ sap.ui.define(
 			onInit: function () {
 				const oModel = this.getOwnerComponent().getModel("docs");
 				const oLabels = [
-					"SrNo",
-					"CompanyName",
+					"Sr No",
+					"Company Name",
 					"Type",
-					"AgreementNo",
-					"ProjectName",
-					"AgreementDate",
-					"AgreementStartDate",
-					"AgreementEndDate",
-					"ProjectType",
+					"Agreement No",
+					"Project Name",
+					"Agreement Date",
+					"Agreement Start Date",
+					"Agreement End Date",
+					"Project Type",
 					"Status",
 				];
 
@@ -62,14 +62,14 @@ sap.ui.define(
 						});
 						cell1.addStyleClass("classSwitch");
 					} else {
-						oColumn = new sap.m.Column("col" + i, {
+						oColumn = new sap.m.Column("col" + i.split(" ").join(""), {
 							header: new sap.m.Label({
 								text: i,
 							}),
 						});
 
 						cell1 = new sap.m.Text({
-							text: "{docs>" + i + "}",
+							text: "{docs>" + i.split(" ").join("") + "}",
 						});
 					}
 
