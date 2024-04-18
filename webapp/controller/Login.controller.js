@@ -68,7 +68,7 @@ sap.ui.define(
 					.then((res) => res.json())
 					.then((data) => {
 						if (data.error) {
-							MessageToast.show(data.error);
+							MessageToast.show("Invalid Login Credentials");
 							throw new Error("LOGIN ERROR");
 						}
 						MessageToast.show(data.message);
