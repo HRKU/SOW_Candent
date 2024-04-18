@@ -65,18 +65,13 @@ sap.ui.define(
 					body: JSON.stringify(oModel.getData()),
 					credentials: "include",
 				})
-					.then((response) => {
-						if (response.status == 200) {
-							return response.json();
-						} else {
-							throw new Error(response.error);
-						}
-					})
+					.then((res) => res.json())
 					.then((data) => {
-						MessageToast.show(data.message, {
-							duration: 5000,
-							animationDuration: 10000,
-						});
+						if (data.error) {
+							MessageToast.show(data.error);
+							throw new Error("LOGIN ERROR");
+						}
+						MessageToast.show(data.message);
 						document.cookie = `token=${data.token}; maxAge=${
 							1000 * 60 * 60 * 24
 						};`;
@@ -92,15 +87,14 @@ sap.ui.define(
 						this.getOwnerComponent().setModel(oUserDetails, "userdetails");
 						this._oRouter.navTo("RouteDashboard");
 						location.reload();
-					})
-					.catch((error) => {
-						MessageToast.show("Something Went Wrong " + error, {
-							duration: 5000,
-							animationDuration: 10000,
-						});
-						document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
-						localStorage.removeItem("token");
 					});
+				// .catch((error) => {
+				// 	console.log({
+				// 		...error
+				// 	})
+				// 	document.cookie = `token=;expires=${new Date(0).toUTCString()}`;
+				// 	localStorage.removeItem("token");
+				// });
 			},
 		});
 	}

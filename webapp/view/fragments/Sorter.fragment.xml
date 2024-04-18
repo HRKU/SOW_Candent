@@ -8,10 +8,15 @@
     >
         <sortItems>
             <ViewSettingsItem
+                id="srNoSort"
+                text="SrNo"
+                key="SrNo"
+                selected="true"
+            />
+            <ViewSettingsItem
                 id="companySort"
                 text="CompanyName"
                 key="CompanyName"
-                selected="true"
             />
             <ViewSettingsItem
                 id="dateSort"
