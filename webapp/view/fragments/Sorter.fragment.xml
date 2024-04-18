@@ -59,8 +59,8 @@
         <presetFilterItems>
             <ViewSettingsItem
                 id="companyFilter"
-                text="companyname"
-                key="companyname"
+                text="companyName"
+                key="companyName"
             />
             <ViewSettingsItem
                 id="statusFilter"

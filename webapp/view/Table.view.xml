@@ -149,7 +149,7 @@
                             id="clearFilter"
                             icon="sap-icon://refresh"
                             type="Emphasized"
-                            press=".onClearFilter"
+                            press=".refresh"
                         />
                         <Button
                             id="_IDGenButton6"
