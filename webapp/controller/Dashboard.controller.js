@@ -22,6 +22,8 @@ sap.ui.define(
 				var oParent = this.getView().getParent().getParent();
 				oParent.byId("dash").setVisible(false);
 				oParent.byId("admin").setVisible(false);
+				oParent.byId("backButton").setVisible(true);
+
 				var oTable = oParent.byId("table");
 				oTable.setVisible(true);
 				oParent.byId("dashboard").setText("Table Data");
@@ -59,6 +61,8 @@ sap.ui.define(
 				var oParent = this.getView().getParent().getParent();
 				oParent.byId("dash").setVisible(false);
 				oParent.byId("admin").setVisible(false);
+				oParent.byId("backButton").setVisible(true);
+
 				var oTable = oParent.byId("table");
 				oTable.setVisible(true);
 				oParent.byId("dashboard").setText("Table Data");
