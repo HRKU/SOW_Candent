@@ -62,15 +62,27 @@ sap.ui.define(
 						});
 						cell1.addStyleClass("classSwitch");
 					} else {
-						oColumn = new sap.m.Column("col" + i.split(" ").join(""), {
-							header: new sap.m.Label({
-								text: i,
-							}),
-						});
+						if (i == "Sr No") {
+							oColumn = new sap.m.Column("col" + i.split(" ").join(""), {
+								header: new sap.m.Label({
+									text: i,
+								}),
+							});
 
-						cell1 = new sap.m.Text({
-							text: "{docs>" + i.split(" ").join("") + "}",
-						});
+							cell1 = new sap.m.Text({
+								text: "{docs>id}",
+							});
+						} else {
+							oColumn = new sap.m.Column("col" + i.split(" ").join(""), {
+								header: new sap.m.Label({
+									text: i,
+								}),
+							});
+
+							cell1 = new sap.m.Text({
+								text: "{docs>" + i.split(" ").join("") + "}",
+							});
+						}
 					}
 
 					oCell.push(cell1);
@@ -386,10 +398,13 @@ sap.ui.define(
 					MessageToast.show("Please select a row to edit");
 					return;
 				}
+				debugger;
 
-				var iSrNo = oSelectedItem.getCells()[0].getText();
+				// var iSrNo = oSelectedItem.getCells()[0].getText();
 				var oModel = oSelectedItem.getModel("docs");
-				var oData = oModel.getProperty(oSelectedItem.getBindingContextPath());
+				var iSrNo = oModel.getProperty(
+					oSelectedItem.getBindingContextPath()
+				).SrNo;
 
 				var oControls = {};
 				var valuesToBeSent = {};
@@ -422,7 +437,6 @@ sap.ui.define(
 				}
 
 				valuesToBeSent["SrNo"] = parseInt(iSrNo);
-				// console.log(oControls, valuesToBeSent, "this is srNo", iSrNo);
 
 				fetch(services.update, {
 					method: "PATCH",
@@ -541,6 +555,7 @@ sap.ui.define(
 				} else {
 					sap.m.MessageToast.show("No file selected");
 				}
+				oEvent.getSource().clear();
 			},
 			//Deals with Deletion of fields in table
 			onDelete() {
@@ -595,13 +610,28 @@ sap.ui.define(
 			},
 			// live refresh of page
 			refresh() {
+				debugger;
+				var count = 1;
+				var prevCompanyName = "";
 				fetch(services.agreementList)
 					.then((res) => res.json())
 					.then((data) => {
 						// console.log(data);
+						data
+							.sort((a, b) => a.CompanyName.localeCompare(b.CompanyName))
+							.forEach((item) => {
+								if (item.CompanyName !== prevCompanyName) {
+									count = 1;
+									prevCompanyName = item.CompanyName;
+								}
+								item.id = count;
+								count++;
+							});
+
 						var oModel = {};
 						oModel.agreements = {};
 						oModel.agreements = data;
+						console.log(oModel.agreements);
 						oModel.goingToExpire = {};
 						oModel.goingToExpire = oModel.agreements
 							.filter((i) => i.Status == "Active")

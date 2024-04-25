@@ -56,6 +56,8 @@ sap.ui.define(
 				if (!document.cookie.includes("token")) {
 					return;
 				}
+				var count = 1;
+				var prevCompanyName = "";
 				var oUserDetails = new JSONModel(this.getUser());
 				this.setModel(oUserDetails, "userdetails");
 				var oModel = this.getModel("userdetails");
@@ -64,9 +66,22 @@ sap.ui.define(
 						.then((res) => res.json())
 						.then((data) => {
 							// console.log(data);
+							debugger;
+							data
+								.sort((a, b) => a.CompanyName.localeCompare(b.CompanyName))
+								.forEach((item) => {
+									if (item.CompanyName !== prevCompanyName) {
+										count = 1;
+										prevCompanyName = item.CompanyName;
+									}
+									item.id = count;
+									count++;
+								});
+
 							var oModel = {};
 							oModel.agreements = {};
 							oModel.agreements = data;
+							console.log(oModel.agreements);
 							oModel.goingToExpire = {};
 							oModel.goingToExpire = oModel.agreements
 								.filter((i) => i.Status == "Active")
@@ -175,7 +190,7 @@ sap.ui.define(
 							oModel.AllLen = {};
 							oModel.AllLen = oModel.agreements.length;
 							this.setModel(new JSONModel(oModel), "docs");
-							// console.log(this.getModel("docs"));
+							console.log(this.getModel("docs").getData());
 							// console.log(
 							// 	"the fetch is working just fine and here is the data from api",
 							// 	data
