@@ -35,7 +35,11 @@ sap.ui.define(
 				oPasswordInput.setType(ePassword.input_type[state]);
 				oPasswordInput.setValueHelpIconSrc(temp.join("://"));
 			},
-			// Opens the create dialog box
+			/**
+			 * @description Opens the dialog box for "com.candentech.sowtracker.view.Dialog" for Editing Users
+			 * @return {void}
+			 *
+			 */
 			handleOpen: function () {
 				debugger;
 				this.qDialog ??= this.loadFragment({

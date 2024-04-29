@@ -566,6 +566,15 @@ sap.ui.define(
 					MessageToast.show("Please select the Record(s) to delete");
 					return;
 				}
+				debugger;
+
+				const srNoMap = oSelectedItems.map((aSelectedItem) => {
+					const sPath = aSelectedItem.getBindingContext("docs").getPath();
+					const { SrNo: iSrNo } = aSelectedItem
+						.getModel("docs")
+						.getProperty(sPath);
+					return iSrNo;
+				});
 
 				MessageBox.confirm(
 					`Are you sure to delete ${oSelectedItems.length} record(s)?`,
@@ -573,35 +582,27 @@ sap.ui.define(
 						title: "Confirm",
 						onClose: (sAction) => {
 							if (sAction === "OK") {
-								oSelectedItems.forEach((aSelectedItem) => {
-									const sPath = aSelectedItem
-										.getBindingContext("docs")
-										.getPath();
-									const { SrNo: iSrNo } = aSelectedItem
-										.getModel("docs")
-										.getProperty(sPath);
-
-									fetch(services.delete, {
-										method: "DELETE",
-										body: JSON.stringify({
-											SrNo: iSrNo,
-										}),
-									})
-										.then((res) => res.json())
-										.then((data) => {
-											if (data) {
-												sap.m.MessageToast.show(data.message);
-												oTable.removeItem(aSelectedItem);
-											} else {
-												sap.m.MessageToast.show("Failed to delete the record.");
-											}
-										})
-										.catch((error) => {
+								fetch(services.delete, {
+									method: "DELETE",
+									body: JSON.stringify(srNoMap),
+								})
+									.then((res) => res.json())
+									.then((data) => {
+										debugger;
+										if (data) {
 											sap.m.MessageToast.show(
-												"An error occurred: " + error.message
+												data.message.replace("updated", "deleted")
 											);
-										});
-								});
+										} else {
+											sap.m.MessageToast.show("Failed to delete the record.");
+										}
+									})
+									.catch((error) => {
+										debugger;
+										sap.m.MessageToast.show(
+											"An error occurred: " + error.message
+										);
+									});
 							}
 							this.refresh();
 						},
@@ -610,7 +611,6 @@ sap.ui.define(
 			},
 			// live refresh of page
 			refresh() {
-				debugger;
 				var count = 1;
 				var prevCompanyName = "";
 				fetch(services.agreementList)

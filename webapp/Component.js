@@ -1,4 +1,24 @@
 /**
+ * @description Get list of unique values present in an Array
+ * @returns {Array}
+ */
+
+function getUnique() {
+	var o = {},
+		a = [],
+		i,
+		e;
+	for (i = 0; (e = this[i]); i++) {
+		o[e] = 1;
+	}
+	for (e in o) {
+		a.push(e);
+	}
+	return a;
+}
+
+
+/**
  * eslint-disable @sap/ui5-jsdocs/no-jsdoc
  */
 
@@ -19,19 +39,7 @@ sap.ui.define(
 			},
 			//setup of custom functions
 			setup_customization: function () {
-				window.Array.prototype.getUnique = function () {
-					var o = {},
-						a = [],
-						i,
-						e;
-					for (i = 0; (e = this[i]); i++) {
-						o[e] = 1;
-					}
-					for (e in o) {
-						a.push(e);
-					}
-					return a;
-				};
+				window.Array.prototype.getUnique = getUnique;
 			},
 			/**
 			 * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
