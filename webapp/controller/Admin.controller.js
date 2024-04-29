@@ -37,10 +37,11 @@ sap.ui.define(
 			},
 			// Opens the create dialog box
 			handleOpen: function () {
+				debugger;
 				this.qDialog ??= this.loadFragment({
 					name: "com.candentech.sowtracker.view.Dialog",
 				});
-				this.byId("password").setValue("");
+				// this.byId("password").setValue();
 				this.qDialog.then((oDialog) => oDialog.open());
 				this.byId("password").setVisible(true);
 				this.byId("newpassword").setVisible(false);
@@ -56,6 +57,7 @@ sap.ui.define(
 				var oRole = this.byId("role");
 				this.byId("submit").setVisible(true);
 				this.byId("save").setVisible(false);
+				this.byId("password").setValue();
 
 				oUsername.setValue();
 				oUsername.setEditable(true);
@@ -116,6 +118,7 @@ sap.ui.define(
 			},
 			//This opens the Edit dialog box when editing users
 			onEdit(oEvent) {
+				debugger;
 				const oBindingContext = oEvent.getSource().getBindingContext("users");
 				const sPath = oBindingContext.getPath();
 				const oModel = this.getView().getModel("users");
