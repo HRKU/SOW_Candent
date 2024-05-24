@@ -27,7 +27,7 @@
                 >
                     <form:SimpleForm
                         id="idSimpleForm"
-                        class="classHBox"
+                        class="classHBox flip-container fliper back front"
                     >
                         <HBox
                             id="idHBox"
@@ -74,7 +74,13 @@
                             width="100%"
                             liveChange="onInputChange"
                         />
-                        <HBox
+                        <Link
+                            text="Forgot Password"
+                            textAlign="End"
+                            width="100%"
+                            press="onLinkPress"
+                        />
+                         <HBox
                             id="_IDGenHBox2"
                             justifyContent="Center"
                         >
@@ -91,13 +97,5 @@
                 </VBox>
             </FlexBox>
         </content>
-        <!-- <Panel
-                        id="idPanel"
-                        class="waveAnimation"
-                        backgroundDesign="Transparent"
-                    >
-                    </Panel>     -->
-
-        <!-- Inner content goes here -->
     </Page>
 </mvc:View>

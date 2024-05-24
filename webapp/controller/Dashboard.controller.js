@@ -3,16 +3,19 @@ sap.ui.define(
 		"sap/ui/core/mvc/Controller",
 		"sap/ui/model/json/JSONModel",
 		"../model/formatter",
+		"sap/ui/core/Fragment",
 	],
-	function (Controller, JSONModel, formatter) {
+	function (Controller, JSONModel, formatter, Fragment) {
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Dashboard", {
 			formatter: formatter,
-			onInit: function () {},
+			onInit: function () {
+
+			},
 			//Routes each chart component to the required  value it is associated with
 			routeToTableViaChart: function (oEvent) {
-				debugger;
+				// debugger;
 				const oSelectedValue = oEvent
 					.getParameter("data")
 					.map((i) => i.data)
@@ -35,17 +38,27 @@ sap.ui.define(
 				oComboBox.setValue("Active");
 
 				oSearchField1.setValue(oSelectedValue["type"]);
-				oSearchField1.fireChange({ query: oSelectedValue["type"] });
+				oSearchField1.fireChange({
+					query: oSelectedValue["type"]
+				});
 				oSearchField2.setValue(oSelectedValue["Company Name"]);
-				oSearchField2.fireChange({ query: oSelectedValue["Company Name"] });
+				oSearchField2.fireChange({
+					query: oSelectedValue["Company Name"]
+				});
 				oSearchField3.setValue(oSelectedValue["project name"]);
-				oSearchField3.fireChange({ query: oSelectedValue["project name"] });
-				oComboBox.fireChange({ value: "Active" });
-				oVizFrame.vizSelection([], { clearSelection: true });
+				oSearchField3.fireChange({
+					query: oSelectedValue["project name"]
+				});
+				oComboBox.fireChange({
+					value: "Active"
+				});
+				oVizFrame.vizSelection([], {
+					clearSelection: true
+				});
 			},
 			//Routes the Urgent expiry list items to the table view by filtering out the document
 			routeToTableViaCard(oEvent) {
-				debugger;
+				// debugger;
 				var oProjectName = oEvent
 					.getSource()
 					.getBindingContext("docs")
@@ -73,11 +86,17 @@ sap.ui.define(
 				oComboBox.setValue("Active");
 				// oComboBox.fireChange({ value: "Active" });
 				oSearchField1.setValue(oType);
-				oSearchField1.fireChange({ query: oType });
+				oSearchField1.fireChange({
+					query: oType
+				});
 				oSearchField2.setValue(oCompanyName);
-				oSearchField2.fireChange({ query: oCompanyName });
+				oSearchField2.fireChange({
+					query: oCompanyName
+				});
 				oSearchField3.setValue(oProjectName);
-				oSearchField3.fireChange({ query: oProjectName });
+				oSearchField3.fireChange({
+					query: oProjectName
+				});
 			},
 			// filterDocs(oEvent) {
 			// 	debugger;

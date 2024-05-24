@@ -6,8 +6,9 @@ sap.ui.define(
 		"sap/m/MessageBox",
 		"com/candentech/sowtracker/enum/services",
 		"../model/formatter",
+		"sap/ui/core/Fragment",
 	],
-	(Controller, JSONModel, MessageToast, MessageBox, services, formatter) => {
+	(Controller, JSONModel, MessageToast, MessageBox, services, formatter, Fragment) => {
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Table", {
@@ -100,14 +101,14 @@ sap.ui.define(
 					template: aColList,
 					sorter: oSorter,
 				});
-				var sRole = this.getOwnerComponent()
-					.getModel("userdetails")
-					.getProperty("/role");
-				if (sRole === "viewer") {
-					oTable.setMode("None");
-				} else {
-					oTable.setMode("MultiSelect");
-				}
+				// var sRole = this.getOwnerComponent()
+				// 	.getModel("userdetails")
+				// 	.getProperty("/role");
+				// if (sRole === "viewer") {
+				// 	oTable.setMode("None");
+				// } else {
+				// 	oTable.setMode("MultiSelect");
+				// }
 			},
 			// opens Sorter PopUp
 			handleOpenDialog: async function () {
@@ -215,7 +216,7 @@ sap.ui.define(
 			},
 			//this handles sorter "OK" Button to sort,group,Filter
 			handleConfirm(oEvent) {
-				debugger;
+				// debugger;
 				// console.log(oEvent);
 				var sGroupName = "";
 				var sFilter = "";
@@ -398,7 +399,7 @@ sap.ui.define(
 					MessageToast.show("Please select a row to edit");
 					return;
 				}
-				debugger;
+				// debugger;
 
 				// var iSrNo = oSelectedItem.getCells()[0].getText();
 				var oModel = oSelectedItem.getModel("docs");
@@ -444,7 +445,7 @@ sap.ui.define(
 				})
 					.then((res) => res.json())
 					.then((data) => {
-						debugger;
+						// debugger;
 						// console.log(data);
 						if (data.message) {
 							// console.log(data);
@@ -507,7 +508,7 @@ sap.ui.define(
 					var oDialog = this.byId("idAddAndEditSowDialog");
 
 					if (oSelectedRow) {
-						debugger;
+						// debugger;
 						var items = oSelectedRow
 							.getCells()
 							.map((i) =>
@@ -558,59 +559,105 @@ sap.ui.define(
 				oEvent.getSource().clear();
 			},
 			//Deals with Deletion of fields in table
+			// onDelete() {
+			// 	const oTable = this.byId("projectTable");
+			// 	const oSelectedItems = oTable.getSelectedItems();
+
+			// 	if (oSelectedItems.length === 0) {
+			// 		MessageToast.show("Please select the Record(s) to delete");
+			// 		return;
+			// 	}
+
+			// 	MessageBox.confirm(
+			// 		`Are you sure to delete ${oSelectedItems.length} record(s)?`,
+			// 		{
+			// 			title: "Confirm",
+			// 			onClose: (sAction) => {
+			// 				if (sAction === "OK") {
+			// 					const oSrNo = [];
+			// 					oSelectedItems.forEach((aSelectedItem) => {
+			// 						const sPath = aSelectedItem
+			// 							.getBindingContext("docs")
+			// 							.getPath();
+			// 						const { SrNo: iSrNo } = aSelectedItem
+			// 							.getModel("docs")
+			// 							.getProperty(sPath);
+			// 							oSrNo.push(iSrNo);
+
+			// 						fetch(services.delete, {
+			// 							method: "DELETE",
+			// 							body: JSON.stringify({
+			// 								SrNo: oSrNo,
+			// 							}),
+			// 						})
+			// 							.then((res) => res.json())
+			// 							.then((data) => {
+			// 								if (data) {
+			// 									sap.m.MessageToast.show(data.message);
+			// 									oTable.removeItem(aSelectedItem);
+			// 								} else {
+			// 									sap.m.MessageToast.show("Failed to delete the record.");
+			// 								}
+			// 							})
+			// 							.catch((error) => {
+			// 								sap.m.MessageToast.show(
+			// 									"An error occurred: " + error.message
+			// 								);
+			// 							});
+			// 					});
+			// 				}
+			// 				this.refresh();
+			// 			},
+			// 		}
+			// 	);
+			// },
 			onDelete() {
 				const oTable = this.byId("projectTable");
 				const oSelectedItems = oTable.getSelectedItems();
-
+			
 				if (oSelectedItems.length === 0) {
 					MessageToast.show("Please select the Record(s) to delete");
 					return;
 				}
-
+			
 				MessageBox.confirm(
 					`Are you sure to delete ${oSelectedItems.length} record(s)?`,
 					{
 						title: "Confirm",
 						onClose: (sAction) => {
 							if (sAction === "OK") {
+								const deleteRequests = [];
 								oSelectedItems.forEach((aSelectedItem) => {
-									const sPath = aSelectedItem
-										.getBindingContext("docs")
-										.getPath();
-									const { SrNo: iSrNo } = aSelectedItem
-										.getModel("docs")
-										.getProperty(sPath);
-
-									fetch(services.delete, {
-										method: "DELETE",
-										body: JSON.stringify({
-											SrNo: iSrNo,
-										}),
-									})
-										.then((res) => res.json())
-										.then((data) => {
-											if (data) {
-												sap.m.MessageToast.show(data.message);
-												oTable.removeItem(aSelectedItem);
-											} else {
-												sap.m.MessageToast.show("Failed to delete the record.");
-											}
-										})
-										.catch((error) => {
-											sap.m.MessageToast.show(
-												"An error occurred: " + error.message
-											);
-										});
+									const sPath = aSelectedItem.getBindingContext("docs").getPath();
+									const { SrNo: iSrNo } = aSelectedItem.getModel("docs").getProperty(sPath);
+									deleteRequests.push( iSrNo );
+									oTable.removeItem(aSelectedItem); 
+								});
+			
+								fetch(services.delete, {
+									method: "DELETE",
+									body: JSON.stringify(deleteRequests),
+								})
+								.then((res) => res.json())
+								.then((data) => {
+									if (data) {
+										sap.m.MessageToast.show(data.message);
+									} else {
+										sap.m.MessageToast.show("Failed to delete the record(s).");
+									}
+								})
+								.catch((error) => {
+									sap.m.MessageToast.show("An error occurred: " + error.message);
 								});
 							}
-							this.refresh();
+							this.refresh(); 
 						},
 					}
 				);
 			},
+			
 			// live refresh of page
 			refresh() {
-				debugger;
 				var count = 1;
 				var prevCompanyName = "";
 				fetch(services.agreementList)

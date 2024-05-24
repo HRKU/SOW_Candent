@@ -84,28 +84,64 @@
 				{
 					"name": "RouteLogin",
 					"pattern": "",
-					"target": ["TargetLogin"]
+					"target": ["Login"]
+				},
+				{
+					"name": "RouteForgotPassword",
+					"pattern": "forgotPassword",
+					"target": ["ForgotPassword"]
 				},
 				{
 					"name": "RouteDashboard",
 					"pattern": "dashboard",
-					"target": ["TargetDashboard"]
+					"target": ["Dashboard"]
+				},
+				{
+					"name": "RouteTable",
+					"pattern": "table",
+					"target": ["Table"]
+				},
+				{
+					"name": "RouteAdmin",
+					"pattern": "admin",
+					"target": ["Admin"]
 				}
 			],
 			"targets": {
-				"TargetLogin": {
+				"Login": {
 					"viewType": "XML",
-					"transition": "slide",
+					"transition": "show",
 					"clearControlAggregation": false,
 					"viewId": "Login",
 					"viewName": "Login"
 				},
-				"TargetDashboard": {
+				"ForgotPassword": {
+					"viewType": "XML",
+					"transition": "flip",
+					"clearControlAggregation": false,
+					"viewId": "ForgotPassword",
+					"viewName": "ForgotPassword"
+				},
+				"Dashboard": {
 					"viewType": "XML",
 					"transition": "slide",
 					"clearControlAggregation": false,
-					"viewId": "Main",
-					"viewName": "Main"
+					"viewId": "Dashboard",
+					"viewName": "Dashboard"
+				},
+				"Table": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "Table",
+					"viewName": "Table"
+				},
+				"Admin": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "Admin",
+					"viewName": "Admin"
 				}
 			}
 		},

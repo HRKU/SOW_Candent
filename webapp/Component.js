@@ -66,7 +66,7 @@ sap.ui.define(
 						.then((res) => res.json())
 						.then((data) => {
 							// console.log(data);
-							debugger;
+							// debugger;
 							data
 								.sort((a, b) => a.CompanyName.localeCompare(b.CompanyName))
 								.forEach((item) => {

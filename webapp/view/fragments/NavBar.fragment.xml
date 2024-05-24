@@ -1,16 +1,10 @@
-<mvc:View
-    controllerName="com.candentech.sowtracker.controller.Main"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
     xmlns:tnt="sap.tnt"
->
-    <Page
-        id="mainPage"
-        showHeader="false"
-    >
-        <content>
-            <!-- <tnt:ToolHeader
+>   
+    
+            <tnt:ToolHeader
                 id="MainHeader"
                 class="sapUiTinyMargin"
                 style="Standard"
@@ -30,14 +24,14 @@
 
                 <Button
                     type="Neutral"
-                    press=".setVisibleDash"
+                    press=".onPressDash"
                     id="dashbutton"
                     icon="sap-icon://home"
                     class="sapUiSmallMargin"
                 />
                 <Button
                     type="Neutral"
-                    press=".setVisibleTable"
+                    press=".onPressTable"
                     id="tablebutton"
                     icon="sap-icon://filter-fields"
                     class="sapUiSmallMargin"
@@ -55,21 +49,7 @@
                     text="logout"
                     class="sapUiSmallMargin"
                 />
-            </tnt:ToolHeader> -->
-            <!-- <mvc:XMLView
-                id="dash"
-                viewName="com.candentech.sowtracker.view.Dashboard"
-            />
-            <mvc:XMLView
-                id="table"
-                visible="false"
-                viewName="com.candentech.sowtracker.view.Table"
-            />
-            <mvc:XMLView
-                id="admin"
-                visible="false"
-                viewName="com.candentech.sowtracker.view.Admin"
-            /> -->
-        </content>
-    </Page>
-</mvc:View>
+            </tnt:ToolHeader>
+            
+
+</c:FragmentDefinition>

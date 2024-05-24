@@ -21,9 +21,8 @@ sap.ui.define(
 					location.reload();
 				}
 			},
-
-			//can login when pressing enter on the keyboard
 			onKeyPress: function (event) {
+				// debugger;
 				var loginButton = this.byId("idLoginButton");
 				if (event.key === "Enter" && loginButton) {
 					var oUsername = this.getView().byId("username");
@@ -40,33 +39,61 @@ sap.ui.define(
 					loginButton.firePress();
 				}
 			},
-
+			
 			// Show/Hide Password Function
 			onShowPasswordSelect: function () {
 				var oPasswordInput = this.byId("password");
 				var temp = oPasswordInput.getValueHelpIconSrc().split("://");
-
+				
 				var state = temp.pop();
-
+				
 				temp.push(ePassword.opposite_state[state]);
-
+				
 				oPasswordInput.setType(ePassword.input_type[state]);
 				oPasswordInput.setValueHelpIconSrc(temp.join("://"));
 			},
-
 			// OnLogin press Function
+			// onLoginPress: function () {
+			// 	debugger;
+			// 	var oView = this.getView();
+			// 	var oEmail = oView.byId("username");
+			// 	var oPassword = oView.byId("password");
+
+			// 	var oModel = new sap.ui.model.json.JSONModel();
+			// 	oModel.setProperty("/username", oEmail.getValue());
+			// 	oModel.setProperty("/password", oPassword.getValue());
+
+			// 	fetch(services.login, {
+			// 		method: "POST",
+			// 		body: JSON.stringify(oModel.getData()),
+			// 		credentials: "include",
+			// 	})var oView = this.getView();
 			onLoginPress: function () {
+				debugger;
 				var oView = this.getView();
 				var oEmail = oView.byId("username");
 				var oPassword = oView.byId("password");
+				var oSsecretKey = "Cdt@private*ltd+2020"; 
 
-				var oModel = new sap.ui.model.json.JSONModel();
-				oModel.setProperty("/username", oEmail.getValue());
-				oModel.setProperty("/password", oPassword.getValue());
-
+				var loginData = {
+					username: oEmail.getValue(),
+					password: oPassword.getValue(),
+					secret_key: oSsecretKey
+				};
+			 
+				var loginDataString = JSON.stringify(loginData);
+			 
+				// Concatenate login data string with the shared secret key
+				// var combinedData = loginDataString + secretKey;
+			 
+				// Encode the combined data with Base64
+				var encodedData = btoa(loginDataString);
 				fetch(services.login, {
 					method: "POST",
-					body: JSON.stringify(oModel.getData()),
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${encodedData}` // Send encoded data in Authorization header
+					},
 					credentials: "include",
 				})
 					.then((res) => res.json())
@@ -100,6 +127,12 @@ sap.ui.define(
 						localStorage.removeItem("token");
 					});
 			},
+			onLinkPress: function () {
+				this.getOwnerComponent().getRouter().navTo("RouteForgotPassword");
+				this.getView().byId("idSimpleForm").setVisible(false);
+				// location.reload();
+			},
+			
 		});
 	}
 );

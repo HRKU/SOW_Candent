@@ -10,7 +10,7 @@
     displayBlock="true"
     height="100%"
     busyIndicatorDelay="0"
->
+> 
     <VBox
         id="adminpage"
         height="auto"

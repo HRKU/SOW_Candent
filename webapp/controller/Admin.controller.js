@@ -9,6 +9,7 @@ sap.ui.define(
 		"../model/formatter",
 		"sap/m/MessageBox",
 		"com/candentech/sowtracker/enum/services",
+		"sap/ui/core/Fragment",
 	],
 	function (
 		Controller,
@@ -19,13 +20,15 @@ sap.ui.define(
 		Text,
 		formatter,
 		MessageBox,
-		services
+		services,
+		Fragment,
 	) {
 		"use strict";
 
 		return Controller.extend("com.candentech.sowtracker.controller.Admin", {
 			formatter: formatter,
-			onInit: function () {},
+			onInit: function () {
+			},
 			//show and hides password when creating or editing passwords
 			onShowPasswordSelect: function (oEvent) {
 				var oPasswordInput = oEvent.getSource();
